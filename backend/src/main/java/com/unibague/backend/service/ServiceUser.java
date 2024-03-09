@@ -1,19 +1,19 @@
 package com.unibague.backend.service;
 
-import com.unibague.backend.model.Student;
-import com.unibague.backend.repository.RepositoryStudent;
+import com.unibague.backend.model.User;
+import com.unibague.backend.repository.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ServiceStudent {
+public class ServiceUser {
 
     @Autowired
-    private RepositoryStudent repositoryStudent;
+    private RepositoryUser repositoryStudent;
 
-    public Boolean addStudent(Student student) {
+    public Boolean addStudent(User student) {
         try{
             repositoryStudent.save(student);
             return true;
@@ -23,11 +23,11 @@ public class ServiceStudent {
         }
     }
 
-    public Student getStudentById(Long id) {
+    public User getStudentById(Long id) {
         return repositoryStudent.findById(id).orElse(null);
     }
 
-    public List<Student> getStudents() {
-        return (List<Student>) repositoryStudent.findAll();
+    public List<User> getStudents() {
+        return (List<User>) repositoryStudent.findAll();
     }
 }

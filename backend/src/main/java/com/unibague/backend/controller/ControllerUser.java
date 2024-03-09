@@ -1,15 +1,14 @@
 package com.unibague.backend.controller;
 
-import com.unibague.backend.model.Student;
-import com.unibague.backend.service.ServiceStudent;
+import com.unibague.backend.service.ServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ControllerStudent {
+public class ControllerUser {
 
     @Autowired
-    ServiceStudent serviceStudent;
+    ServiceUser serviceStudent;
 
 
     @RequestMapping(path="/")
