@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 defineProps<{ msg: string }>()
 
@@ -9,7 +9,7 @@ const count = ref(0)
 <template>
   <h1>{{ msg }}</h1>
 
-  <img src="../assets/Obsidian.gif" alt="obsidian stone" class="logo"/>
+  <img src="../assets/Obsidian.gif" alt="obsidian stone" class="logo obsidian"/>
 
   <div class="card">
     <button type="button" @click="count++">🕹️Abyss hype is {{ count }}</button>
@@ -36,5 +36,10 @@ const count = ref(0)
 <style scoped>
 .read-the-docs {
   color: #888;
+}
+.obsidian:hover{
+  filter: drop-shadow(0 0 2em rgb(255, 72, 0));
+  transition: 300ms;
+  cursor: pointer;
 }
 </style>

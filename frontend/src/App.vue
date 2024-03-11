@@ -4,6 +4,10 @@ import HelloWorld from './components/Obsidian.vue'
 
 <template>
   <div>
+    <RouterLink style="margin: 0 5px;" to="/">Home</RouterLink>
+    <RouterLink style="margin: 0 5px;" to="/lina">Lina</RouterLink>
+    <RouterLink style="margin: 0 5px;color: orange; font-weight: bolder;" to="/test">Test</RouterLink>
+    <RouterView></RouterView>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
