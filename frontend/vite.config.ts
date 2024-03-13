@@ -1,10 +1,17 @@
 import { defineConfig } from 'vite'
+import VueRouter from 'unplugin-vue-router/vite'
 import vue from '@vitejs/plugin-vue'
+
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [VueRouter({
+    routesFolder:[{
+      src: 'src/views'
+    }]
+  }), vue()],
   server:{
-    host: '0.0.0.0'
+    //host: '0.0.0.0'
   }
 })
