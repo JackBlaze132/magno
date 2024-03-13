@@ -15,7 +15,7 @@ public class ControllerUser {
     ServiceUser serviceStudent;
 
 
-    @GetMapping(path = "/listarEmpleadosJpa", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/getUsers", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> hello_world() {
         return  serviceStudent.getStudents();
     }
