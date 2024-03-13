@@ -12,11 +12,11 @@ import java.util.List;
 public class ControllerUser {
 
     @Autowired
-    ServiceUser serviceStudent;
+    ServiceUser serviceUser;
 
 
     @GetMapping(path = "/getUsers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> hello_world() {
-        return  serviceStudent.getStudents();
+    public List<User> getUsers() {
+        return  serviceUser.getStudents();
     }
 }

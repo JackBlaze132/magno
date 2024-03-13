@@ -1,5 +1,6 @@
 package com.unibague.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unibague.backend.util.AcademicProgram;
 import com.unibague.backend.util.Sex;
 import jakarta.persistence.*;
@@ -49,6 +50,7 @@ public class User{
     @Column(name = "is_external_user")
     private Boolean isExternalUser;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_research_seedbeds",

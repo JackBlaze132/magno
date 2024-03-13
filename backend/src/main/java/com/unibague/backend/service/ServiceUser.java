@@ -11,11 +11,11 @@ import java.util.List;
 public class ServiceUser {
 
     @Autowired
-    private RepositoryUser repositoryStudent;
+    private RepositoryUser repositoryUser;
 
     public Boolean addStudent(User student) {
         try{
-            repositoryStudent.save(student);
+            repositoryUser.save(student);
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
@@ -24,10 +24,10 @@ public class ServiceUser {
     }
 
     public User getStudentById(Long id) {
-        return repositoryStudent.findById(id).orElse(null);
+        return repositoryUser.findById(id).orElse(null);
     }
 
     public List<User> getStudents() {
-        return (List<User>) repositoryStudent.findAll();
+        return (List<User>) repositoryUser.findAll();
     }
 }
