@@ -2,11 +2,17 @@
 import { defineComponent, PropType } from 'vue';
 
 interface Item {
-  id: number;
-  name: string;
-  code: string;
-  email: string;
-  academicProgram: string;
+  id: number, 
+  userCode: string, 
+  identificationNumber: string,
+  firstName: string, 
+  middleName: string, 
+  lastName: string, 
+  secondLastName: string, 
+  academicProgram: number, 
+  email: string, 
+  phoneNumber: string, 
+  sex: number 
 }
 
 export default defineComponent({
@@ -23,27 +29,51 @@ export default defineComponent({
 <template>
     <table>
         <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>code</th>
-          <th>email</th>
+          <th>ID</th>
+          <th>Code</th>
+          <th>C.C.</th>
+          <th>First name</th>
+          <th>Middle name</th>
+          <th>Last name</th>
+          <th>Second last name</th>
           <th>academic program</th>
+          <th>E-mail</th>
+          <th>Phone number</th>
+          <th>Sex</th>
         </tr>
         <tr v-for="item in items" :key="item.id">
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.id }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.name }}
+            {{ item.userCode }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.code }}
+            {{ item.identificationNumber }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.firstName }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.middleName }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.lastName }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.secondLastName }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.academicProgram }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.email }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.academicProgram }}
+            {{ item.phoneNumber }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.sex }}
           </td>
         </tr>
     </table>

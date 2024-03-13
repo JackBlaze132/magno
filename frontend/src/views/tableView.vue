@@ -1,7 +1,13 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang='ts'>
+import { defineComponent} from 'vue';
 import InfoTable from '../components/infoTable.vue';
 
+
+
+/*
+-------------------------------------------------------------------
+TESTING TABLE CREATION
+-------------------------------------------------------------------
 export default defineComponent({
   name: 'tableView',
   components: {
@@ -16,12 +22,54 @@ export default defineComponent({
 
     return { items };
   },
-});
+});*/
+
+export default {
+  name: 'TableView',
+  components: {
+    InfoTable,
+  },
+  data() {
+    return {
+      items: [],
+    };
+  },
+  created() {
+    this.getStudents();
+  },
+  methods: {
+    async getStudents() {
+      try {
+        const response = await fetch('/api/getUsers');
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.items = data;
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    },
+  },
+};
+
+
+/*
+onMounted(async () => {
+  const response = await fetch('/api/getUsers')
+  console.log(response)
+  const data = await response.json
+  console.log(data)
+})*/
 </script>
 
 <template>
   <div>
     <h1>Table View</h1>
-    <InfoTable :items="items" />
+    <div >
+    <infoTable :items="items"></infoTable>
+  </div>
   </div>
 </template>
