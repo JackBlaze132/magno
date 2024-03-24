@@ -14,18 +14,18 @@ public class ResearchSeedbed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "coordinator_id")
+    @Column(name = "coordinator_id", nullable = false)
     private Long coordinatorId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "investigation_group_id")
+    @JoinColumn(name = "investigation_group_id", nullable = false)
     private InvestigationGroup investigationGroup;
 
     @ManyToMany(mappedBy = "researchSeedbeds")
-    private List<User> users;
+    private List<StudentProfile> students_profiles;
 
     public ResearchSeedbed(String name, Long coordinatorId, InvestigationGroup investigationGroup){
         this.name = name;

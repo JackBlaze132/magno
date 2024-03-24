@@ -26,5 +26,11 @@ public class User{
     @Column(name = "is_external_user")
     private Boolean isExternalUser;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userStudent", cascade = CascadeType.ALL)
+    private List<StudentProfile> studentProfiles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userTeacher", cascade = CascadeType.ALL)
+    private List<TeacherProfile> teacherProfiles;
+
 
 }

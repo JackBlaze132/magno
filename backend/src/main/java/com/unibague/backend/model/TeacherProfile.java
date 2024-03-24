@@ -26,4 +26,8 @@ public class TeacherProfile {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dependency_id")
     private Dependency dependency;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userTeacher;
 }
