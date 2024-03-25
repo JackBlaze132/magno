@@ -11,7 +11,7 @@ import java.util.List;
 public class ServiceStudentProfile {
 
     @Autowired
-    RepositoryStudentProfile repositoryStudentProfile;
+    private RepositoryStudentProfile repositoryStudentProfile;
 
     public Boolean addStudentProfile(StudentProfile studentProfile) {
         try{

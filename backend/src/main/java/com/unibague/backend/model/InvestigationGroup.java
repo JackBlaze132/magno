@@ -1,5 +1,6 @@
 package com.unibague.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,16 +18,13 @@ public class InvestigationGroup {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "coordinator_id", nullable = false)
-    private Long coordinatorId;
+    @OneToOne
+    @JoinColumn(name = "coordinator_id")
+    private TeacherProfile coordinator;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "investigationGroup", cascade = CascadeType.ALL)
     private List<ResearchSeedbed> researchSeedbeds;
-
-    public InvestigationGroup(String name, Long coordinatorId){
-        this.name = name;
-        this.coordinatorId = coordinatorId;
-    }
 
     public InvestigationGroup(){
     }

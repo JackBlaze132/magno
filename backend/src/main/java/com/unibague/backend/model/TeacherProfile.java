@@ -28,6 +28,10 @@ public class TeacherProfile {
 
     private Sex sex;
 
+    @OneToOne(mappedBy = "coordinator", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private InvestigationGroup investigationGroup;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dependency_id")
     private Dependency dependency;
