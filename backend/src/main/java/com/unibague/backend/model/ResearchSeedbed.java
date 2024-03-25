@@ -25,7 +25,10 @@ public class ResearchSeedbed {
     private InvestigationGroup investigationGroup;
 
     @ManyToMany(mappedBy = "researchSeedbeds")
-    private List<StudentProfile> students_profiles;
+    private List<StudentProfile> studentsProfiles;
+
+    @ManyToMany(mappedBy = "researchSeedbeds_teacher")
+    private List<TeacherProfile> teachersProfiles;
 
     public ResearchSeedbed(String name, Long coordinatorId, InvestigationGroup investigationGroup){
         this.name = name;
