@@ -1,8 +1,6 @@
 package com.unibague.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.unibague.backend.util.AcademicProgram;
-import com.unibague.backend.util.Sex;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,7 +18,7 @@ public class User{
     @Column(name = "user_code")
     private String userCode;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "is_external_user")
@@ -32,5 +30,14 @@ public class User{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userTeacher", cascade = CascadeType.ALL)
     private List<TeacherProfile> teacherProfiles;
 
+    public User(){
+
+    }
+
+    public User(String userCode, String email, Boolean isExternalUser){
+        this.userCode = userCode;
+        this.email = email;
+        this.isExternalUser = isExternalUser;
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.unibague.backend.util;
 
-public enum AcademicProgram {
+public enum EnumAcademicProgram {
     INGMECANICA,
     INGSISTEMAS,
     INGINDUSTRIAL,

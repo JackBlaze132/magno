@@ -19,4 +19,9 @@ public class ControllerUser {
     public List<User> getUsers() {
         return  serviceUser.getStudents();
     }
+
+    @PostMapping(path = "/addUser", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Boolean addUser(@RequestBody User user) {
+        return serviceUser.addStudent(user);
+    }
 }

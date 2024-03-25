@@ -3,10 +3,12 @@ package com.unibague.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unibague.backend.util.Sex;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "teacher_profiles")
 public class TeacherProfile {
 
@@ -26,11 +28,11 @@ public class TeacherProfile {
 
     private Sex sex;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dependency_id")
     private Dependency dependency;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User userTeacher;
 

@@ -1,5 +1,6 @@
 package com.unibague.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,9 +25,11 @@ public class ResearchSeedbed {
     @JoinColumn(name = "investigation_group_id", nullable = false)
     private InvestigationGroup investigationGroup;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "researchSeedbeds")
     private List<StudentProfile> studentsProfiles;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "researchSeedbeds_teacher")
     private List<TeacherProfile> teachersProfiles;
 

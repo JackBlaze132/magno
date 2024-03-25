@@ -1,5 +1,10 @@
 package com.unibague.backend.util;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum Sex {
-    MALE, FEMALE
+    @JsonProperty("Masculino")
+    MALE,
+    @JsonProperty("Femenino")
+    FEMALE
 }

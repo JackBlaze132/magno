@@ -13,9 +13,9 @@ public class ServiceUser {
     @Autowired
     private RepositoryUser repositoryUser;
 
-    public Boolean addStudent(User student) {
+    public Boolean addStudent(User user) {
         try{
-            repositoryUser.save(student);
+            repositoryUser.save(user);
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
