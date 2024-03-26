@@ -32,6 +32,10 @@ public class TeacherProfile {
     @JsonIgnore
     private InvestigationGroup investigationGroup;
 
+    @OneToOne(mappedBy = "coordinator", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private ResearchSeedbed researchSeedbed;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dependency_id")
     private Dependency dependency;

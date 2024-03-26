@@ -18,8 +18,9 @@ public class ResearchSeedbed {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "coordinator_id", nullable = false)
-    private Long coordinatorId;
+    @OneToOne
+    @JoinColumn(name = "coordinator_id")
+    private TeacherProfile coordinator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "investigation_group_id", nullable = false)
@@ -32,14 +33,5 @@ public class ResearchSeedbed {
     @JsonIgnore
     @ManyToMany(mappedBy = "researchSeedbeds_teacher")
     private List<TeacherProfile> teachersProfiles;
-
-    public ResearchSeedbed(String name, Long coordinatorId, InvestigationGroup investigationGroup){
-        this.name = name;
-        this.coordinatorId = coordinatorId;
-        this.investigationGroup = investigationGroup;
-    }
-
-    public ResearchSeedbed(){
-    }
 
 }

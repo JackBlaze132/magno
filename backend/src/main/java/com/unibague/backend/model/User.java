@@ -1,5 +1,6 @@
 package com.unibague.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,9 +26,11 @@ public class User{
     private Boolean isExternalUser;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userStudent", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<StudentProfile> studentProfiles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userTeacher", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<TeacherProfile> teacherProfiles;
 
     public User(){
