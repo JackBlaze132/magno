@@ -22,7 +22,7 @@ public class ResearchSeedbed {
     @JoinColumn(name = "coordinator_id")
     private TeacherProfile coordinator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "investigation_group_id", nullable = false)
     private InvestigationGroup investigationGroup;
 
