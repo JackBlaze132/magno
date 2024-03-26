@@ -2,21 +2,21 @@
 import { defineComponent, PropType } from 'vue';
 
 interface Item {
-  id: number, 
-  userCode: string, 
+  id: number,
+  name: string,
+  userCode: string,
   identificationNumber: string,
-  firstName: string, 
-  middleName: string, 
-  lastName: string, 
-  secondLastName: string, 
-  academicProgram: number, 
   email: string, 
-  phoneNumber: string, 
-  sex: number 
+  phoneNumber: string,
+  sex: string,
+  dependency: {
+    id: number,
+    name: string
+  }
 }
 
 export default defineComponent({
-  name: 'infoTable',
+  name: 'tableTeachers',
   props: {
     items: {
       type: Array as PropType<Item[]>,
@@ -30,20 +30,20 @@ export default defineComponent({
     <table>
         <tr>
           <th>ID</th>
-          <th>Code</th>
-          <th>C.C.</th>
-          <th>First name</th>
-          <th>Middle name</th>
-          <th>Last name</th>
-          <th>Second last name</th>
-          <th>academic program</th>
+          <th>Nombre</th>
+          <th>Código</th>
+          <th>Número de identificación</th>
           <th>E-mail</th>
-          <th>Phone number</th>
-          <th>Sex</th>
+          <th>Número telefónico</th>
+          <th>Sexo</th>
+          <th>dependencia</th>
         </tr>
         <tr v-for="item in items" :key="item.id">
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.id }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.name }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.userCode }}
@@ -52,28 +52,16 @@ export default defineComponent({
             {{ item.identificationNumber }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.firstName }}
+            {{ item.email}}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.middleName }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.lastName }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.secondLastName }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.academicProgram }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.email }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.phoneNumber }}
+            {{ item.phoneNumber}}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.sex }}
+          </td>
+          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
+            {{ item.dependency.name }}
           </td>
         </tr>
     </table>
