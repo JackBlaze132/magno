@@ -18,7 +18,7 @@ public class AcademicProgram {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "academicProgram", cascade = CascadeType.ALL)
     @JsonIgnore
+    @ManyToMany(mappedBy = "academicPrograms")
     private List<StudentProfile> studentProfiles;
 }

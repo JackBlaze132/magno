@@ -16,13 +16,13 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_code")
+    @Column(name = "user_code", unique = true)
     private String userCode;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "is_external_user")
+    @Column(name = "is_external_user", nullable = false)
     private Boolean isExternalUser;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userStudent", cascade = CascadeType.ALL)

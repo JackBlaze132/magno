@@ -47,7 +47,7 @@ public class TeacherProfile {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "research_seedbeds_students_teachers_profiles",
+            name = "research_seedbeds_teachers_profiles",
             joinColumns = @JoinColumn(name = "teacher_profile_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "research_seedbed_id", referencedColumnName = "id")
     )

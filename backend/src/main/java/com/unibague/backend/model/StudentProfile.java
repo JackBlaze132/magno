@@ -3,11 +3,13 @@ package com.unibague.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unibague.backend.util.Sex;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "student_profiles")
+@Data
 public class StudentProfile {
 
     @Id
@@ -32,17 +34,22 @@ public class StudentProfile {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "research_seedbeds_students_teachers_profiles",
+                name = "research_seedbeds_students_profiles",
             joinColumns = @JoinColumn(name = "student_profile_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "research_seedbed_id", referencedColumnName = "id")
     )
     private List<ResearchSeedbed> researchSeedbeds;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "academic_program_id")
-    private AcademicProgram academicProgram;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "academic_programs_students_profiles",
+            joinColumns = @JoinColumn(name = "student_profile_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "academic_program_id", referencedColumnName = "id")
+    )
+    private List<AcademicProgram> academicPrograms;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User userStudent;
 }
