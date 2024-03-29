@@ -28,6 +28,12 @@ public class StudentProfile {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "was_active")
+    private boolean wasActive;
+
     @Column(name = "sex")
     private Sex sex;
 
