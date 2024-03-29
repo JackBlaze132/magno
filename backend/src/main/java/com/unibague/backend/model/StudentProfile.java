@@ -28,6 +28,9 @@ public class StudentProfile {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "semester")
+    private Byte semester;
+
     @Column(name = "email")
     private String email;
 
