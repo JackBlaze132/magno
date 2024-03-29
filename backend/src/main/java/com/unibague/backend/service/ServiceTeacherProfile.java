@@ -26,4 +26,24 @@ public class ServiceTeacherProfile {
     public List<TeacherProfile> getTeacherProfiles() {
         return repositoryTeacherProfile.findAll();
     }
+
+    public List<TeacherProfile> getTeacherProfiles1() {
+        return repositoryTeacherProfile.findAll1();
+    }
+
+    public List<TeacherProfile> getTeacherProfiles2() {
+        return repositoryTeacherProfile.findAll2();
+    }
+
+    public TeacherProfile findResearchSeedbedCoordinator1() {
+        return repositoryTeacherProfile.findResearchSeedbedCoordinator1();
+    }
+
+    public TeacherProfile findResearchSeedbedCoordinator2() {
+        return repositoryTeacherProfile.findResearchSeedbedCoordinator2();
+    }
+
+    public TeacherProfile findInvestigationGroupDirector1(){
+        return repositoryTeacherProfile.findInvestigationGroupDirector1();
+    }
 }

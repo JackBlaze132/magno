@@ -26,4 +26,12 @@ public class ServiceStudentProfile {
     public List<StudentProfile> getStudentProfiles() {
         return (List<StudentProfile>) repositoryStudentProfile.findAll();
     }
+
+    public List<StudentProfile> getStudentProfiles1() {
+        return (List<StudentProfile>) repositoryStudentProfile.findAll1();
+    }
+
+    public List<StudentProfile> getStudentProfiles2() {
+        return (List<StudentProfile>) repositoryStudentProfile.findAll2();
+    }
 }

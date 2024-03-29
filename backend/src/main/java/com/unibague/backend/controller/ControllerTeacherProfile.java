@@ -21,6 +21,31 @@ public class ControllerTeacherProfile {
         return serviceTeacherProfile.getTeacherProfiles();
     }
 
+    @GetMapping("/getTeacherProfiles1")
+    public List<TeacherProfile> getTeacherProfiles1() {
+        return serviceTeacherProfile.getTeacherProfiles1();
+    }
+
+    @GetMapping("/getTeacherProfiles2")
+    public List<TeacherProfile> getTeacherProfiles2() {
+        return serviceTeacherProfile.getTeacherProfiles2();
+    }
+
+    @GetMapping("/getResearchSeedbedCoordinator1")
+    public TeacherProfile getResearchSeedbedCoordinator1() {
+        return serviceTeacherProfile.findResearchSeedbedCoordinator1();
+    }
+
+    @GetMapping("/getResearchSeedbedCoordinator2")
+    public TeacherProfile getResearchSeedbedCoordinator2() {
+        return serviceTeacherProfile.findResearchSeedbedCoordinator2();
+    }
+
+    @GetMapping("/getInvestigationGroupDirector1")
+    public TeacherProfile getInvestigationGroupDirector1() {
+        return serviceTeacherProfile.findInvestigationGroupDirector1();
+    }
+
     @PostMapping("/addTeacherProfile")
     public Boolean addTeacherProfile(@RequestBody TeacherProfile teacherProfile) {
         return serviceTeacherProfile.addTeacherProfile(teacherProfile);

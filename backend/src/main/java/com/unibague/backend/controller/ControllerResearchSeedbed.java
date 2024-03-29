@@ -18,4 +18,9 @@ public class ControllerResearchSeedbed {
     public List<ResearchSeedbed> getResearchSeedbeds(){
         return serviceResearchSeedbed.getResearchSeedbeds();
     }
+
+    @GetMapping("/getResearchSeedbeds1")
+    public List<ResearchSeedbed> getResearchSeedbeds1(){
+        return serviceResearchSeedbed.getResearchSeedbeds1();
+    }
 }

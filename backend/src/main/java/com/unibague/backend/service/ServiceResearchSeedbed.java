@@ -16,4 +16,8 @@ public class ServiceResearchSeedbed {
     public List<ResearchSeedbed> getResearchSeedbeds(){
         return repositoryResearchSeedbed.findAll();
     }
+
+    public List<ResearchSeedbed> getResearchSeedbeds1(){
+        return repositoryResearchSeedbed.findAll1();
+    }
 }
