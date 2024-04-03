@@ -14,7 +14,7 @@ public class ControllerResearchSeedbed {
     @Autowired
     ServiceResearchSeedbed serviceResearchSeedbed;
 
-    @GetMapping("/getResearchSeedbeds")
+    @GetMapping("/getResearchSeedbeds   ")
     public List<ResearchSeedbed> getResearchSeedbeds(){
         return serviceResearchSeedbed.getResearchSeedbeds();
     }

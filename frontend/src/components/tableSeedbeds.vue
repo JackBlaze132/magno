@@ -10,7 +10,7 @@ interface Item {
 }
 
 export default defineComponent({
-  name: 'tableSeedbeds',
+  name: 'tableMembers1',
   props: {
     items: {
       type: Array as PropType<Item[]>,
@@ -18,13 +18,14 @@ export default defineComponent({
     },
   },
 });
+
 </script>
 
 <template>
     <table>
         <tr>
           <th>ID</th>
-          <th>Nombre</th>
+          <th>Semillero</th>
           <th>Coordinador</th>
         </tr>
         <tr v-for="item in items" :key="item.id">
@@ -32,7 +33,7 @@ export default defineComponent({
             {{ item.id }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.name }}
+           <RouterLink :to="`/seedbeds/${item.id}`">{{ item.name }}</RouterLink>
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.coordinator.name }}
