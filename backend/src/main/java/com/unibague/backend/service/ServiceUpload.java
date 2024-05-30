@@ -1,5 +1,6 @@
 package com.unibague.backend.service;
 
+import com.unibague.backend.util.UtilUpload;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,13 +9,22 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
 public class ServiceUpload {
-    public void uploadExcel(MultipartFile file) throws Exception{
+
+    private final UtilUpload utilUpload;
+
+    public ServiceUpload(UtilUpload utilUpload){
+        this.utilUpload = utilUpload;
+    }
+    public List<Map<String, String>> uploadExcel(MultipartFile file) throws Exception{
 
         Path tempDir = Files.createTempDirectory("");
 
@@ -26,18 +36,28 @@ public class ServiceUpload {
 
         Sheet sheet = workbook.getSheetAt(0);
 
-        Stream<Row> rowStream = StreamSupport.stream(sheet.spliterator(), false);
+        Supplier<Stream<Row>> rowStreamSupplier = utilUpload.getRowStreamSupplier(sheet);
 
-        rowStream.forEach(row ->{
+        Row headerRow = rowStreamSupplier.get().findFirst().get();
+
+        List<String> headerCells = utilUpload.getStream(headerRow)
+                .map(Cell::getStringCellValue)
+                .collect(Collectors.toList());
+
+        int colCount = headerCells.size();
+
+        return rowStreamSupplier.get()
+                .skip(1)
+                .map(row ->{
             //Given a row, get a cellStream from it
-            Stream<Cell> cellStream = StreamSupport.stream(row.spliterator(), false);
+            List<String> cellList = utilUpload.getStream(row)
+                    .map(Cell::getStringCellValue)
+                    .collect(Collectors.toList());
 
-            List<String> cellVals = cellStream.map(cell -> {
-                String cellVal = cell.getStringCellValue();
-                return cellVal;
-            }).collect(Collectors.toList());
-
-            System.out.println(cellVals);
-        });
+            return utilUpload.cellIteratorSupplier(colCount)
+                    .get()
+                    .collect(Collectors.toMap(headerCells::get, cellList::get));
+        })
+                .collect(Collectors.toList());
     }
 }
