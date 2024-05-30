@@ -19,5 +19,5 @@ public class Dependency {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "dependency", cascade = CascadeType.ALL)
-    private List<TeacherProfile> teacherProfiles;
+    private List<FunctionaryProfile> functionaryProfiles;
 }

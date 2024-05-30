@@ -20,11 +20,15 @@ public class InvestigationGroup {
 
     @OneToOne
     @JoinColumn(name = "coordinator_id")
-    private TeacherProfile coordinator;
+    private FunctionaryProfile coordinator;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "investigationGroup", cascade = CascadeType.ALL)
     private List<ResearchSeedbed> researchSeedbeds;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assesment_period_id")
+    private AssesmentPeriod assesmentPeriod;
 
     public InvestigationGroup(){
     }

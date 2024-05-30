@@ -61,4 +61,8 @@ public class StudentProfile {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User userStudent;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assesment_period_id")
+    private AssesmentPeriod assesmentPeriod;
 }

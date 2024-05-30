@@ -1,7 +1,6 @@
 package com.unibague.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,7 +30,7 @@ public class User{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userTeacher", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<TeacherProfile> teacherProfiles;
+    private List<FunctionaryProfile> functionaryProfiles;
 
     public User(){
 

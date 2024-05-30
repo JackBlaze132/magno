@@ -1,6 +1,6 @@
 package com.unibague.backend.controller;
 
-import com.unibague.backend.model.TeacherProfile;
+import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.service.ServiceTeacherProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,37 +17,37 @@ public class ControllerTeacherProfile {
     ServiceTeacherProfile serviceTeacherProfile;
 
     @GetMapping("/getTeacherProfiles")
-    public List<TeacherProfile> getTeacherProfiles() {
+    public List<FunctionaryProfile> getTeacherProfiles() {
         return serviceTeacherProfile.getTeacherProfiles();
     }
 
     @GetMapping("/getTeacherProfiles1")
-    public List<TeacherProfile> getTeacherProfiles1() {
+    public List<FunctionaryProfile> getTeacherProfiles1() {
         return serviceTeacherProfile.getTeacherProfiles1();
     }
 
     @GetMapping("/getTeacherProfiles2")
-    public List<TeacherProfile> getTeacherProfiles2() {
+    public List<FunctionaryProfile> getTeacherProfiles2() {
         return serviceTeacherProfile.getTeacherProfiles2();
     }
 
     @GetMapping("/getResearchSeedbedCoordinator1")
-    public TeacherProfile getResearchSeedbedCoordinator1() {
+    public FunctionaryProfile getResearchSeedbedCoordinator1() {
         return serviceTeacherProfile.findResearchSeedbedCoordinator1();
     }
 
     @GetMapping("/getResearchSeedbedCoordinator2")
-    public TeacherProfile getResearchSeedbedCoordinator2() {
+    public FunctionaryProfile getResearchSeedbedCoordinator2() {
         return serviceTeacherProfile.findResearchSeedbedCoordinator2();
     }
 
     @GetMapping("/getInvestigationGroupDirector1")
-    public TeacherProfile getInvestigationGroupDirector1() {
+    public FunctionaryProfile getInvestigationGroupDirector1() {
         return serviceTeacherProfile.findInvestigationGroupDirector1();
     }
 
     @PostMapping("/addTeacherProfile")
-    public Boolean addTeacherProfile(@RequestBody TeacherProfile teacherProfile) {
-        return serviceTeacherProfile.addTeacherProfile(teacherProfile);
+    public Boolean addTeacherProfile(@RequestBody FunctionaryProfile functionaryProfile) {
+        return serviceTeacherProfile.addTeacherProfile(functionaryProfile);
     }
 }

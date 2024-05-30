@@ -9,8 +9,8 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "teacher_profiles")
-public class TeacherProfile {
+@Table(name = "functionary_profiles")
+public class FunctionaryProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +36,10 @@ public class TeacherProfile {
     @JsonIgnore
     private ResearchSeedbed researchSeedbed;
 
+    @OneToOne(mappedBy = "tutor", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private ResearchSeedbed tutor;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dependency_id")
     private Dependency dependency;
@@ -52,4 +56,8 @@ public class TeacherProfile {
             inverseJoinColumns = @JoinColumn(name = "research_seedbed_id", referencedColumnName = "id")
     )
     private List<ResearchSeedbed> researchSeedbeds_teacher;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assesment_period_id")
+    private AssesmentPeriod assesmentPeriod;
 }

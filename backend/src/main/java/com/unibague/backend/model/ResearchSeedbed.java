@@ -20,7 +20,11 @@ public class ResearchSeedbed {
 
     @OneToOne
     @JoinColumn(name = "coordinator_id")
-    private TeacherProfile coordinator;
+    private FunctionaryProfile coordinator;
+
+    @OneToOne
+    @JoinColumn(name = "tutor_id")
+    private FunctionaryProfile tutor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "investigation_group_id", nullable = false)
@@ -32,6 +36,10 @@ public class ResearchSeedbed {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "researchSeedbeds_teacher")
-    private List<TeacherProfile> teachersProfiles;
+    private List<FunctionaryProfile> teachersProfiles;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assesment_period_id")
+    private AssesmentPeriod assesmentPeriod;
 
 }

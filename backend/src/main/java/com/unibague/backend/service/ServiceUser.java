@@ -4,6 +4,7 @@ import com.unibague.backend.model.User;
 import com.unibague.backend.repository.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ public class ServiceUser {
 
     @Autowired
     private RepositoryUser repositoryUser;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     public Boolean addStudent(User user) {
         try{
@@ -29,5 +33,9 @@ public class ServiceUser {
 
     public List<User> getStudents() {
         return (List<User>) repositoryUser.findAll();
+    }
+
+    public String fetchExternalData(String url) {
+        return restTemplate.getForObject(url, String.class);
     }
 }
