@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -41,7 +42,7 @@ public class ServiceUpload {
         Row headerRow = rowStreamSupplier.get().findFirst().get();
 
         List<String> headerCells = utilUpload.getStream(headerRow)
-                .map(Cell::getStringCellValue)
+                .map(this::getCellValueAsString)
                 .collect(Collectors.toList());
 
         int colCount = headerCells.size();
@@ -51,7 +52,7 @@ public class ServiceUpload {
                 .map(row ->{
             //Given a row, get a cellStream from it
             List<String> cellList = utilUpload.getStream(row)
-                    .map(Cell::getStringCellValue)
+                    .map(this::getCellValueAsString)
                     .collect(Collectors.toList());
 
             return utilUpload.cellIteratorSupplier(colCount)
@@ -59,5 +60,30 @@ public class ServiceUpload {
                     .collect(Collectors.toMap(headerCells::get, cellList::get));
         })
                 .collect(Collectors.toList());
+    }
+
+    private String getCellValueAsString(Cell cell){
+        switch (cell.getCellType()){
+            case STRING:
+                return cell.getStringCellValue();
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)){
+                    return String.valueOf(cell.getDateCellValue());
+                }
+                else{
+                    double numericValue = cell.getNumericCellValue();
+                    if (numericValue == (long) numericValue) {
+                        return String.format("%d", (long) numericValue);
+                    } else {
+                        return BigDecimal.valueOf(numericValue).toPlainString();
+                    }
+                }
+            case BLANK:
+                return "";
+            default:
+                return "";
+        }
     }
 }
