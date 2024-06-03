@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -15,8 +16,8 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_code", unique = true)
-    private String userCode;
+    @Column(name = "user_identification", unique = true, nullable = false)
+    private String userIdentification;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -36,8 +37,8 @@ public class User{
 
     }
 
-    public User(String userCode, String email, Boolean isExternalUser){
-        this.userCode = userCode;
+    public User(String userIdentification, String email, Boolean isExternalUser){
+        this.userIdentification = userIdentification;
         this.email = email;
         this.isExternalUser = isExternalUser;
     }

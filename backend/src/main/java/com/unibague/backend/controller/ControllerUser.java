@@ -1,18 +1,32 @@
 package com.unibague.backend.controller;
 
 import com.unibague.backend.model.User;
+import com.unibague.backend.repository.RepositoryUser;
+import com.unibague.backend.service.ServiceUpload;
 import com.unibague.backend.service.ServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ControllerUser {
 
     @Autowired
     ServiceUser serviceUser;
+
+    @Autowired
+    RepositoryUser repositoryUser;
+
+    private final ServiceUpload serviceUpload;
+
+    public ControllerUser(ServiceUpload serviceUpload) {
+        this.serviceUpload = serviceUpload;
+    }
 
 
     @GetMapping(path = "/getUsers", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,4 +44,30 @@ public class ControllerUser {
         String url = "http://integra.unibague.edu.co/studentInfo?api_token=$2y$42$s/9xFMDieYOEvYD/gfPqFAeFzvWXt13feXyterJzQ9rZKrbLpBYUqo&code_user=" + String.valueOf(id) +"&type=C";
         return serviceUser.fetchExternalData(url);
     }
+
+    @PostMapping(path = "/addUsersByExcel")
+    public Boolean addUserByExcel(@RequestParam("file") MultipartFile file) {
+        List<Map<String, String>> retorno = null;
+        try{
+            retorno = serviceUpload.uploadExcel(file);
+        }catch (Exception e) {
+            retorno = null;
+            System.out.println("Error: ");
+            e.printStackTrace();
+            return false;
+        }
+
+        List<User> users = new ArrayList<User>();
+        for (Map<String, String> stringStringMap : retorno) {
+
+            String userCode = stringStringMap.get("user_code");
+            String email = stringStringMap.get("email");
+            Boolean isExternalUser = Boolean.parseBoolean(stringStringMap.get("is_external_user"));
+
+            User user = new User(userCode, email, isExternalUser);
+            users.add(user);
+        }
+        return serviceUser.addNewUsers(users);
+    }
+
 }
