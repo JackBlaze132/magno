@@ -3,7 +3,10 @@ package com.unibague.backend.controller;
 import com.unibague.backend.model.InvestigationGroup;
 import com.unibague.backend.service.ServiceInvestigationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,5 +20,10 @@ public class ControllerInvestigationGroup {
     @GetMapping("/getInvestigationGroups")
     public List<InvestigationGroup> getInvestigationGroups() {
         return serviceInvestigationGroup.getInvestigationGroups();
+    }
+
+    @PostMapping(path = "/addInvestigationGroup", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean addInvestigationGroup(@RequestBody InvestigationGroup investigationGroup) {
+        return serviceInvestigationGroup.addInvestigationGroup(investigationGroup);
     }
 }

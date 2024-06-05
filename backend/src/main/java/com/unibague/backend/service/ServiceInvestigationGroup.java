@@ -16,4 +16,13 @@ public class ServiceInvestigationGroup {
     public List<InvestigationGroup> getInvestigationGroups() {
         return repositoryInvestigationGroup.findAll();
     }
+
+    public boolean addInvestigationGroup(InvestigationGroup investigationGroup) {
+        try{
+            repositoryInvestigationGroup.save(investigationGroup);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
