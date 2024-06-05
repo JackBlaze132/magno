@@ -21,11 +21,9 @@ public class AssesmentPeriod {
     private String name;
 
     @Column(name = "start_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startDate;
 
     @Column(name = "end_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date endDate;
 
     @Column(name = "is_active", nullable = false)
