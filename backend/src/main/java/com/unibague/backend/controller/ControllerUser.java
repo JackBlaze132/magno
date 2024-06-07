@@ -4,6 +4,8 @@ import com.unibague.backend.model.User;
 import com.unibague.backend.repository.RepositoryUser;
 import com.unibague.backend.service.ServiceUpload;
 import com.unibague.backend.service.ServiceUser;
+import com.unibague.backend.util.FetchExternalData;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +43,7 @@ public class ControllerUser {
 
     @GetMapping(path = "/getUserst/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getUserData(@PathVariable Long id) {
-        String url = "http://integra.unibague.edu.co/studentInfo?api_token=$2y$42$s/9xFMDieYOEvYD/gfPqFAeFzvWXt13feXyterJzQ9rZKrbLpBYUqo&code_user=" + String.valueOf(id) +"&type=C";
-        return serviceUser.fetchExternalData(url);
+        return serviceUser.fetchExternalData(FetchExternalData.fetchExternalDataFromStudent(String.valueOf(id)));
     }
 
     @PostMapping(path = "/addUsersByExcel")

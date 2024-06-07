@@ -18,6 +18,9 @@ public class AcademicProgram {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "program_code")
+    private String programCode;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "academicPrograms")
     private List<StudentProfile> studentProfiles;

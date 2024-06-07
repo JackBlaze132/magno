@@ -4,9 +4,11 @@ import com.unibague.backend.model.User;
 import com.unibague.backend.repository.RepositoryUser;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ public class ServiceUser {
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -56,6 +59,7 @@ public class ServiceUser {
                     repositoryUser.flush();
                 }
             }
+            repositoryUser.deleteUserWithEmptyEmailOrUserIdentification();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;

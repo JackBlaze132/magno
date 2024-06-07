@@ -18,4 +18,9 @@ public interface RepositoryUser extends JpaRepository<User, Long> {
     @Transactional
     @Query("UPDATE User u SET u.email = :email, u.isExternalUser = :isExternalUser WHERE u.userIdentification = :userIdentification")
     int updateUserByUserIdentification(String email, Boolean isExternalUser, String userIdentification);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM User u WHERE u.email = '' OR u.userIdentification = ''")
+    void deleteUserWithEmptyEmailOrUserIdentification();
 }
