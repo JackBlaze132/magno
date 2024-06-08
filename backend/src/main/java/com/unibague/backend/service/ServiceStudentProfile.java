@@ -1,11 +1,9 @@
 package com.unibague.backend.service;
 
 import com.unibague.backend.model.AcademicProgram;
+import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.model.StudentProfile;
-import com.unibague.backend.repository.RepositoryAcademicProgram;
-import com.unibague.backend.repository.RepositoryAssesmentPeriod;
-import com.unibague.backend.repository.RepositoryStudentProfile;
-import com.unibague.backend.repository.RepositoryUser;
+import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.Sex;
 import org.json.JSONObject;
@@ -36,6 +34,9 @@ public class ServiceStudentProfile {
     @Autowired
     private RepositoryAcademicProgram repositoryAcademicProgram;
 
+    @Autowired
+    RepositoryResearchSeedbed repositoryResearchSeedbed;
+
     public Boolean addStudentProfile(HashMap<String, String> studentProfile) {
         try{
 
@@ -55,14 +56,19 @@ public class ServiceStudentProfile {
 
             s.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(studentProfile.get("assesment_period_id"))).get());
             s.setUserStudent(repositoryUser.findByUserIdentification(studentProfile.get("identification_number")).get());
+
             List<AcademicProgram> list = new ArrayList<>();
             list.add(repositoryAcademicProgram.findByProgramCode(studentProfile.get("program_codes")));
             s.setAcademicPrograms(list);
 
+            List<ResearchSeedbed> researchSeedbeds = new ArrayList<>();
+            researchSeedbeds.add(repositoryResearchSeedbed.findById(Long.valueOf(studentProfile.get("research_seedbed_id"))).get());
+            s.setResearchSeedbeds(researchSeedbeds);
+
             System.out.println(s.toString());
 
 
-            //repositoryStudentProfile.save(s);
+            repositoryStudentProfile.save(s);
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-public class ControllerTeacherProfile {
+public class ControllerFunctionaryProfile {
 
     @Autowired
     ServiceFunctionaryProfile serviceFunctionaryProfile;

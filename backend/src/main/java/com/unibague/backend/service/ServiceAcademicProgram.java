@@ -23,6 +23,7 @@ public class ServiceAcademicProgram {
 
             AcademicProgram a = new AcademicProgram();
             a.setName(academicProgram.get("name"));
+            a.setProgramCode(academicProgram.get("program_code"));
             repositoryAcademicProgram.save(a);
 
             return true;
