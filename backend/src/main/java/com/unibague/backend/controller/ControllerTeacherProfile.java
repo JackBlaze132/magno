@@ -1,8 +1,7 @@
 package com.unibague.backend.controller;
 
 import com.unibague.backend.model.FunctionaryProfile;
-import com.unibague.backend.service.ServiceTeacherProfile;
-import com.unibague.backend.util.FetchExternalData;
+import com.unibague.backend.service.ServiceFunctionaryProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,40 +15,40 @@ import java.util.List;
 public class ControllerTeacherProfile {
 
     @Autowired
-    ServiceTeacherProfile serviceTeacherProfile;
+    ServiceFunctionaryProfile serviceFunctionaryProfile;
 
     @GetMapping("/getTeacherProfiles")
     public List<FunctionaryProfile> getTeacherProfiles() {
-        return serviceTeacherProfile.getTeacherProfiles();
+        return serviceFunctionaryProfile.getTeacherProfiles();
     }
 
     @GetMapping("/getTeacherProfiles1")
     public List<FunctionaryProfile> getTeacherProfiles1() {
-        return serviceTeacherProfile.getTeacherProfiles1();
+        return serviceFunctionaryProfile.getTeacherProfiles1();
     }
 
     @GetMapping("/getTeacherProfiles2")
     public List<FunctionaryProfile> getTeacherProfiles2() {
-        return serviceTeacherProfile.getTeacherProfiles2();
+        return serviceFunctionaryProfile.getTeacherProfiles2();
     }
 
     @GetMapping("/getResearchSeedbedCoordinator1")
     public FunctionaryProfile getResearchSeedbedCoordinator1() {
-        return serviceTeacherProfile.findResearchSeedbedCoordinator1();
+        return serviceFunctionaryProfile.findResearchSeedbedCoordinator1();
     }
 
     @GetMapping("/getResearchSeedbedCoordinator2")
     public FunctionaryProfile getResearchSeedbedCoordinator2() {
-        return serviceTeacherProfile.findResearchSeedbedCoordinator2();
+        return serviceFunctionaryProfile.findResearchSeedbedCoordinator2();
     }
 
     @GetMapping("/getInvestigationGroupDirector1")
     public FunctionaryProfile getInvestigationGroupDirector1() {
-        return serviceTeacherProfile.findInvestigationGroupDirector1();
+        return serviceFunctionaryProfile.findInvestigationGroupDirector1();
     }
 
     @PostMapping("/addTeacherProfile")
     public Boolean addTeacherProfile(@RequestBody HashMap<String, String> functionaryProfile) {
-        return serviceTeacherProfile.addTeacherProfile(functionaryProfile);
+        return serviceFunctionaryProfile.addTeacherProfile(functionaryProfile);
     }
 }
