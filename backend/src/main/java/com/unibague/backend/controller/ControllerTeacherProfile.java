@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -47,7 +48,7 @@ public class ControllerTeacherProfile {
     }
 
     @PostMapping("/addTeacherProfile")
-    public Boolean addTeacherProfile(@RequestBody FunctionaryProfile functionaryProfile) {
+    public Boolean addTeacherProfile(@RequestBody HashMap<String, String> functionaryProfile) {
         return serviceTeacherProfile.addTeacherProfile(functionaryProfile);
     }
 }
