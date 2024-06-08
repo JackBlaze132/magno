@@ -40,7 +40,6 @@ public class ServiceStudentProfile {
         try{
 
             String urlReturn = FetchExternalData.fetchExternalDataFromStudent(studentProfile.get("identification_number"));
-            System.out.println(urlReturn);
             Map<String, Object> map = FetchExternalData.fromStringJsonToMap(urlReturn);
 
             StudentProfile s = new StudentProfile();

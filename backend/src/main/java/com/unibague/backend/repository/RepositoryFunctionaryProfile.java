@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface RepositoryTeacherProfile extends JpaRepository<FunctionaryProfile, Long> {
+public interface RepositoryFunctionaryProfile extends JpaRepository<FunctionaryProfile, Long> {
 
     Optional<FunctionaryProfile> findById(Long teacherProfileId);
 
@@ -25,4 +25,6 @@ public interface RepositoryTeacherProfile extends JpaRepository<FunctionaryProfi
 
     @Query("SELECT ig.coordinator from InvestigationGroup ig WHERE ig.id = 1")
     FunctionaryProfile findInvestigationGroupDirector1();
+
+    FunctionaryProfile findFunctionaryProfileById(Long id);
 }

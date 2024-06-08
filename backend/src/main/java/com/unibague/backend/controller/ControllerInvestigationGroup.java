@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class ControllerInvestigationGroup {
     }
 
     @PostMapping(path = "/addInvestigationGroup", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean addInvestigationGroup(@RequestBody InvestigationGroup investigationGroup) {
+    public boolean addInvestigationGroup(@RequestBody HashMap<String, String> investigationGroup) {
         return serviceInvestigationGroup.addInvestigationGroup(investigationGroup);
     }
 }
