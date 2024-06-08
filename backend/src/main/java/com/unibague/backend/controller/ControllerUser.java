@@ -5,13 +5,13 @@ import com.unibague.backend.repository.RepositoryUser;
 import com.unibague.backend.service.ServiceUpload;
 import com.unibague.backend.service.ServiceUser;
 import com.unibague.backend.util.FetchExternalData;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +37,8 @@ public class ControllerUser {
     }
 
     @PostMapping(path = "/addUser", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Boolean addUser(@RequestBody User user) {
-        return serviceUser.addStudent(user);
+    public Boolean addUser(@RequestBody HashMap<String, String> user) {
+        return serviceUser.addUser(user);
     }
 
     @GetMapping(path = "/getUserst/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

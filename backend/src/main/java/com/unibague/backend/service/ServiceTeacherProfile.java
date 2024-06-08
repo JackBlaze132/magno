@@ -41,7 +41,7 @@ public class ServiceTeacherProfile {
             f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
 
             f.setEmail(String.valueOf(map.get("email")));
-            f.setName(String.valueOf(map.get("name")));
+            f.setName(String.valueOf(map.get("full_name")));
             f.setPhoneNumber("1234567890");
             f.setSex(Sex.MALE);
             f.setUserCode(String.valueOf(map.get("code_user")));

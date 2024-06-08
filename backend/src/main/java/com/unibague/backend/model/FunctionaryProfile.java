@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unibague.backend.util.Sex;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "functionary_profiles")
 public class FunctionaryProfile {
 

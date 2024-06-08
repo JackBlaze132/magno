@@ -4,7 +4,6 @@ import com.unibague.backend.model.User;
 import com.unibague.backend.repository.RepositoryUser;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,9 +20,13 @@ public class ServiceUser {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Boolean addStudent(User user) {
+    public Boolean addUser(HashMap<String, String> user) {
         try{
-            repositoryUser.save(user);
+            User u = new User();
+            u.setEmail(user.get("email"));
+            u.setIsExternalUser(Boolean.parseBoolean(user.get("isExternalUser")));
+            u.setUserIdentification(user.get("userIdentification"));
+            repositoryUser.save(u);
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
