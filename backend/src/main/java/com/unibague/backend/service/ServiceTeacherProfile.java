@@ -32,8 +32,7 @@ public class ServiceTeacherProfile {
     public Boolean addTeacherProfile(HashMap<String, String> functionaryProfile) {
         try{
 
-            String urlReturn = FetchExternalData.fetchExternalDataFromStudent(functionaryProfile.get("identification_number"));
-            Map<String, Object> map = FetchExternalData.fromStringJsonToMap(urlReturn);
+            Map<String, Object> map = FetchExternalData.fetchExternalDataFromFunctionary(functionaryProfile.get("identification_number"));
 
             FunctionaryProfile f = new FunctionaryProfile();
             f.setIdentificationNumber(functionaryProfile.get("identification_number"));
@@ -43,10 +42,10 @@ public class ServiceTeacherProfile {
 
             f.setEmail(String.valueOf(map.get("email")));
             f.setName(String.valueOf(map.get("name")));
-            f.setPhoneNumber(String.valueOf(map.get("phone_number")));
+            f.setPhoneNumber("1234567890");
             f.setSex(Sex.MALE);
-            f.setUserCode(String.valueOf(map.get("user_code")));
-
+            f.setUserCode(String.valueOf(map.get("code_user")));
+            System.out.println(f.toString());
             repositoryFunctionaryProfile.save(f);
 
             return true;

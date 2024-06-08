@@ -2,6 +2,7 @@ package com.unibague.backend.controller;
 
 import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.service.ServiceTeacherProfile;
+import com.unibague.backend.util.FetchExternalData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

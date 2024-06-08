@@ -16,16 +16,21 @@ public class FunctionaryProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "user_code", nullable = false)
     private String userCode;
 
+    @Column(name = "identification_number", nullable = false)
     private String identificationNumber;
 
+    @Column(name = "email", nullable = false)
     private String email;
 
     private String phoneNumber;
 
+    @Column(name = "sex", nullable = false)
     private Sex sex;
 
     @OneToOne(mappedBy = "coordinator", cascade = CascadeType.ALL)
