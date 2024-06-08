@@ -1,15 +1,14 @@
 package com.unibague.backend.service;
 
 import com.unibague.backend.model.FunctionaryProfile;
-import com.unibague.backend.repository.RepositoryAssesmentPeriod;
-import com.unibague.backend.repository.RepositoryDependency;
-import com.unibague.backend.repository.RepositoryFunctionaryProfile;
-import com.unibague.backend.repository.RepositoryUser;
+import com.unibague.backend.model.ResearchSeedbed;
+import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,10 @@ public class ServiceFunctionaryProfile {
     @Autowired
     RepositoryUser repositoryUser;
 
-    public Boolean addTeacherProfile(HashMap<String, String> functionaryProfile) {
+    @Autowired
+    RepositoryResearchSeedbed repositoryResearchSeedbed;
+
+    public Boolean addFunctionaryProfile(HashMap<String, String> functionaryProfile) {
         try{
 
             Map<String, Object> map = FetchExternalData.fetchExternalDataFromFunctionary(functionaryProfile.get("identification_number"));
@@ -51,6 +53,22 @@ public class ServiceFunctionaryProfile {
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
+            return false;
+        }
+    }
+
+    public Boolean addFunctionaryProfileToAResearchSeedbed(HashMap<String, String> functionaryProfile){
+        try{
+            FunctionaryProfile f = repositoryFunctionaryProfile.findById(Long.valueOf(functionaryProfile.get("functionary_profile_id"))).get();
+            List<ResearchSeedbed> researchSeedbeds = new ArrayList<>();
+            researchSeedbeds.add(repositoryResearchSeedbed.findById(Long.valueOf(functionaryProfile.get("research_seedbed_id"))).get());
+            f.setResearchSeedbeds_teacher(researchSeedbeds);
+            repositoryFunctionaryProfile.save(f);
+            return true;
+        }
+        catch (Exception e){
+            System.out.printf("Error: %s", e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

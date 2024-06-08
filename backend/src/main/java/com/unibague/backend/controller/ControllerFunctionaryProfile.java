@@ -48,7 +48,12 @@ public class ControllerFunctionaryProfile {
     }
 
     @PostMapping("/addTeacherProfile")
-    public Boolean addTeacherProfile(@RequestBody HashMap<String, String> functionaryProfile) {
-        return serviceFunctionaryProfile.addTeacherProfile(functionaryProfile);
+    public Boolean addFunctionaryProfile(@RequestBody HashMap<String, String> functionaryProfile) {
+        return serviceFunctionaryProfile.addFunctionaryProfile(functionaryProfile);
+    }
+
+    @PostMapping("/addFunctionaryProfileToAResearchSeedbed")
+    public Boolean addFunctionaryProfileToAResearchSeedbed(@RequestBody HashMap<String, String> functionaryProfile) {
+        return serviceFunctionaryProfile.addFunctionaryProfileToAResearchSeedbed(functionaryProfile);
     }
 }
