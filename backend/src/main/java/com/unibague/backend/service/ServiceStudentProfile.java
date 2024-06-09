@@ -3,6 +3,7 @@ package com.unibague.backend.service;
 import com.unibague.backend.model.AcademicProgram;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.model.StudentProfile;
+import com.unibague.backend.model.User;
 import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.Sex;
@@ -42,20 +43,11 @@ public class ServiceStudentProfile {
 
             String urlReturn = FetchExternalData.fetchExternalDataFromStudent(studentProfile.get("identification_number"));
             Map<String, Object> map = FetchExternalData.fromStringJsonToMap(urlReturn);
+            String identification = String.valueOf(map.get("identification"));
 
-            StudentProfile s = new StudentProfile();
-
-            s.setEmail(String.valueOf(map.get("email")));
-            s.setIdentificationNumber(String.valueOf(map.get("identification")));
-            s.setName(String.valueOf(map.get("name")));
-            s.setPhoneNumber(String.valueOf(map.get("telephone")));
-            s.setSemester(Byte.parseByte(String.valueOf(map.get("semester"))));
-            s.setSex(map.get("sexo").equals("F") ? Sex.FEMALE : Sex.MALE);
-            s.setUserCode(String.valueOf(map.get("code_student")));
-            s.setWasActive(false);
+            StudentProfile s = studentProfileByIdentification(identification);
 
             s.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(studentProfile.get("assesment_period_id"))).get());
-            s.setUserStudent(repositoryUser.findByUserIdentification(studentProfile.get("identification_number")).get());
 
             List<AcademicProgram> list = new ArrayList<>();
             list.add(repositoryAcademicProgram.findByProgramCode(studentProfile.get("program_codes")));
@@ -88,4 +80,37 @@ public class ServiceStudentProfile {
     public List<StudentProfile> getStudentProfiles2() {
         return (List<StudentProfile>) repositoryStudentProfile.findAll2();
     }
+
+    public Boolean addStudentProfilesByExcel(List<StudentProfile> studentProfiles, String apid, String rsid) {
+        for (StudentProfile studentProfile : studentProfiles) {
+            String document = studentProfile.getIdentificationNumber();
+            studentProfile = studentProfileByIdentification(document);
+            studentProfile.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(apid)).get());
+            studentProfile.setResearchSeedbeds(List.of(repositoryResearchSeedbed.findById(Long.valueOf(rsid)).get()));
+            repositoryStudentProfile.save(studentProfile);
+        }
+        return true;
+    }
+
+    private StudentProfile studentProfileByIdentification(String identification) {
+
+        String stringJson = FetchExternalData.fetchExternalDataFromStudent(identification);
+        Map<String, Object> map = FetchExternalData.fromStringJsonToMap(stringJson);
+
+        StudentProfile s = new StudentProfile();
+
+        s.setEmail(String.valueOf(map.get("email")));
+        s.setIdentificationNumber(String.valueOf(map.get("identification")));
+        s.setName(String.valueOf(map.get("name")));
+        s.setPhoneNumber(String.valueOf(map.get("telephone")));
+        s.setSemester(Byte.parseByte(String.valueOf(map.get("semester"))));
+        s.setSex(map.get("sexo").equals("F") ? Sex.FEMALE : Sex.MALE);
+        s.setUserCode(String.valueOf(map.get("code_student")));
+        s.setWasActive(false);
+        s.setUserStudent(repositoryUser.findByUserIdentification(identification).get());
+        s.setAcademicPrograms(List.of(repositoryAcademicProgram.findByProgramCode(String.valueOf(map.get("program_code")))));
+
+        return s;
+    }
+
 }

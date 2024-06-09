@@ -1,22 +1,30 @@
 package com.unibague.backend.controller;
 
 import com.unibague.backend.model.StudentProfile;
+import com.unibague.backend.model.User;
 import com.unibague.backend.service.ServiceStudentProfile;
+import com.unibague.backend.service.ServiceUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ControllerStudentProfile {
 
     @Autowired
     ServiceStudentProfile serviceStudentProfile;
+
+    private final ServiceUpload serviceUpload;
+
+    public ControllerStudentProfile(ServiceUpload serviceUpload) {
+        this.serviceUpload = serviceUpload;
+    }
 
     @GetMapping(path = "/getStudentProfiles", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StudentProfile> getStudentProfiles() {
@@ -36,5 +44,30 @@ public class ControllerStudentProfile {
     @PostMapping(path = "/addStudentProfile", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Boolean addStudentProfile(@RequestBody HashMap<String, String> studentProfile) {
         return serviceStudentProfile.addStudentProfile(studentProfile);
+    }
+
+    @PostMapping(path = "/addStudentProfileByExcel/{apid}/{rsid}")
+    //apid = assesment_period_id / rsid = research_seedbed_id
+    public Boolean addUserByExcel(@RequestParam("file") MultipartFile file, @PathVariable String apid, @PathVariable String rsid) {
+        List<Map<String, String>> retorno = null;
+        try{
+            retorno = serviceUpload.uploadExcel(file);
+        }catch (Exception e) {
+            retorno = null;
+            System.out.println("Error: ");
+            e.printStackTrace();
+            return false;
+        }
+
+        List<StudentProfile> studentProfiles = new ArrayList<StudentProfile>();
+        for (Map<String, String> stringStringMap : retorno) {
+            System.out.println("Documento: " + stringStringMap.get("Documento"));
+            String studentIdentification = stringStringMap.get("Documento");
+
+            StudentProfile studentProfile = new StudentProfile();
+            studentProfile.setIdentificationNumber(studentIdentification);
+            studentProfiles.add(studentProfile);
+        }
+        return serviceStudentProfile.addStudentProfilesByExcel(studentProfiles, apid, rsid);
     }
 }

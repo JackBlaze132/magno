@@ -54,11 +54,11 @@ public class FetchExternalData {
             identificationMap.computeIfAbsent(identification, k -> new HashMap<>()).putAll(map);
         }
 
-        Map<String, Object> mapaByIdentificacion = identificationMap.get(identificationNumber);
+        Map<String, Object> mapByIdentificacion = identificationMap.get(identificationNumber);
         long endTime= System.nanoTime();
         long executionTime = endTime - startTime;
         System.out.println("Execution time: " + executionTime);
-        return mapaByIdentificacion;
+        return mapByIdentificacion;
     }
 
     public static Map<String, Object> fromStringJsonToMap(String json) {
