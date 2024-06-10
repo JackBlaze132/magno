@@ -52,23 +52,12 @@ public class ControllerUser {
         try{
             retorno = serviceUpload.uploadExcel(file);
         }catch (Exception e) {
-            retorno = null;
+            retorno = new ArrayList<>();
             System.out.println("Error: ");
             e.printStackTrace();
             return false;
         }
-
-        List<User> users = new ArrayList<User>();
-        for (Map<String, String> stringStringMap : retorno) {
-
-            String userCode = stringStringMap.get("user_code");
-            String email = stringStringMap.get("email");
-            Boolean isExternalUser = Boolean.parseBoolean(stringStringMap.get("is_external_user"));
-
-            User user = new User(userCode, email, isExternalUser);
-            users.add(user);
-        }
-        return serviceUser.addNewUsers(users);
+        return serviceUser.addNewUsers(retorno);
     }
 
 }

@@ -4,6 +4,7 @@ import com.unibague.backend.model.StudentProfile;
 import com.unibague.backend.model.User;
 import com.unibague.backend.service.ServiceStudentProfile;
 import com.unibague.backend.service.ServiceUpload;
+import com.unibague.backend.util.IntegraStudentNomenclature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -61,9 +62,8 @@ public class ControllerStudentProfile {
 
         List<StudentProfile> studentProfiles = new ArrayList<StudentProfile>();
         for (Map<String, String> stringStringMap : retorno) {
-            System.out.println("Documento: " + stringStringMap.get("Documento"));
-            String studentIdentification = stringStringMap.get("Documento");
 
+            String studentIdentification = stringStringMap.get(IntegraStudentNomenclature.IDENTIFICATION);
             StudentProfile studentProfile = new StudentProfile();
             studentProfile.setIdentificationNumber(studentIdentification);
             studentProfiles.add(studentProfile);

@@ -2,14 +2,13 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.User;
 import com.unibague.backend.repository.RepositoryUser;
+import com.unibague.backend.util.IntegraStudentNomenclature;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ServiceUser {
@@ -43,9 +42,48 @@ public class ServiceUser {
         return restTemplate.getForObject(url, String.class);
     }
 
-    @Transactional
+    /*@Transactional
     public  Boolean addNewUsers(List<User> users){
         if(users == null || users.isEmpty()){
+            return false;
+        }
+        try {
+            for (User user : users) {
+                Optional<User> existingUserOpt = repositoryUser.findByUserIdentification(user.getUserIdentification());
+                if(existingUserOpt.isEmpty()){
+                    repositoryUser.save(user);
+                }
+                else {
+                    if(user.getEmail().equals(existingUserOpt.get().getEmail()) && user.getIsExternalUser().equals(existingUserOpt.get().getIsExternalUser())){
+                        continue;
+                    }
+                    repositoryUser.updateUserByUserIdentification(user.getEmail(), user.getIsExternalUser(), user.getUserIdentification());
+                    repositoryUser.flush();
+                }
+            }
+            repositoryUser.deleteUserWithEmptyEmailOrUserIdentification();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }*/
+
+    @Transactional
+    public  Boolean addNewUsers(List<Map<String, String>> listOfMaps){
+
+        List<User> users = new ArrayList<User>();
+        for (Map<String, String> stringStringMap : listOfMaps) {
+
+            String userIdentification = stringStringMap.get(IntegraStudentNomenclature.IDENTIFICATION);
+            String email = stringStringMap.get(IntegraStudentNomenclature.EMAIL);
+            //If the Excel file doesn't have the is_external column, the default value is false
+            Boolean isExternalUser = stringStringMap.containsKey("is_external") && Boolean.parseBoolean(stringStringMap.get("is_external"));
+
+            User user = new User(userIdentification, email, isExternalUser);
+            users.add(user);
+        }
+        if(users.isEmpty()){
             return false;
         }
         try {
