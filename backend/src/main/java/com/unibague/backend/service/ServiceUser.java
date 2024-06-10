@@ -72,6 +72,10 @@ public class ServiceUser {
     @Transactional
     public  Boolean addNewUsers(List<Map<String, String>> listOfMaps){
 
+        if(listOfMaps == null || listOfMaps.isEmpty()){
+            return false;
+        }
+
         List<User> users = new ArrayList<User>();
         for (Map<String, String> stringStringMap : listOfMaps) {
 
@@ -83,9 +87,7 @@ public class ServiceUser {
             User user = new User(userIdentification, email, isExternalUser);
             users.add(user);
         }
-        if(users.isEmpty()){
-            return false;
-        }
+
         try {
             for (User user : users) {
                 Optional<User> existingUserOpt = repositoryUser.findByUserIdentification(user.getUserIdentification());

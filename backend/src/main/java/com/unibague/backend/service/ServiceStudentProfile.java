@@ -6,6 +6,7 @@ import com.unibague.backend.model.StudentProfile;
 import com.unibague.backend.model.User;
 import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
+import com.unibague.backend.util.IntegraStudentNomenclature;
 import com.unibague.backend.util.Sex;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,19 @@ public class ServiceStudentProfile {
         return (List<StudentProfile>) repositoryStudentProfile.findAll2();
     }
 
-    public Boolean addStudentProfilesByExcel(List<StudentProfile> studentProfiles, String apid, String rsid) {
+    public Boolean addStudentProfilesByExcel(List<Map<String, String>> listOfMaps, String apid, String rsid) {
+
+        if(listOfMaps == null || listOfMaps.isEmpty()){
+            return false;
+        }
+
+        List<StudentProfile> studentProfiles = new ArrayList<StudentProfile>();
+        for (Map<String, String> stringStringMap : listOfMaps) {
+            String studentIdentification = stringStringMap.get(IntegraStudentNomenclature.IDENTIFICATION);
+            StudentProfile studentProfile = new StudentProfile();
+            studentProfile.setIdentificationNumber(studentIdentification);
+            studentProfiles.add(studentProfile);
+        }
         for (StudentProfile studentProfile : studentProfiles) {
             String document = studentProfile.getIdentificationNumber();
             studentProfile = studentProfileByIdentification(document);
@@ -99,16 +112,16 @@ public class ServiceStudentProfile {
 
         StudentProfile s = new StudentProfile();
 
-        s.setEmail(String.valueOf(map.get("email")));
-        s.setIdentificationNumber(String.valueOf(map.get("identification")));
-        s.setName(String.valueOf(map.get("name")));
-        s.setPhoneNumber(String.valueOf(map.get("telephone")));
-        s.setSemester(Byte.parseByte(String.valueOf(map.get("semester"))));
-        s.setSex(map.get("sexo").equals("F") ? Sex.FEMALE : Sex.MALE);
-        s.setUserCode(String.valueOf(map.get("code_student")));
+        s.setEmail(String.valueOf(map.get(IntegraStudentNomenclature.EMAIL)));
+        s.setIdentificationNumber(String.valueOf(map.get(IntegraStudentNomenclature.IDENTIFICATION)));
+        s.setName(String.valueOf(map.get(IntegraStudentNomenclature.NAME)));
+        s.setPhoneNumber(String.valueOf(map.get(IntegraStudentNomenclature.TELEPHONE)));
+        s.setSemester(Byte.parseByte(String.valueOf(map.get(IntegraStudentNomenclature.SEMESTER))));
+        s.setSex(map.get(IntegraStudentNomenclature.SEX).equals("F") ? Sex.FEMALE : Sex.MALE);
+        s.setUserCode(String.valueOf(map.get(IntegraStudentNomenclature.CODE)));
         s.setWasActive(false);
         s.setUserStudent(repositoryUser.findByUserIdentification(identification).get());
-        s.setAcademicPrograms(List.of(repositoryAcademicProgram.findByProgramCode(String.valueOf(map.get("program_code")))));
+        s.setAcademicPrograms(List.of(repositoryAcademicProgram.findByProgramCode(String.valueOf(map.get(IntegraStudentNomenclature.PROGRAM_CODE)))));
 
         return s;
     }

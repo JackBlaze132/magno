@@ -52,7 +52,6 @@ public class ControllerUser {
         try{
             retorno = serviceUpload.uploadExcel(file);
         }catch (Exception e) {
-            retorno = new ArrayList<>();
             System.out.println("Error: ");
             e.printStackTrace();
             return false;

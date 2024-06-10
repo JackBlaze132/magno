@@ -54,20 +54,10 @@ public class ControllerStudentProfile {
         try{
             retorno = serviceUpload.uploadExcel(file);
         }catch (Exception e) {
-            retorno = null;
             System.out.println("Error: ");
             e.printStackTrace();
             return false;
         }
-
-        List<StudentProfile> studentProfiles = new ArrayList<StudentProfile>();
-        for (Map<String, String> stringStringMap : retorno) {
-
-            String studentIdentification = stringStringMap.get(IntegraStudentNomenclature.IDENTIFICATION);
-            StudentProfile studentProfile = new StudentProfile();
-            studentProfile.setIdentificationNumber(studentIdentification);
-            studentProfiles.add(studentProfile);
-        }
-        return serviceStudentProfile.addStudentProfilesByExcel(studentProfiles, apid, rsid);
+        return serviceStudentProfile.addStudentProfilesByExcel(retorno, apid, rsid);
     }
 }
