@@ -4,6 +4,7 @@ import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
+import com.unibague.backend.util.IntegraFunctionaryNomenclature;
 import com.unibague.backend.util.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class ServiceFunctionaryProfile {
             f.setEmail(String.valueOf(map.get("email")));
             f.setName(String.valueOf(map.get("full_name")));
             f.setPhoneNumber("1234567890");
-            f.setSex(Sex.MALE);
+            f.setSex(String.valueOf(map.get(IntegraFunctionaryNomenclature.SEX)).equals("F") ? Sex.FEMALE : Sex.MALE);
             f.setUserCode(String.valueOf(map.get("code_user")));
             System.out.println(f.toString());
             repositoryFunctionaryProfile.save(f);
