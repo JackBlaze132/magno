@@ -48,7 +48,6 @@ public class ServiceFunctionaryProfile {
             f.setPhoneNumber("1234567890");
             f.setSex(String.valueOf(map.get(IntegraFunctionaryNomenclature.SEX)).equals("F") ? Sex.FEMALE : Sex.MALE);
             f.setUserCode(String.valueOf(map.get("code_user")));
-            System.out.println(f.toString());
             repositoryFunctionaryProfile.save(f);
 
             return true;
