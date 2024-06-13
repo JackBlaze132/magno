@@ -60,7 +60,7 @@ public class ServiceFunctionaryProfile {
     public Boolean addFunctionaryProfileToAResearchSeedbed(HashMap<String, String> functionaryProfile){
         try{
             FunctionaryProfile f = repositoryFunctionaryProfile.findById(Long.valueOf(functionaryProfile.get("functionary_profile_id"))).get();
-            List<ResearchSeedbed> researchSeedbeds = new ArrayList<>();
+            List<ResearchSeedbed> researchSeedbeds = f.getResearchSeedbeds_teacher();
             researchSeedbeds.add(repositoryResearchSeedbed.findById(Long.valueOf(functionaryProfile.get("research_seedbed_id"))).get());
             f.setResearchSeedbeds_teacher(researchSeedbeds);
             repositoryFunctionaryProfile.save(f);
