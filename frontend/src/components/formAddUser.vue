@@ -3,7 +3,7 @@ import { defineComponent, PropType } from 'vue';
 
 interface Item {
  
-  userCode: string,
+  userIdentification: string,
   email: string,
   isExternalUser: boolean
 }
@@ -21,7 +21,7 @@ export default defineComponent({
 
 <template>
       <label for="name">Codigo</label>
-      <input type="text" name="name" id="name" placeholder="Nombre" v-model="item.userCode"/>
+      <input type="text" name="name" id="name" placeholder="Nombre" v-model="item.userIdentification"/>
       <br><label for="name">Correo</label>
       <input type="text" name="name" id="name" placeholder="Correo electrónico" v-model="item.email"/>
       <br><label for="sex">Externo</label>

@@ -4,7 +4,7 @@ import formAddUser from '../../components/formAddUser.vue';
 
 interface Item {
 
-userCode: string,
+userIdentification: string,
 email: string,
 isExternalUser: boolean
 }

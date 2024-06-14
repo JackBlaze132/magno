@@ -3,7 +3,7 @@ import { defineComponent, PropType } from 'vue';
 
 interface Item {
   id: number, 
-  userCode: string, 
+  userIdentification: string, 
   email: string, 
   isExternalUser: boolean, 
 }
@@ -37,7 +37,7 @@ export default defineComponent({
             {{ item.id }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.userCode }}
+            {{ item.userIdentification }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
             {{ item.email }}
