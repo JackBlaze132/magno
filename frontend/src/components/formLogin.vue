@@ -1,13 +1,24 @@
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script setup lang="ts">
+import { defineComponent, ref } from 'vue';
+
+const form = ref({
+  email: '',
+  password: '',
+  remember: false
+
+
+})
+const isPasswordVisible = ref(false)
 
 /*interface Item {
- 
+
   userCode: string,
   email: string,
   isExternalUser: boolean
 }*/
+</script>
 
+<script lang="ts">
 export default defineComponent({
   name: 'formLogin',
   /*props: {
@@ -19,20 +30,120 @@ export default defineComponent({
 });
 </script>
 
+
 <template>
-    <div class="card">
-      <h1>Ingresar</h1>
-      <br><input type="submit" value="google">
-      <br>
-      <hr>
-      <label for="name">Correo</label>
-      <input type="text" name="name" id="name" placeholder="Nombre" />
-      <br><label for="name">Contraseña</label>
-      <input type="text" name="name" id="name" placeholder="Correo electrónico" />
-      <br>
-      <a>¿Olvidaste tu Contraseña?</a>
-      <br><input type="submit" value="Iniciar Sesion">
-      <p>solicita acceso <a>aquí</a></p>
-      <a>Aviso de cookies</a>
-    </div> 
+  <div class="bg">
+    <VCard
+      class="auth-card pa-4 pt-7 me-md-8"
+      max-width="448"
+      rounded="lg"
+    >
+      <VCardTitle class="d-flex justify-center">
+        Ingresar
+      </VCardTitle>
+      <VCardText class="d-flex justify-center">
+        <VBtn
+          type="submit"
+          rounded="xl"
+          class="text-capitalize"
+          variant="outlined"
+          color="grey-darken-1"
+        >
+          <VImg
+            :width="24"
+            src="../assets/images/logos/google.png"
+            class="custom-icon px-1"
+          />
+          google
+        </VBtn>
+      </VCardText>
+      <VCol cols="12" class="d-flex align-center">
+        <VDivider />
+        <span
+          class="v-col-4"
+        >
+          Aliado Externo
+        </span>
+        <VDivider />
+      </VCol>
+      <VCardText>
+        <VForm>
+          <VRow>
+            <VCol cols="12">
+              <VTextField
+                v-model="form.email"
+                label="correo"
+                placeholder="ejemplo@mail.com"
+                type="email"
+                variant="outlined"
+              />
+            </VCol>
+
+            <VCol cols="12">
+              <VTextField
+                v-model="form.password"
+                label="Contraseña"
+                placeholder="············"
+                variant="outlined"
+                :type="isPasswordVisible ? 'text' : 'password'"
+                :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
+                @click:append-inner="isPasswordVisible = !isPasswordVisible"
+              />
+              <div class="d-flex align-center justify-space-between flex-wrap mt-1 mb-4">
+                <VCheckbox
+                  v-model="form.remember"
+                  label="Recordar"
+                />
+                <a
+                  class="ms-2 mb-1"
+                  href="javascript:void(0)"
+                >
+                  ¿Olvidaste tu contraseña?
+                </a>
+              </div>
+              <span class="d-flex justify-center">
+                <VBtn rounded="xl"
+                  class="px-12 text-capitalize"
+                  type="submit"
+                  color="black"
+                  to="/home"
+                >
+                  Ingresar
+                </VBtn>
+              </span>
+            </VCol>
+            <VCol
+              cols="12"
+              class="text-center text-base"
+            >
+              <span>
+                Solicitar acceso
+              </span>
+              <RouterLink
+                class="text-primary"
+                to="/register"
+              >
+                aquí
+              </RouterLink>
+            </VCol>
+
+            <VCol cols="12" class="d-flex align-center justify-center">
+              <span>
+                <RouterLink to="/">
+                  <VIcon size="24" icon="ri-information-fill" />
+                  Aviso de cookies
+                </RouterLink>
+              </span>
+            </VCol>
+          </VRow>
+        </VForm>
+      </VCardText>
+    </VCard>
+
+    <VImg
+      :width="300"
+      src="../assets/images/logos/magno.svg"
+      class="position-absolute logo-login"
+    />
+  </div>
 </template>
