@@ -1,17 +1,17 @@
-<script setup lang="ts">
+<script lang="ts">
+  import navbar from '../src/components/navbar.vue'
+  import sidebar from '../src/components/sidebar.vue'
 </script>
-
 <template>
-  <div>
-    <RouterLink style="margin: 0 5px;" to="/">Inicio</RouterLink>
-    <RouterLink style="margin: 0 5px;color: darkorchid; font-weight: bolder;" to="/users">Usuarios</RouterLink>
-    <!--<RouterLink style="margin: 0 5px;color: orange; font-weight: bolder;" to="/teachers">Profesores</RouterLink>
-    <RouterLink style="margin: 0 5px;color: greenyellow; font-weight: bolder;" to="/seedbeds">Semilleros</RouterLink>-->
-    <RouterLink Style="margin: 0 5px; color:aqua" to="/research-groups">Grupos de investigación</RouterLink>
-    <RouterLink style="margin: 0 5px;color: red; font-weight: bolder;" to="/academic-programs">Programas</RouterLink>
-    
-    <RouterView></RouterView>
-  
-  </div>
+  <VApp>
+    <div class="auth-wrapper">
+      <navbar v-if="['/', 'news'].includes($route.name)"/>
+      <sidebar v-if="!['/', 'news', '/login/'].includes($route.name)"/>
+      <RouterView></RouterView>
+    </div>
+  </VApp>
 </template>
 
+<script setup lang="ts">
+  //
+</script>
