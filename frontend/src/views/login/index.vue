@@ -1,12 +1,9 @@
-<script setup lang="ts">
-import FormLogin from '../../components/formLogin.vue';
+<script lang="ts">
+import formLogin from '../../components/formLogin.vue'
 </script>
 
-
-<template class='login-bg'>
-<div  style="width: 100%;">
-    <Divider />
-<formLogin></formLogin>
-
-</div>
+<template>
+  <div class="auth-wrapper d-flex align-md-end align-sm-center flex-md-column justify-center pa-4 login-bg">
+    <formLogin />
+  </div>
 </template>
