@@ -13,9 +13,6 @@ export default{
       }
     },
 
-    const file = new FormData();
-    file.append(name "file", this.)
-
     methods: {
         addUser() {
 
