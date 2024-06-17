@@ -5,7 +5,7 @@ import verticalNav from './components/verticalNav.vue';
 <template>
   <div class="d-flex">
   <verticalNav/>
-  <RouterView class="ma-6"/>
+  <RouterView class="ma-8"/>
 </div>
 </template>
 

@@ -9,6 +9,10 @@ export const routes = [
         component: () => import('@/views/home/index.vue'),
       },
       {
+        path: 'groups',
+        component: () => import('@/views/research-groups/index.vue')
+      },
+      {
         path:'reports',
         component: () => import('@/views/reports/index.vue'),
         children: [
@@ -23,7 +27,7 @@ export const routes = [
         component: () => import('@/views/users/index.vue'),
         children:[
           {
-            path: '/addUser',
+            path: 'addUser',
             component: () => import('@/views/users/addUser.vue')
           }
         ],

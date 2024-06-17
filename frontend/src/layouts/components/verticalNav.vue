@@ -22,7 +22,8 @@
           <v-list-item
             prepend-icon="ri-gallery-view"
             title="Grupos de investigación"
-            value="groups">
+            value="groups"
+            to="/groups">
           </v-list-item>
           <v-list-item
             prepend-icon="ri-file-2-line"

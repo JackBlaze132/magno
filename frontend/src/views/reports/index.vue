@@ -1,23 +1,13 @@
-<script lang="ts">
-
-
-export default {
-  name: 'reports',
-}
-
-
-</script>
-
 <template>
-    <h1>Certificados</h1>
-    <VBtn
-    color="indigo-darken-1"
-    variant="outlined"
-    class="text-capitalize"
-    to="reports/upload"
-    >
-      importar
+  <div>
+    <h1>Informes</h1>
+    <div >
 
-    </VBtn>
-    <RouterView/>
+    <VBtn to="reports/upload">+ Agregar</VBtn>
+    <RouterView></RouterView>
+
+  </div>
+  </div>
+
+
 </template>
