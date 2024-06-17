@@ -12,6 +12,7 @@ declare module 'vue' {
     FormUpload: typeof import('./src/components/reports/formUpload.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Navbar: typeof import('./src/components/navbar.vue')['default']
+    NavTest: typeof import('./src/components/navTest.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/sidebar.vue')['default']

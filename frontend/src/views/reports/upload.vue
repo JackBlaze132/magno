@@ -1,6 +1,6 @@
 <script lang="ts">
-import formUpload from '../../components/reports/formUpload.vue';
-import { defineComponent } from 'vue'
+import formUpload from '@/components/reports/formUpload.vue';
+/*import { defineComponent } from 'vue'
 
 export default{
     name: 'upload',
@@ -34,7 +34,7 @@ export default{
             });
         }
     }
-}
+}*/
 </script>
 
 <template>

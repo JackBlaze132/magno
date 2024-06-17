@@ -1,10 +1,18 @@
-
+<script setup lang="ts">
+  import magnoDark from '@images/logos/magno-dark.svg?raw'
+</script>
 
 <template>
   <v-card>
-    <v-layout>
+    <v-layout class="auth-wrapper">
       <v-navigation-drawer class="bg-grey-lighten-2" theme="light" permanent>
         <v-list nav>
+          <v-list-item>
+            <VImg
+              :width="300"
+              v-html=magnoDark
+            />
+          </v-list-item>
           <v-list-item
             prepend-icon="ri-home-3-fill"
             title="Inicio"
@@ -22,6 +30,12 @@
             value="reports"
             to="/reports">
           </v-list-item>
+          <v-list-item
+            prepend-icon="ri-user-settings-fill"
+            title="Usuarios"
+            value="users"
+            to="/users">
+          </v-list-item>
         </v-list>
         <template v-slot:append>
           <div class="pa-2">
@@ -35,7 +49,7 @@
           </div>
         </template>
       </v-navigation-drawer>
-      <v-main style="height: 250px"></v-main>
+      <v-main></v-main>
     </v-layout>
   </v-card>
 </template>

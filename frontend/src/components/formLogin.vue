@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue';
+import google from '@images/logos/google.png'
+import magnoLight from '@images/logos/magno-light.svg?raw'
 
 const form = ref({
   email: '',
@@ -51,7 +53,7 @@ export default defineComponent({
         >
           <VImg
             :width="24"
-            src="../assets/images/logos/google.png"
+            :src=google
             class="custom-icon px-1"
           />
           google
@@ -142,7 +144,7 @@ export default defineComponent({
 
     <VImg
       :width="300"
-      src="../assets/images/logos/magno.svg"
+      v-html=magnoLight
       class="position-absolute logo-login"
     />
   </div>

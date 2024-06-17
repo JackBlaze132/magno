@@ -5,6 +5,7 @@ import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import ViteFonts from 'unplugin-fonts/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import svgLoader from 'vite-svg-loader'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -13,14 +14,8 @@ import { fileURLToPath, URL } from 'node:url'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    VueRouter({
-      routesFolder:[{
-        src: 'src/views'
-      }]
-    }), 
-    Vue({
-      template: { transformAssetUrls },
-    }),
+    Vue(),
+    vueJsx(),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify(),
     Components(),
@@ -33,6 +28,10 @@ export default defineConfig({
       },
     }),
     svgLoader(),
+    Components({
+      dirs: ['src/@core/components', 'src/components'],
+      dts: true,
+    }),
   ],
   define: { 'process.env': {} },
   resolve: {
@@ -60,5 +59,12 @@ export default defineConfig({
         rewrite:(path) => path.replace(/^\/api/, '')   
       },
     }
+  },
+
+  optimizeDeps: {
+    exclude: ['vuetify'],
+    entries: [
+      './src/**/*.vue',
+    ],
   },
 })

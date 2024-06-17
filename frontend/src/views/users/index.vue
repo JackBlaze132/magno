@@ -41,7 +41,7 @@ export default {
     <h1>Tabla Usuarios</h1>
     <div >
     <tableUsers :items="items"></tableUsers>
-    <RouterLink to="users/addUser"><button>+ Agregar</button></RouterLink>
+    <VBtn to="users/addUser">+ Agregar</VBtn>
     <RouterView></RouterView>
   
   </div>
