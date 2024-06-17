@@ -1,8 +1,7 @@
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue'
 
 interface Item {
- 
   userIdentification: string,
   email: string,
   isExternalUser: boolean
@@ -10,23 +9,47 @@ interface Item {
 
 export default defineComponent({
   name: 'formAddUser',
-  props: {
-    item: {
-      type: Object as PropType<Item>,
-      required: true,
-    },
+  data() {
+    return {
+      item: {} as Item
+    }
   },
+  methods: {
+    addUser() {
+      fetch('/api/addUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.item)
+      })
+      .then(data => {
+        console.log(data);
+
+        // Redirigir a la página de usuarios
+        this.$router.push('/users')
+      })
+      .catch(error => {
+        console.log(this.item)
+        console.error('Error al realizar la solicitud:', error);
+      });
+    }
+  }
 });
 </script>
 
 <template>
-      <label for="name">Codigo</label>
-      <input type="text" name="name" id="name" placeholder="Nombre" v-model="item.userIdentification"/>
-      <br><label for="name">Correo</label>
-      <input type="text" name="name" id="name" placeholder="Correo electrónico" v-model="item.email"/>
-      <br><label for="sex">Externo</label>
-      <input type="radio" name="isExternal"   v-model="item.isExternalUser" :value="true">
-      <label for="sex">Interno</label>
-      <input type="radio" name="isInternal"  v-model="item.isExternalUser" :value="false">
-      <br><input type="submit" value="submit">
+  <VForm validate-on="submit" @submit.prevent="addUser">
+    <VTextField label="Cedula" type="text" name="identification" id="identification" v-model="item.userIdentification"/>
+    <VTextField label="Correo" type="text" name="mail" id="mail"  v-model="item.email"/>
+    <VRadioGroup v-model="item.isExternalUser" class="d-flex">
+      <VRadio label="Externo" :value="true"/>
+      <VRadio label="Interno" :value="false"/>
+    </VRadioGroup>
+    <VBtn
+      text="Agregar"
+      prepend-icon="ri-add-fill"
+      type="submit"
+    />
+  </VForm>
 </template>

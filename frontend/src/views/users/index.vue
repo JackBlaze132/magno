@@ -41,9 +41,9 @@ export default {
     <h1>Tabla Usuarios</h1>
     <div >
     <tableUsers :items="items"></tableUsers>
-    <VBtn to="users/addUser">+ Agregar</VBtn>
+    <VBtn to="users/addUser" prepend-icon="ri-add-fill"> Agregar</VBtn>
     <RouterView></RouterView>
-  
+
   </div>
   </div>
 </template>
