@@ -25,10 +25,10 @@ public class FunctionaryProfile {
     @Column(name = "user_code", nullable = false)
     private String userCode;
 
-    @Column(name = "identification_number", nullable = false)
+    @Column(name = "identification_number", nullable = false, unique = true)
     private String identificationNumber;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     private String phoneNumber;
@@ -59,7 +59,7 @@ public class FunctionaryProfile {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "research_seedbeds_teachers_profiles",
+            name = "research_seedbeds_functionary_profiles",
             joinColumns = @JoinColumn(name = "teacher_profile_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "research_seedbed_id", referencedColumnName = "id")
     )
