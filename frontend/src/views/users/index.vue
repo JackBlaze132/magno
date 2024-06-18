@@ -1,4 +1,4 @@
-<script lang='ts'>
+<!--<script lang='ts'>
 import tableUsers from '../../components/tableUsers.vue';
 
 
@@ -34,13 +34,13 @@ export default {
 };
 
 
-</script>
+</script>-->
 
 <template>
   <div>
     <h1>Tabla Usuarios</h1>
     <div >
-    <tableUsers :items="items"></tableUsers>
+    <tableUsers></tableUsers>
     <VBtn to="users/addUser" prepend-icon="ri-add-fill"> Agregar</VBtn>
     <RouterView></RouterView>
 

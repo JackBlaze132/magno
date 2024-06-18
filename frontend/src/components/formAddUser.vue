@@ -1,4 +1,4 @@
-<script lang="ts">
+<!--<script lang="ts">
 import { defineComponent } from 'vue'
 
 interface Item {
@@ -33,6 +33,37 @@ export default defineComponent({
         console.log(this.item)
         console.error('Error al realizar la solicitud:', error);
       });
+    }
+  }
+});
+</script>-->
+
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  import { post } from "@/utils/api";
+
+  interface Item {
+    userIdentification: string,
+    email: string,
+    isExternalUser: boolean
+  }
+
+  export default defineComponent({
+    name: 'formAddUser',
+    data() {
+      return {
+        item: {} as Item
+      }
+  },
+  methods: {
+    addUser() {
+      post('addUser', this.item)
+        .then((data) => {
+          this.$router.push('/users');
+        })
+        .catch((error) => {
+          console.error('Error al realizar la solicitud:', error);
+        });
     }
   }
 });
