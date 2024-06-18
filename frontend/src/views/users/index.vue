@@ -39,11 +39,6 @@ export default {
 <template>
   <div>
     <h1>Tabla Usuarios</h1>
-    <div >
-    <tableUsers></tableUsers>
-    <VBtn to="users/addUser" prepend-icon="ri-add-fill"> Agregar</VBtn>
-    <RouterView></RouterView>
-
-  </div>
+    <RouterView/>
   </div>
 </template>

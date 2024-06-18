@@ -22,16 +22,22 @@ export const routes = [
           }
         ]
       },
+      {path: '/users', redirect: '/users/listUsers'},
       {
-        path: 'users',
+        path: '/users',
         component: () => import('@/views/users/index.vue'),
         children:[
+          {
+            path: 'listUsers',
+            component: () => import('@/views/users/listUser.vue')
+          },
           {
             path: 'addUser',
             component: () => import('@/views/users/addUser.vue')
           }
         ],
-      }
+      },
+
 
     ],
   },

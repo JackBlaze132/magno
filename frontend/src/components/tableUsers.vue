@@ -1,74 +1,9 @@
-<!--<script lang="ts">
-import { defineComponent, PropType } from 'vue';
-
-interface Item {
-  id: number,
-  userIdentification: string,
-  email: string,
-  isExternalUser: boolean,
-}
-
-export default defineComponent({
-  name: 'tableUsers',
-  props: {
-    items: {
-      type: Array as PropType<Item[]>,
-      required: true,
-    },
-  },
-  methods:{
-    formatType( isExternalUser: boolean){
-      return isExternalUser ? 'externo' : 'interno'
-    },
-  },
-});
-</script>-->
-
-<!--<script lang="ts">
-import { defineComponent } from 'vue'
-
-interface Item {
-  id: number,
-  userIdentification: string,
-  email: string,
-  isExternalUser: boolean,
-}
-
-export default defineComponent({
-  name: 'tableUsers',
-  data() {
-    return {
-      items: [] as Item[],
-    };
-  },
-  created() {
-    this.getUsers();
-  },
-  methods: {
-    async getUsers() {
-      try {
-        const response = await fetch('/api/getUsers');
-        console.log(response);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        this.items = data;
-        console.log(data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    },
-    formatType(isExternalUser: boolean) {
-      return isExternalUser ? 'externo' : 'interno'
-    },
-  },
-});
-</script>-->
-
 <script lang="ts">
-import { get } from "@/utils/api";
 import { defineComponent } from "vue"
+
+//utils
+import { get } from "@/utils/api";
+import { externalFormatter } from "@/utils/formatter";
 
 interface Item {
   id: number,
@@ -97,10 +32,8 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    formatType(isExternalUser: boolean) {
-      return isExternalUser ? 'externo' : 'interno'
-    },
-  }
+    externalFormatter
+  },
 })
 </script>
 
@@ -123,7 +56,7 @@ export default defineComponent({
             {{ item.email }}
           </td>
           <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ formatType(item.isExternalUser) }}
+            {{ externalFormatter(item.isExternalUser) }}
             </td>
         </tr>
     </table>

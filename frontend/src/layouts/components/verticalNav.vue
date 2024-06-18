@@ -31,6 +31,7 @@
             value="reports"
             to="/reports">
           </v-list-item>
+          <VDivider class="px-4 my-4"></VDivider>
           <v-list-item
             prepend-icon="ri-user-settings-fill"
             title="Usuarios"
