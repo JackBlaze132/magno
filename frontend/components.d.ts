@@ -22,5 +22,7 @@ declare module 'vue' {
     TableSeedbeds: typeof import('./src/components/tableSeedbeds.vue')['default']
     TableTeachers: typeof import('./src/components/tableTeachers.vue')['default']
     TableUsers: typeof import('./src/components/tableUsers.vue')['default']
+    TableUsersProvitional: typeof import('./src/components/tableUsersProvitional.vue')['default']
+    TableUsersTest: typeof import('./src/components/tableUsersTest.vue')['default']
   }
 }

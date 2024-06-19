@@ -17,6 +17,7 @@ export default defineComponent({
   data() {
     return {
       items: [] as Item[],
+      search: '',
     }
   },
   // ...
@@ -32,33 +33,29 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    externalFormatter
+    externalFormatter,
   },
 })
 </script>
 
 <template>
-    <table>
-        <tr>
-          <th>ID</th>
-          <th>Codigo</th>
-          <th>E-mail</th>
-          <th>Tipo</th>
-        </tr>
-        <tr v-for="item in items" :key="item.id">
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.id }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.userIdentification }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.email }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ externalFormatter(item.isExternalUser) }}
-            </td>
-        </tr>
-    </table>
-
+  <Vcard flat>
+    <VCardTitle class="d-flex align-center justify-end">
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="ri-search-line"
+        variant="outlined"
+        hide-details
+        single-line
+      ></v-text-field>
+      <VBtn to="addUser" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+    </VCardTitle>
+    <v-data-table
+      :items="items"
+      :search="search"
+    ></v-data-table>
+  </vcard>
 </template>
+

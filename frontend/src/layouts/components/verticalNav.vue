@@ -9,7 +9,7 @@
         <v-list nav>
           <v-list-item>
             <VImg
-              :width="300"
+              :width="500"
               v-html=magnoDark
             />
           </v-list-item>
