@@ -8,6 +8,7 @@ import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.IntegraStudentNomenclature;
 import com.unibague.backend.util.Sex;
+import jakarta.transaction.Transactional;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,7 @@ public class ServiceStudentProfile {
         return (List<StudentProfile>) repositoryStudentProfile.findAll2();
     }
 
+    @Transactional
     public Boolean addStudentProfilesByExcel(List<Map<String, String>> listOfMaps, String apid, String rsid) {
 
         if(listOfMaps == null || listOfMaps.isEmpty()){
@@ -97,6 +99,9 @@ public class ServiceStudentProfile {
         }
         for (StudentProfile studentProfile : studentProfiles) {
             String document = studentProfile.getIdentificationNumber();
+            if(document == null || document.isEmpty() || document.isBlank()){
+                continue;
+            }
             studentProfile = studentProfileByIdentification(document);
             studentProfile.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(apid)).get());
             studentProfile.setResearchSeedbeds(List.of(repositoryResearchSeedbed.findById(Long.valueOf(rsid)).get()));
@@ -116,7 +121,10 @@ public class ServiceStudentProfile {
         s.setIdentificationNumber(String.valueOf(map.get(IntegraStudentNomenclature.IDENTIFICATION)));
         s.setName(String.valueOf(map.get(IntegraStudentNomenclature.NAME)));
         s.setPhoneNumber(String.valueOf(map.get(IntegraStudentNomenclature.TELEPHONE)));
-        s.setSemester(Byte.parseByte(String.valueOf(map.get(IntegraStudentNomenclature.SEMESTER))));
+
+        String semester = String.valueOf(map.get(IntegraStudentNomenclature.SEMESTER));
+        s.setSemester(semester.isEmpty() ? 0 : Byte.parseByte(semester));
+
         s.setSex(map.get(IntegraStudentNomenclature.SEX).equals("F") ? Sex.FEMALE : Sex.MALE);
         s.setUserCode(String.valueOf(map.get(IntegraStudentNomenclature.CODE)));
         s.setWasActive(false);

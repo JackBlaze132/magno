@@ -62,9 +62,16 @@ public class FetchExternalData {
     }
 
     public static Map<String, Object> fromStringJsonToMap(String json) {
-        JSONObject jsonObject = new JSONObject(json);
-        Map<String, Object> map = jsonObject.toMap();
-        return map;
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+            Map<String, Object> map = jsonObject.toMap();
+            return map;
+        }
+        catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            System.out.println(json + "fin del json");
+            return null;
+        }
     }
 
 }
