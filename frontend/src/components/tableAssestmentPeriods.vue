@@ -41,6 +41,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
   <table align="center">
       <tr>
         <th>ID</th>
@@ -72,5 +73,5 @@ export default defineComponent({
 
   </table>
   <br>
-  <RouterLink to="/seedbeds/:id"><button>+ Agregar</button></RouterLink>
+  <!--<RouterLink to="/seedbeds/:id"><button>+ Agregar</button></RouterLink>-->
 </template>

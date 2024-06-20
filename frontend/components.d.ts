@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    FormAddPeriod: typeof import('./src/components/formAddPeriod.vue')['default']
     FormAddUser: typeof import('./src/components/formAddUser.vue')['default']
     FormLogin: typeof import('./src/components/formLogin.vue')['default']
     FormUpload: typeof import('./src/components/reports/formUpload.vue')['default']

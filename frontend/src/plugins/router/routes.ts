@@ -16,6 +16,10 @@ export const routes = [
           {
             path:'listPeriods',
             component: () => import('@/views/assestment-periods/listPeriods.vue')
+          },
+          {
+            path:'addPeriod',
+            component: () => import ('@/views/assestment-periods/addPeriod.vue')
           }
         ]
       },

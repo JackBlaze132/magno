@@ -23,15 +23,8 @@ public class ServiceAssesmentPeriod {
     public boolean addAssesmentPeriod(HashMap<String, String> assesmentPeriod) {
         try {
             AssesmentPeriod a = new AssesmentPeriod();
-
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-            Date startDate = (Date) sdf.parse(assesmentPeriod.get("start_date"));
-            a.setStartDate(startDate);
-
-            Date endDate = (Date) sdf.parse(assesmentPeriod.get("end_date"));
-            a.setEndDate(endDate);
-
+            a.setStartDate(Date.valueOf(assesmentPeriod.get("start_date").substring(0,10)));
+            a.setEndDate(Date.valueOf(assesmentPeriod.get("end_date").substring(0,10)));
             a.setName(assesmentPeriod.get("name"));
             a.setIsActive(Boolean.parseBoolean(assesmentPeriod.get("is_active")));
             repositoryAssesmentPeriod.save(a);
