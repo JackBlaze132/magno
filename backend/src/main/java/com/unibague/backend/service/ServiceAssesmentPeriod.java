@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,11 +21,17 @@ public class ServiceAssesmentPeriod {
     }
 
     public boolean addAssesmentPeriod(HashMap<String, String> assesmentPeriod) {
-        try{
-
+        try {
             AssesmentPeriod a = new AssesmentPeriod();
-            a.setStartDate(Date.valueOf(assesmentPeriod.get("start_date")));
-            a.setEndDate(Date.valueOf(assesmentPeriod.get("end_date")));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+            Date startDate = (Date) sdf.parse(assesmentPeriod.get("start_date"));
+            a.setStartDate(startDate);
+
+            Date endDate = (Date) sdf.parse(assesmentPeriod.get("end_date"));
+            a.setEndDate(endDate);
+
             a.setName(assesmentPeriod.get("name"));
             a.setIsActive(Boolean.parseBoolean(assesmentPeriod.get("is_active")));
             repositoryAssesmentPeriod.save(a);
