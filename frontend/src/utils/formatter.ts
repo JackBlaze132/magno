@@ -5,3 +5,8 @@ export function externalFormatter(isExternalUser: boolean){
 export function genderFormatter(){
 
 }
+
+export function periodActivityFormatter(isActive: boolean){
+  return isActive? 'Activo' : 'inactivo'
+}
+

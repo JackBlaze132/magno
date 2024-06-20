@@ -8,9 +8,16 @@ export const routes = [
         path: 'home',
         component: () => import('@/views/home/index.vue'),
       },
+      {path: '/periods', redirect: '/periods/listPeriods'},
       {
-        path: 'groups',
-        component: () => import('@/views/research-groups/index.vue')
+        path: '/periods',
+        component: () => import('@/views/assestment-periods/index.vue'),
+        children:[
+          {
+            path:'listPeriods',
+            component: () => import('@/views/assestment-periods/listPeriods.vue')
+          }
+        ]
       },
       {
         path:'reports',
