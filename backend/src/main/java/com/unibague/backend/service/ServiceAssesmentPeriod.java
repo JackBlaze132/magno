@@ -7,12 +7,17 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class ServiceAssesmentPeriod {
 
     @Autowired
     private RepositoryAssesmentPeriod repositoryAssesmentPeriod;
+
+    public List<AssesmentPeriod> getAssesmentPeriods() {
+        return repositoryAssesmentPeriod.findAll();
+    }
 
     public boolean addAssesmentPeriod(HashMap<String, String> assesmentPeriod) {
         try{
