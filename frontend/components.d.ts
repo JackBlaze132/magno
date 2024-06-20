@@ -17,6 +17,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/sidebar.vue')['default']
     TableAcademic: typeof import('./src/components/tableAcademic.vue')['default']
+    TableAssestmentPeriods: typeof import('./src/components/tableAssestmentPeriods.vue')['default']
     TableGroups: typeof import('./src/components/tableGroups.vue')['default']
     TableMembers1: typeof import('./src/components/tableMembers1.vue')['default']
     TableSeedbeds: typeof import('./src/components/tableSeedbeds.vue')['default']

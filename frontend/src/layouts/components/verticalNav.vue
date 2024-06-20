@@ -20,10 +20,10 @@
             to="/home">
           </v-list-item>
           <v-list-item
-            prepend-icon="ri-gallery-view"
-            title="Grupos de investigación"
+            prepend-icon="ri-calendar-check-fill"
+            title="Periodos académicos"
             value="groups"
-            to="/groups">
+            to="/periods">
           </v-list-item>
           <v-list-item
             prepend-icon="ri-file-2-line"
