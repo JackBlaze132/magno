@@ -18,6 +18,12 @@ export default defineComponent({
     return {
       items: [] as Item[],
       search: '',
+      headers: [
+        {title: 'ID', key: 'id'},
+        {title: 'Número de identificación', key: 'userIdentification'},
+        {title: 'Correo electrónico', key: 'email'},
+        {title: 'Afiliación', key: 'isExternalUser'}
+      ]
     }
   },
   // ...
@@ -36,6 +42,8 @@ export default defineComponent({
     externalFormatter,
   },
 })
+
+
 </script>
 
 <template>
@@ -55,7 +63,13 @@ export default defineComponent({
     <v-data-table
       :items="items"
       :search="search"
-    ></v-data-table>
+      :headers="headers"
+    >
+      <template v-slot:item.isExternalUser="{item}">
+        {{ externalFormatter(item.isExternalUser)}}
+
+      </template>
+    </v-data-table>
   </vcard>
 </template>
 
