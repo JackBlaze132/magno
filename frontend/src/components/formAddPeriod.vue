@@ -33,9 +33,9 @@
 <template>
   <VForm validate-on="submit" @submit.prevent="addUser">
     <VTextField label="Nombre" name="name" id="name" v-model="item.name"/>
-    <VDateInput label="Fecha de inicio" type="text" name="startDate" id="startDate"  v-model="item.start_date"/>
-    <VDateInput label="Fecha de finzalización" type="text" name="endtDate" id="endtDate"  v-model="item.end_date"/>
-    <VRadioGroup v-model="item.is_active" class="d-flex">
+    <VDateInput label="Fecha de inicio" prepend-inner-icon="ri-calendar-start" prepend-icon="" type="text" name="startDate" id="startDate"  v-model="item.start_date"/>
+    <VDateInput label="Fecha de finzalización" prepend-inner-icon="ri-calendar-end" prepend-icon="" type="text" name="endtDate" id="endtDate"  v-model="item.end_date"/>
+    <VRadioGroup v-model="item.is_active" class="d-flex" inline>
       <VRadio label="Activo" :value="true"/>
       <VRadio label="Inactivo" :value="false"/>
     </VRadioGroup>

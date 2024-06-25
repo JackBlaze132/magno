@@ -20,6 +20,13 @@ export default defineComponent({
     return {
       items: [] as Item[],
       search: '',
+      headers: [
+        {title: 'ID', key: 'id'},
+        {title: 'Nombre', key: 'name'},
+        {title: 'Fecha de inicio', key: 'startDate'},
+        {title: 'Fecha de finalización', key: 'endDate'},
+        {title: 'Estado', key: 'isActive'},
+      ]
     }
   },
   // ...
@@ -41,37 +48,28 @@ export default defineComponent({
 </script>
 
 <template>
-  <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
-  <table align="center">
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Fecha de inicio</th>
-        <th>Fecha de Finalización</th>
-        <th>Actividad</th>
-      </tr>
+  <Vcard flat>
+    <VCardTitle class="d-flex align-center justify-end">
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="ri-search-line"
+        variant="outlined"
+        hide-details
+        single-line
+      ></v-text-field>
+      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+    </VCardTitle>
+    <v-data-table
+      :items="items"
+      :search="search"
+      :headers="headers"
+    >
+      <template v-slot:item.isExternalUser="{item}">
+        {{ periodActivityFormatter(item.isActive)}}
 
-
-      <tr v-for="item in items" :key="item.id" to="/">
-         <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-          {{ item.id }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-          {{ item.name }}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-          {{ item.startDate}}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ item.endDate}}
-          </td>
-          <td style="border: 1px dashed; padding:0 10px; margin: 0 5px;">
-            {{ periodActivityFormatter(item.isActive)}}
-          </td>
-      </tr>
-
-
-  </table>
-  <br>
-  <!--<RouterLink to="/seedbeds/:id"><button>+ Agregar</button></RouterLink>-->
+      </template>
+    </v-data-table>
+  </vcard>
 </template>
