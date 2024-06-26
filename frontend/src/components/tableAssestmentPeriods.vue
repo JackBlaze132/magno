@@ -4,6 +4,8 @@ import { defineComponent } from "vue"
 //utils
 import { get } from "@/utils/api";
 import { periodActivityFormatter } from "@/utils/formatter";
+import { VChip, VIcon } from "vuetify/components";
+import { RouterLink } from "vue-router";
 
 
 interface Item {
@@ -20,13 +22,15 @@ export default defineComponent({
     return {
       items: [] as Item[],
       search: '',
+      links: '',
       headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
         {title: 'Fecha de inicio', key: 'startDate'},
         {title: 'Fecha de finalización', key: 'endDate'},
         {title: 'Estado', key: 'isActive'},
-      ]
+        { key: 'link', sortable: false},
+      ],
     }
   },
   // ...
@@ -66,9 +70,15 @@ export default defineComponent({
       :search="search"
       :headers="headers"
     >
-      <template v-slot:item.isExternalUser="{item}">
-        {{ periodActivityFormatter(item.isActive)}}
-
+      <template v-slot:item.isActive="{item}">
+        <VChip :color="item.isActive ? 'green' : ''" >
+          {{ periodActivityFormatter(item.isActive)}}
+        </VChip>
+      </template>
+      <template v-slot:item.link="{item}">
+        <RouterLink :to="item.id.toString()">
+          <VIcon icon="ri-search-eye-fill"/>
+        </RouterLink>
       </template>
     </v-data-table>
   </vcard>
