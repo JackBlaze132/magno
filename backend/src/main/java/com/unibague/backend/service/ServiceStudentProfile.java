@@ -3,13 +3,11 @@ package com.unibague.backend.service;
 import com.unibague.backend.model.AcademicProgram;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.model.StudentProfile;
-import com.unibague.backend.model.User;
 import com.unibague.backend.repository.*;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.IntegraStudentNomenclature;
 import com.unibague.backend.util.Sex;
 import jakarta.transaction.Transactional;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -132,6 +130,10 @@ public class ServiceStudentProfile {
         s.setAcademicPrograms(List.of(repositoryAcademicProgram.findByProgramCode(String.valueOf(map.get(IntegraStudentNomenclature.PROGRAM_CODE)))));
 
         return s;
+    }
+
+    public List<StudentProfile> getStudentProfilesByResearchSeedbedId(Long researchSeedbedId) {
+        return repositoryStudentProfile.findAllByResearchSeedbedId(researchSeedbedId);
     }
 
 }

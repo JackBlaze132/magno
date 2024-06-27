@@ -60,4 +60,9 @@ public class ControllerStudentProfile {
         }
         return serviceStudentProfile.addStudentProfilesByExcel(retorno, apid, rsid);
     }
+
+    @GetMapping(path = "/getStudentProfilesByResearchSeedbedId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<StudentProfile> getStudentProfilesByResearchSeedbedId(@PathVariable Long id) {
+        return serviceStudentProfile.getStudentProfilesByResearchSeedbedId(id);
+    }
 }
