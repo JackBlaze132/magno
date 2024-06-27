@@ -46,4 +46,8 @@ public class ServiceInvestigationGroup {
             return false;
         }
     }
+
+    public List<InvestigationGroup> findInvestigationGroupByAssesmentPeriod(Long assesmentPeriodId) {
+        return repositoryInvestigationGroup.findByAssesmentPeriodId(assesmentPeriodId);
+    }
 }
