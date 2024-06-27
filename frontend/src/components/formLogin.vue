@@ -108,7 +108,7 @@ export default defineComponent({
                   class="px-12 text-capitalize"
                   type="submit"
                   color="black"
-                  to="/home"
+                  to="/inicio"
                 >
                   Ingresar
                 </VBtn>

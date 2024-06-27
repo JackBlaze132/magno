@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <v-card>
+  <v-card >
     <v-layout class="auth-wrapper">
-      <v-navigation-drawer class="bg-grey-lighten-2" theme="light" permanent>
+      <v-navigation-drawer class="bg-grey-lighten-2 position-fixed" theme="light" permanent>
         <v-list nav>
           <v-list-item>
             <VImg
@@ -16,27 +16,27 @@
           <v-list-item
             prepend-icon="ri-home-3-fill"
             title="Inicio"
-            value="home"
-            to="/home">
+            value="inicio"
+            to="/inicio">
           </v-list-item>
           <v-list-item
             prepend-icon="ri-calendar-check-fill"
             title="Periodos académicos"
-            value="groups"
-            to="/periods">
+            value="periodos"
+            to="/periodos">
           </v-list-item>
           <v-list-item
             prepend-icon="ri-file-2-line"
             title="Informes"
-            value="reports"
-            to="/reports">
+            value="informes"
+            to="/informes">
           </v-list-item>
           <VDivider class="px-4 my-4"></VDivider>
           <v-list-item
             prepend-icon="ri-user-settings-fill"
             title="Usuarios"
-            value="users"
-            to="/users">
+            value="usuarios"
+            to="/usuarios">
           </v-list-item>
         </v-list>
         <template v-slot:append>

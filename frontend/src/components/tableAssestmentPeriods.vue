@@ -76,7 +76,7 @@ export default defineComponent({
         </VChip>
       </template>
       <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id.toString()">
+        <RouterLink :to="item.id + '/grupos-investigacion/listar-grupos'">
           <VIcon icon="ri-search-eye-fill"/>
         </RouterLink>
       </template>

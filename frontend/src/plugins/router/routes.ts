@@ -1,26 +1,41 @@
 export const routes = [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/login' },
   {
     path: '/',
     component: () => import('@/layouts/default.vue'),
     children: [
       {
-        path: 'home',
+        path: 'inicio',
         component: () => import('@/views/home/index.vue'),
       },
-      {path: '/periods', redirect: '/periods/listPeriods'},
+      {path: '/periodos', redirect: '/periodos/listar-periodos'},
       {
-        path: '/periods',
+        path: '/periodos',
         component: () => import('@/views/assestment-periods/index.vue'),
         children:[
           {
-            path:'listPeriods',
+            path:'listar-periodos',
             component: () => import('@/views/assestment-periods/listPeriods.vue')
           },
           {
-            path:'addPeriod',
+            path:'añadir-periodo',
             component: () => import ('@/views/assestment-periods/addPeriod.vue')
-          }
+          },
+          {
+            path:':id/grupos-investigacion',
+            component: () => import ('@/views/research-groups/index.vue'),
+            children:[
+              {
+                path:'listar-grupos',
+                component: () => import ('@/views/research-groups/listGroups.vue'),
+              },
+              {
+                path:':id/semilleros',
+                component: () => import ('@/views/seedbeds/listSeedbeds.vue')
+              }
+            ]
+          },
+
         ]
       },
       {
@@ -33,17 +48,17 @@ export const routes = [
           }
         ]
       },
-      {path: '/users', redirect: '/users/listUsers'},
+      {path: '/usuarios', redirect: '/usuarios/listar-usuarios'},
       {
-        path: '/users',
+        path: '/usuarios',
         component: () => import('@/views/users/index.vue'),
         children:[
           {
-            path: 'listUsers',
+            path: 'listar-usuarios',
             component: () => import('@/views/users/listUser.vue')
           },
           {
-            path: 'addUser',
+            path: 'añadir-usuario',
             component: () => import('@/views/users/addUser.vue')
           }
         ],
