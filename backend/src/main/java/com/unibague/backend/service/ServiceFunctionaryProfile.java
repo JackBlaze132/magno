@@ -73,6 +73,18 @@ public class ServiceFunctionaryProfile {
         }
     }
 
+    public FunctionaryProfile getCoordinatorByResearchSeedbedId(Long researchseedbedId) {
+        return repositoryFunctionaryProfile.findCoordinatorByResearchSeedbedId(researchseedbedId);
+    }
+
+    public FunctionaryProfile getTutorByResearchSeedbedId(Long researchseedbedId) {
+        return repositoryFunctionaryProfile.findTutorByResearchSeedbedId(researchseedbedId);
+    }
+
+    public List<FunctionaryProfile> getExternalFunctionaryProfilesByResearchSeedbedId(Long researchseedbedId) {
+        return repositoryFunctionaryProfile.findExternalFunctionaryProfilesByResearchSeedbedId(researchseedbedId);
+    }
+
     public List<FunctionaryProfile> getTeacherProfiles() {
         return repositoryFunctionaryProfile.findAll();
     }

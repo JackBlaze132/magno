@@ -1,6 +1,7 @@
 package com.unibague.backend.repository;
 
 import com.unibague.backend.model.FunctionaryProfile;
+import com.unibague.backend.model.StudentProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -26,5 +27,12 @@ public interface RepositoryFunctionaryProfile extends JpaRepository<FunctionaryP
     @Query("SELECT ig.coordinator from InvestigationGroup ig WHERE ig.id = 1")
     FunctionaryProfile findInvestigationGroupDirector1();
 
-    FunctionaryProfile findFunctionaryProfileById(Long id);
+    @Query("SELECT rs.coordinator from ResearchSeedbed rs WHERE rs.id = ?1")
+    FunctionaryProfile findCoordinatorByResearchSeedbedId(Long id);
+
+    @Query("SELECT rs.tutor from ResearchSeedbed rs WHERE rs.id = ?1")
+    FunctionaryProfile findTutorByResearchSeedbedId(Long id);
+
+    @Query("SELECT fp from FunctionaryProfile fp INNER JOIN fp.researchSeedbeds_teacher rs WHERE rs.id = ?1 AND fp.userTeacher.isExternalUser = true")
+    List<FunctionaryProfile> findExternalFunctionaryProfilesByResearchSeedbedId(Long id);
 }

@@ -3,10 +3,8 @@ package com.unibague.backend.controller;
 import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.service.ServiceFunctionaryProfile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,5 +53,20 @@ public class ControllerFunctionaryProfile {
     @PostMapping("/addFunctionaryProfileToAResearchSeedbed")
     public Boolean addFunctionaryProfileToAResearchSeedbed(@RequestBody HashMap<String, String> functionaryProfile) {
         return serviceFunctionaryProfile.addFunctionaryProfileToAResearchSeedbed(functionaryProfile);
+    }
+
+    @GetMapping(path = "/getTutorByResearchseedbedId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FunctionaryProfile getTutorByResearchseedbedId(@PathVariable Long id) {
+        return serviceFunctionaryProfile.getTutorByResearchSeedbedId(id);
+    }
+
+    @GetMapping(path = "/getCoordinatorByResearchseedbedId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FunctionaryProfile getCoordinatorByResearchseedbedId(@PathVariable Long id) {
+        return serviceFunctionaryProfile.getCoordinatorByResearchSeedbedId(id);
+    }
+
+    @GetMapping(path = "/getExternalFunctionaryProfilesByResearchSeedbedId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FunctionaryProfile> getExternalFunctionaryProfilesByResearchSeedbedId(@PathVariable Long id) {
+        return serviceFunctionaryProfile.getExternalFunctionaryProfilesByResearchSeedbedId(id);
     }
 }
