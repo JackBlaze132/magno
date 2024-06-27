@@ -29,8 +29,8 @@ public class ControllerResearchSeedbed {
         return serviceResearchSeedbed.addResearchSeedbed(researchSeedbed);
     }
 
-    @GetMapping("/getResearchSeedbedsById/{id}")
-    public List<ResearchSeedbed> getResearchSeedbedsById(@PathVariable Long id){
-        return serviceResearchSeedbed.getResearchSeedbedsByInvestigationGroup(id);
+    @GetMapping("/getResearchSeedbedsByInvestigationGroupId/{id}")
+    public List<ResearchSeedbed> getResearchSeedbedsByInvestigationGroupId(@PathVariable Long id){
+        return serviceResearchSeedbed.getResearchSeedbedsByInvestigationGroupId(id);
     }
 }

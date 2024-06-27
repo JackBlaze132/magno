@@ -67,7 +67,7 @@ public class ServiceResearchSeedbed {
         }
     }
 
-    public List<ResearchSeedbed> getResearchSeedbedsByInvestigationGroup(Long id){
+    public List<ResearchSeedbed> getResearchSeedbedsByInvestigationGroupId(Long id){
         return repositoryResearchSeedbed.findByInvestigationGroupId(id);
     }
 }

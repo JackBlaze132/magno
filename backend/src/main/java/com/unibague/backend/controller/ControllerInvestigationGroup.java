@@ -25,8 +25,8 @@ public class ControllerInvestigationGroup {
         return serviceInvestigationGroup.addInvestigationGroup(investigationGroup);
     }
 
-    @GetMapping("/getInvestigationGroupById/{id}")
-    public List<InvestigationGroup> getInvestigationGroupById(@PathVariable Long id) {
+    @GetMapping("/getInvestigationGroupsByAssesmentPeriodId/{id}")
+    public List<InvestigationGroup> getInvestigationGroupsByAssesmentPeriodId(@PathVariable Long id) {
         return serviceInvestigationGroup.findInvestigationGroupByAssesmentPeriod(id);
     }
 }
