@@ -1,3 +1,5 @@
+import { RouteLocationNormalized } from 'vue-router'
+
 export const routes = [
   { path: '/', redirect: '/login' },
   {
@@ -22,16 +24,37 @@ export const routes = [
             component: () => import ('@/views/assestment-periods/addPeriod.vue')
           },
           {
+            path: ':id/grupos-investigacion',
+            redirect: (to: RouteLocationNormalized) => {
+              return { name: 'listar-grupos', params: { id: to.params.id } }
+            }
+          },
+          {
             path:':id/grupos-investigacion',
             component: () => import ('@/views/research-groups/index.vue'),
             children:[
               {
                 path:'listar-grupos',
+                name:'listar-grupos',
                 component: () => import ('@/views/research-groups/listGroups.vue'),
               },
               {
                 path:':id/semilleros',
-                component: () => import ('@/views/seedbeds/listSeedbeds.vue')
+                redirect: (to: RouteLocationNormalized) => {
+                  return { name: 'listar-semilleros', params: { id: to.params.id } }
+                },
+                component: () => import ('@/views/seedbeds/index.vue'),
+                children:[
+                  {
+                    path:'listar-semilleros',
+                    name:'listar-semilleros',
+                    component: () => import ('@/views/seedbeds/listSeedbeds.vue'),
+                  },
+                  {
+                    path:':id',
+                    component: () => import ('@/views/seedbeds/members.vue')
+                  }
+                ]
               }
             ]
           },

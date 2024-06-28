@@ -4,7 +4,7 @@ import { defineComponent } from "vue"
 //utils
 import { get } from "@/utils/api";
 import { periodActivityFormatter } from "@/utils/formatter";
-import { VChip, VIcon } from "vuetify/components";
+import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
 
 
@@ -75,7 +75,7 @@ export default defineComponent({
       </template>-->
 
       <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id + '/semilleros/'">
+        <RouterLink :to="item.id + '/semilleros'">
           <VIcon icon="ri-search-eye-fill"/>
         </RouterLink>
       </template>
