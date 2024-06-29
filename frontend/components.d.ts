@@ -7,7 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    copy: typeof import('./src/components/provitional/tableSeedbeds copy.vue')['default']
+    copy: typeof import('./src/components/provitional/tableTeachers copy.vue')['default']
     FormAddPeriod: typeof import('./src/components/formAddPeriod.vue')['default']
     FormAddUser: typeof import('./src/components/formAddUser.vue')['default']
     FormLogin: typeof import('./src/components/formLogin.vue')['default']
@@ -20,14 +20,16 @@ declare module 'vue' {
     Sidebar: typeof import('./src/components/sidebar.vue')['default']
     TableAcademic: typeof import('./src/components/tableAcademic.vue')['default']
     TableAssestmentPeriods: typeof import('./src/components/tableAssestmentPeriods.vue')['default']
+    TableCoordnator: typeof import('./src/components/seedbeds/tableCoordnator.vue')['default']
     TableGroups: typeof import('./src/components/tableGroups.vue')['default']
     'TableGroups copy': typeof import('./src/components/provitional/tableGroups copy.vue')['default']
-    TableMembers: typeof import('./src/components/tableMembers.vue')['default']
+    TableMembers: typeof import('./src/components/seedbeds/tableMembers.vue')['default']
     TableMembers1: typeof import('./src/components/tableMembers1.vue')['default']
     'TableMembers1 copy': typeof import('./src/components/provitional/tableMembers1 copy.vue')['default']
     TableSeedbeds: typeof import('./src/components/tableSeedbeds.vue')['default']
     'TableSeedbeds copy': typeof import('./src/components/provitional/tableSeedbeds copy.vue')['default']
-    TableTeachers: typeof import('./src/components/tableTeachers.vue')['default']
+    TableTeachers: typeof import('./src/components/seedbeds/tableTeachers.vue')['default']
+    'TableTeachers copy': typeof import('./src/components/provitional/tableTeachers copy.vue')['default']
     TableUsers: typeof import('./src/components/tableUsers.vue')['default']
     TableUsersProvitional: typeof import('./src/components/provitional/tableUsersProvitional.vue')['default']
     TableUsersTest: typeof import('./src/components/tableUsersTest.vue')['default']

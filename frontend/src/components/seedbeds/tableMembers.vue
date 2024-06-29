@@ -8,7 +8,7 @@ import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
 
 
-interface Student {
+interface Item {
   id: number,
   name: string
   userCode: string,
@@ -27,10 +27,10 @@ export default defineComponent({
 
   data() {
     return {
-      students: [] as Student[],
+      items: [] as Item[],
       search: '',
       links: '',
-      headersStudents: [
+      headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
         {title: 'Código', key: 'userCode'},
@@ -52,7 +52,7 @@ export default defineComponent({
     async getSeedBeds() {
       try {
         const data = await get('getStudentProfilesByResearchSeedbedId/' + this.$route.params.id);
-        this.students = data;
+        this.items = [data];
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -63,7 +63,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Vcard flat>
+  <VCard flat>
     <h2>Estudiantes</h2>
     <VCardTitle class="d-flex align-center justify-end">
       <v-text-field
@@ -78,9 +78,9 @@ export default defineComponent({
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
     <v-data-table
-      :items="students"
+      :items="items"
       :search="search"
-      :headers="headersStudents"
+      :headers="headers"
     >
     <template v-slot:item.userStudent.isExternalUser="{item}">
       {{ externalFormatter(item.userStudent.isExternalUser)}}
@@ -93,5 +93,5 @@ export default defineComponent({
         </RouterLink>
       </template>
     </v-data-table>
-  </vcard>
+  </VCard>
 </template>
