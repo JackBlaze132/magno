@@ -49,8 +49,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        const data = await get('getTutorByResearchseedbedId/' + this.$route.params.id);
-        this.items = [data];
+        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.id);
       } catch (error) {
         console.error('Error fetching users:', error);
       }

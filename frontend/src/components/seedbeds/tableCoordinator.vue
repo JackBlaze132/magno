@@ -14,13 +14,12 @@ interface Item {
   userCode: string,
   identificationNumber: string,
   phoneNumber: string,
-  semester: number,
   email: string,
-  wasActive: boolean,
   sex: string,
-  userStudent: {
-    isExternalUser: boolean
+  dependency:{
+    name:string,
   }
+
 }
 
 export default defineComponent({
@@ -36,10 +35,9 @@ export default defineComponent({
         {title: 'Código', key: 'userCode'},
         {title: 'Identificación', key: 'identificationNumber'},
         {title: 'Teléfono', key: 'phoneNumber'},
-        {title: 'Semestre', key: 'semester'},
         {title: 'Correo', key: 'email'},
         {title: 'Sexo', key: 'sex'},
-        {title: 'Activo', key: 'userStudent.isExternalUser'},
+        {title: 'Dependecia', key: 'dependency.name'},
         { key: 'link', sortable: false},
       ],
     }
@@ -51,7 +49,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getStudentProfilesByResearchSeedbedId/' + this.$route.params.id);
+        this.items = await get('getCoordinatorByResearchseedbedId/' + this.$route.params.id);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -63,17 +61,8 @@ export default defineComponent({
 
 <template>
   <VCard flat>
-    <h2>Estudiantes</h2>
+    <h2>Coordinador</h2>
     <VCardTitle class="d-flex align-center justify-end">
-      <v-text-field
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="ri-search-line"
-        variant="outlined"
-        hide-details
-        single-line
-      ></v-text-field>
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
     <v-data-table
@@ -81,10 +70,6 @@ export default defineComponent({
       :search="search"
       :headers="headers"
     >
-    <template v-slot:item.userStudent.isExternalUser="{item}">
-      {{ externalFormatter(item.userStudent.isExternalUser)}}
-
-    </template>
 
       <template v-slot:item.link="{item}">
         <RouterLink :to="item.id.toString()">

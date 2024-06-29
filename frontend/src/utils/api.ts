@@ -3,7 +3,8 @@ const apiBaseURL = '/api'; // ya se encuentra registrada en el archivo vite.conf
 export async function get(endpoint: string) {
   try {
     const response = await fetch(`${apiBaseURL}/${endpoint}`);
-    return response.json();
+    const data = await response.json();
+    return Array.isArray(data) ? data : [data];
   } catch (error) {
     console.error(`Error fetching ${endpoint}:`, error);
     throw error;
