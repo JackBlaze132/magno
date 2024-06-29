@@ -22,6 +22,7 @@ declare module 'vue' {
     TableAssestmentPeriods: typeof import('./src/components/tableAssestmentPeriods.vue')['default']
     TableCoordinator: typeof import('./src/components/seedbeds/tableCoordinator.vue')['default']
     TableCoordnator: typeof import('./src/components/seedbeds/tableCoordnator.vue')['default']
+    TableExternal: typeof import('./src/components/seedbeds/tableExternal.vue')['default']
     TableGroups: typeof import('./src/components/tableGroups.vue')['default']
     'TableGroups copy': typeof import('./src/components/provitional/tableGroups copy.vue')['default']
     TableMembers: typeof import('./src/components/seedbeds/tableMembers.vue')['default']

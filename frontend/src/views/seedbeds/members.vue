@@ -7,5 +7,6 @@ import { VCard } from 'vuetify/components';
     <tableCoordinator/>
     <tableTeachers/>
     <tableMembers/>
+    <TableExternal/>
   </VCard>
 </template>
