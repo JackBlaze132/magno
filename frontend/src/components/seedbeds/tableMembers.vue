@@ -74,7 +74,9 @@ export default defineComponent({
         hide-details
         single-line
       ></v-text-field>
+      <VBtn to="upload-users" class="mx-2" prepend-icon="ri-upload-cloud-2-fill" color="black"> Subir</VBtn>
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+
     </VCardTitle>
     <v-data-table
       :items="items"

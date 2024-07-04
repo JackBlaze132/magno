@@ -8,7 +8,7 @@
       <v-navigation-drawer class="bg-grey-lighten-2 position-fixed" theme="light" permanent>
         <v-list nav>
           <v-list-item>
-            <VImg
+            <v-img
               :width="500"
               v-html=magnoDark
             />
@@ -31,7 +31,7 @@
             value="informes"
             to="/informes">
           </v-list-item>
-          <VDivider class="px-4 my-4"></VDivider>
+          <v-divider class="px-4 my-4"></v-divider>
           <v-list-item
             prepend-icon="ri-user-settings-fill"
             title="Usuarios"

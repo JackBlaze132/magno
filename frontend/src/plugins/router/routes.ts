@@ -10,6 +10,10 @@ export const routes = [
         path: 'inicio',
         component: () => import('@/views/home/index.vue'),
       },
+      {
+        path: '/informes',
+        component: () => import('@/views/reports/index.vue'),
+      },
       {path: '/periodos', redirect: '/periodos/listar-periodos'},
       {
         path: '/periodos',
@@ -53,6 +57,10 @@ export const routes = [
                   {
                     path:':id',
                     component: () => import ('@/views/seedbeds/members.vue')
+                  },
+                  {
+                    path:'upload-users',
+                    component: () => import ('@/views/reports/upload.vue')
                   }
                 ]
               }

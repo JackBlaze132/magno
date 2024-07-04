@@ -12,6 +12,7 @@ declare module 'vue' {
     FormAddUser: typeof import('./src/components/formAddUser.vue')['default']
     FormLogin: typeof import('./src/components/formLogin.vue')['default']
     FormUpload: typeof import('./src/components/reports/formUpload.vue')['default']
+    'FormUpload copy': typeof import('./src/components/provitional/formUpload copy.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Navbar: typeof import('./src/components/navbar.vue')['default']
     NavTest: typeof import('./src/components/navTest.vue')['default']

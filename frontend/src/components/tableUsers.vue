@@ -47,8 +47,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <Vcard flat>
-    <VCardTitle class="d-flex align-center justify-end">
+  <v-card flat>
+    <v-card-title class="d-flex align-center justify-end">
       <v-text-field
         v-model="search"
         density="compact"
@@ -58,8 +58,8 @@ export default defineComponent({
         hide-details
         single-line
       ></v-text-field>
-      <VBtn to="addUser" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
-    </VCardTitle>
+      <v-btn to="addUser" class="mx-2" prepend-icon="ri-add-fill"> Agregar</v-btn>
+    </v-card-title>
     <v-data-table
       :items="items"
       :search="search"
@@ -70,6 +70,6 @@ export default defineComponent({
 
       </template>
     </v-data-table>
-  </vcard>
+  </v-card>
 </template>
 
