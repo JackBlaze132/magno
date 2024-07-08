@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<!--<script setup lang="ts">
   import formAddUser from '../../components/formAddUser.vue';
-</script>
+</script>-->
 
 <template>
     <div>

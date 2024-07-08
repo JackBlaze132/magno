@@ -58,7 +58,7 @@ export default defineComponent({
         hide-details
         single-line
       ></v-text-field>
-      <v-btn to="addUser" class="mx-2" prepend-icon="ri-add-fill"> Agregar</v-btn>
+      <v-btn to="agregar-usuarios" class="mx-2" prepend-icon="ri-add-fill"> Agregar</v-btn>
     </v-card-title>
     <v-data-table
       :items="items"

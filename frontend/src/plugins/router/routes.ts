@@ -89,7 +89,7 @@ export const routes = [
             component: () => import('@/views/users/listUser.vue')
           },
           {
-            path: 'añadir-usuario',
+            path: 'agregar-usuarios',
             component: () => import('@/views/users/addUser.vue')
           }
         ],

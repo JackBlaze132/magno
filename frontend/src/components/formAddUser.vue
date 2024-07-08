@@ -33,7 +33,7 @@
   <VForm validate-on="submit" @submit.prevent="addUser">
     <VTextField label="Cedula" type="text" name="identification" id="identification" v-model="item.userIdentification"/>
     <VTextField label="Correo" type="text" name="mail" id="mail"  v-model="item.email"/>
-    <VRadioGroup v-model="item.isExternalUser" class="d-flex">
+    <VRadioGroup v-model="item.isExternalUser" inline>
       <VRadio label="Externo" :value="true"/>
       <VRadio label="Interno" :value="false"/>
     </VRadioGroup>
