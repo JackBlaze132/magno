@@ -38,6 +38,9 @@ public class ServiceStudentProfile {
     @Autowired
     RepositoryResearchSeedbed repositoryResearchSeedbed;
 
+    @Autowired
+    ServiceUser serviceUser;
+
     public Boolean addStudentProfile(HashMap<String, String> studentProfile) {
         try{
 
@@ -87,6 +90,8 @@ public class ServiceStudentProfile {
         if(listOfMaps == null || listOfMaps.isEmpty()){
             return false;
         }
+
+        serviceUser.addNewUsers(listOfMaps);
 
         List<StudentProfile> studentProfiles = new ArrayList<StudentProfile>();
         for (Map<String, String> stringStringMap : listOfMaps) {
