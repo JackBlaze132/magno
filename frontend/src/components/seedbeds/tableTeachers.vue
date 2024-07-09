@@ -29,6 +29,7 @@ export default defineComponent({
       items: [] as Item[],
       search: '',
       links: '',
+      loaded: false,
       headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
@@ -49,7 +50,8 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.id);
+        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.idSemillero);
+        this.loaded = true;
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -63,7 +65,7 @@ export default defineComponent({
   <VCard flat>
     <h2>Tutores</h2>
     <VCardTitle class="d-flex align-center justify-end">
-      <v-text-field
+      <VTextField
         v-model="search"
         density="compact"
         label="Search"
@@ -71,10 +73,10 @@ export default defineComponent({
         variant="outlined"
         hide-details
         single-line
-      ></v-text-field>
+      ></VTextField>
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
-    <v-data-table
+    <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
@@ -85,6 +87,6 @@ export default defineComponent({
           <VIcon icon="ri-search-eye-fill"/>
         </RouterLink>
       </template>
-    </v-data-table>
+    </VDataTable>
   </VCard>
 </template>

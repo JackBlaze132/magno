@@ -24,17 +24,17 @@ export const routes = [
             component: () => import('@/views/assestment-periods/listPeriods.vue')
           },
           {
-            path:'añadir-periodo',
+            path:'agregar-periodo',
             component: () => import ('@/views/assestment-periods/addPeriod.vue')
           },
           {
-            path: ':id/grupos-investigacion',
+            path: ':idPeriodo/grupos-investigacion',
             redirect: (to: RouteLocationNormalized) => {
-              return { name: 'listar-grupos', params: { id: to.params.id } }
+              return { name: 'listar-grupos', params: { idPeriodo : to.params.idPeriodo } }
             }
           },
           {
-            path:':id/grupos-investigacion',
+            path:':idPeriodo/grupos-investigacion',
             component: () => import ('@/views/research-groups/index.vue'),
             children:[
               {
@@ -43,23 +43,24 @@ export const routes = [
                 component: () => import ('@/views/research-groups/listGroups.vue'),
               },
               {
-                path:':id/semilleros',
+                path:':idGrupo/semilleros',
                 redirect: (to: RouteLocationNormalized) => {
-                  return { name: 'listar-semilleros', params: { id: to.params.id } }
+                  return { name: 'listar-semilleros', params: { idGrupo: to.params.idGrupo } }
                 },
                 component: () => import ('@/views/seedbeds/index.vue'),
                 children:[
+
                   {
                     path:'listar-semilleros',
                     name:'listar-semilleros',
                     component: () => import ('@/views/seedbeds/listSeedbeds.vue'),
                   },
                   {
-                    path:':id',
-                    component: () => import ('@/views/seedbeds/members.vue')
+                    path:':idSemillero',
+                    component: () => import ('@/views/seedbeds/members.vue'),
                   },
                   {
-                    path:'upload-users',
+                    path:'subir-estudiantes',
                     component: () => import ('@/views/reports/upload.vue')
                   }
                 ]
