@@ -108,7 +108,14 @@ public class ServiceStudentProfile {
             studentProfile = studentProfileByIdentification(document);
             studentProfile.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(apid)).get());
             studentProfile.setResearchSeedbeds(List.of(repositoryResearchSeedbed.findById(Long.valueOf(rsid)).get()));
-            repositoryStudentProfile.save(studentProfile);
+
+            ResearchSeedbed researchSeedbed = repositoryResearchSeedbed.findById(Long.valueOf(rsid)).get();
+            if (researchSeedbed.getStudentsProfiles().stream().anyMatch(sp -> sp.getIdentificationNumber().equals(document))){
+                continue;
+            }
+            else{
+                repositoryStudentProfile.save(studentProfile);
+            }
         }
         return true;
     }
