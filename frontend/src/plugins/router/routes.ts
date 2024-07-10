@@ -1,3 +1,4 @@
+
 import { RouteLocationNormalized } from 'vue-router'
 
 export const routes = [
@@ -57,7 +58,21 @@ export const routes = [
                   },
                   {
                     path:':idSemillero',
-                    component: () => import ('@/views/seedbeds/members.vue'),
+                    redirect: (to: RouteLocationNormalized) => {
+                      return { name: 'detalles', params: { idSemillero: to.params.idSemillero } }
+                    },
+                    component: () => import ('@/views/lounge/index.vue'),
+                    children:[
+                      {
+                        name: 'detalles',
+                        path: 'detalles',
+                        component: () => import ('@/views/lounge/members.vue')
+                      },
+                      {
+                        path: 'subir-estudiantes',
+                        component: () => import ('@/views/lounge/uploadStudent.vue')
+                      }
+                    ]
                   },
                   {
                     path:'subir-estudiantes',

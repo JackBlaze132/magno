@@ -76,11 +76,7 @@ export default defineComponent({
       :headers="headers"
     >
 
-      <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id.toString()">
-          <VIcon icon="ri-search-eye-fill"/>
-        </RouterLink>
-      </template>
+
     </VDataTable>
   </VCard>
 </template>

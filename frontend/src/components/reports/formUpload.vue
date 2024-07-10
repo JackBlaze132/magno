@@ -62,7 +62,7 @@ export default {
       if (this.file.length != 0) {
         formData.append('file', this.file[0]);
         this.loading = true
-        fetch('/api/addStudentProfileByExcel/1/1', {
+        fetch('/api/addStudentProfileByExcel/' + this.$route.params.idPeriodo + '/' + this.$route.params.idSemillero, {
         method: 'POST',
         body: formData
       })
@@ -72,7 +72,7 @@ export default {
           console.error("Error al realizar la solicitud", data.error);
         } else {
           console.log(data);
-          this.$router.push(this.$route.params.idSemillero.toString());
+          this.$router.push(this.$route.params.idSemillero + '');
         }
       })
       .catch(error => console.error("Error al realizar la solicitud", error));
