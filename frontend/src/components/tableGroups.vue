@@ -38,7 +38,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        const data = await get('getInvestigationGroupsByAssesmentPeriodId/' + this.$route.params.id);
+        const data = await get('getInvestigationGroupsByAssesmentPeriodId/' + this.$route.params.idPeriodo);
         this.items = data;
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -50,9 +50,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <Vcard flat>
+  <VCard flat>
     <VCardTitle class="d-flex align-center justify-end">
-      <v-text-field
+      <VTextField
         v-model="search"
         density="compact"
         label="Search"
@@ -60,10 +60,10 @@ export default defineComponent({
         variant="outlined"
         hide-details
         single-line
-      ></v-text-field>
+      ></VTextField>
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
-    <v-data-table
+    <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
@@ -79,6 +79,6 @@ export default defineComponent({
           <VIcon icon="ri-search-eye-fill"/>
         </RouterLink>
       </template>
-    </v-data-table>
-  </vcard>
+    </VDataTable>
+  </VCard>
 </template>

@@ -83,7 +83,7 @@ export default {
   },
   VProgressCircular: {
     // set v-progress-circular default color to primary
-    color: 'primary',
+
   },
   VProgressLinear: {
     color: 'primary',
