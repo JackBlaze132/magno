@@ -19,4 +19,7 @@ public interface RepositoryStudentProfile extends JpaRepository<StudentProfile, 
 
     @Query("SELECT sp from StudentProfile sp INNER JOIN sp.researchSeedbeds rs WHERE rs.id = ?1")
     List<StudentProfile> findAllByResearchSeedbedId(Long id);
+
+    @Query("SELECT sp from StudentProfile sp INNER JOIN sp.userStudent u WHERE u.userIdentification = ?1")
+    List<StudentProfile> findByUserIdentification(Long id);
 }

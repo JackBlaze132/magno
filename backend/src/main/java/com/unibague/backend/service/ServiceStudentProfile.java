@@ -148,4 +148,8 @@ public class ServiceStudentProfile {
         return repositoryStudentProfile.findAllByResearchSeedbedId(researchSeedbedId);
     }
 
+    public List<StudentProfile> getStudentProfilesByUserIdentification(Long userIdentification) {
+        return repositoryStudentProfile.findByUserIdentification(userIdentification);
+    }
+
 }
