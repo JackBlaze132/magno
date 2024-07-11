@@ -51,7 +51,7 @@ export default defineComponent({
     async getSeedBeds() {
       try {
         this.items = await get('getCoordinatorByResearchseedbedId/' + this.$route.params.idSemillero);
-        this.loaded = true;
+        this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -65,7 +65,7 @@ export default defineComponent({
   <VCard flat>
     <h2>Coordinador</h2>
     <VCardTitle class="d-flex align-center justify-end">
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-pencil-fill">Editar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"

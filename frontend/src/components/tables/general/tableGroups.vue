@@ -50,6 +50,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <h1>Grupos de investigación</h1>
   <VCard flat>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField

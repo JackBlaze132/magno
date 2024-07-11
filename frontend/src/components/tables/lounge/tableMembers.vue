@@ -13,9 +13,14 @@ interface Item {
   name: string
   userCode: string,
   identificationNumber: string,
+  phoneNumber: string,
+  semester: number,
   email: string,
+  wasActive: boolean,
   sex: string,
-
+  userStudent: {
+    isExternalUser: boolean
+  }
 }
 
 export default defineComponent({
@@ -31,21 +36,24 @@ export default defineComponent({
         {title: 'Nombre', key: 'name'},
         {title: 'Código', key: 'userCode'},
         {title: 'Identificación', key: 'identificationNumber'},
+        {title: 'Teléfono', key: 'phoneNumber'},
+        {title: 'Semestre', key: 'semester'},
         {title: 'Correo', key: 'email'},
         {title: 'Sexo', key: 'sex'},
+        {title: 'Activo', key: 'userStudent.isExternalUser'},
         { key: 'link', sortable: false},
       ],
     }
   },
   // ...
-  created() {
+  mounted() {
     this.getSeedBeds();
   },
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getExternalFunctionaryProfilesByResearchSeedbedId/' + this.$route.params.idSemillero);
-        this.loaded = true;
+        this.items = await get('getStudentProfilesByResearchSeedbedId/' + this.$route.params.idSemillero);
+        this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -57,7 +65,7 @@ export default defineComponent({
 
 <template>
   <VCard flat>
-    <h2>Aliados externos</h2>
+    <h2>Estudiantes</h2>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
@@ -68,15 +76,25 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
+      <VBtn to="subir-estudiantes" class="mx-2" prepend-icon="ri-upload-cloud-2-fill" color="black"> Subir</VBtn>
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+
     </VCardTitle>
     <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
     >
+    <template v-slot:item.userStudent.isExternalUser="{item}">
+      {{ externalFormatter(item.userStudent.isExternalUser)}}
 
+    </template>
 
+      <!--<template v-slot:item.link="{item}">
+        <RouterLink :to="item.id.toString()">
+          <VIcon icon="ri-search-eye-fill"/>
+        </RouterLink>
+      </template>-->
     </VDataTable>
   </VCard>
 </template>

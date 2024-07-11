@@ -4,16 +4,16 @@ import { defineComponent } from "vue"
 //utils
 import { get } from "@/utils/api";
 import { periodActivityFormatter } from "@/utils/formatter";
-import { VIcon } from "vuetify/components";
+import { VChip, VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
 
 
 interface Item {
   id: number,
   name: string,
-  coordninator: {
-    name: string
-  }
+  startDate: string,
+  endDate: string,
+  isActive: boolean,
 }
 
 export default defineComponent({
@@ -26,19 +26,21 @@ export default defineComponent({
       headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
-        {title: 'Coordinador', key: 'coordinator.name'},
+        {title: 'Fecha de inicio', key: 'startDate'},
+        {title: 'Fecha de finalización', key: 'endDate'},
+        {title: 'Estado', key: 'isActive'},
         { key: 'link', sortable: false},
       ],
     }
   },
   // ...
   created() {
-    this.getSeedBeds();
+    this.getPeriods();
   },
   methods: {
-    async getSeedBeds() {
+    async getPeriods() {
       try {
-        const data = await get('getResearchSeedbedsByInvestigationGroupId/' + this.$route.params.idGrupo);
+        const data = await get('getAssesmentPeriods');
         this.items = data;
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -50,6 +52,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <h1>Periodos académicos</h1>
   <VCard flat>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
@@ -61,21 +64,20 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+      <VBtn to="agregar-periodo" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
     >
-      <!--<template v-slot:item.isActive="{item}">
+      <template v-slot:item.isActive="{item}">
         <VChip :color="item.isActive ? 'green' : ''" >
           {{ periodActivityFormatter(item.isActive)}}
         </VChip>
-      </template>-->
-
+      </template>
       <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id.toString()">
+        <RouterLink :to="item.id + '/grupos-investigacion/listar-grupos'">
           <VIcon icon="ri-search-eye-fill"/>
         </RouterLink>
       </template>

@@ -3,23 +3,16 @@ import { defineComponent } from "vue"
 
 //utils
 import { get } from "@/utils/api";
-import { externalFormatter } from "@/utils/formatter";
+import { periodActivityFormatter } from "@/utils/formatter";
 import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
 
 
 interface Item {
   id: number,
-  name: string
-  userCode: string,
-  identificationNumber: string,
-  phoneNumber: string,
-  semester: number,
-  email: string,
-  wasActive: boolean,
-  sex: string,
-  userStudent: {
-    isExternalUser: boolean
+  name: string,
+  coordninator: {
+    name: string
   }
 }
 
@@ -30,42 +23,35 @@ export default defineComponent({
       items: [] as Item[],
       search: '',
       links: '',
-      loaded: false,
       headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
-        {title: 'Código', key: 'userCode'},
-        {title: 'Identificación', key: 'identificationNumber'},
-        {title: 'Teléfono', key: 'phoneNumber'},
-        {title: 'Semestre', key: 'semester'},
-        {title: 'Correo', key: 'email'},
-        {title: 'Sexo', key: 'sex'},
-        {title: 'Activo', key: 'userStudent.isExternalUser'},
+        {title: 'Coordinador', key: 'coordinator.name'},
         { key: 'link', sortable: false},
       ],
     }
   },
   // ...
-  mounted() {
+  created() {
     this.getSeedBeds();
   },
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getStudentProfilesByResearchSeedbedId/' + this.$route.params.idSemillero);
-        this.loaded=true
+        const data = await get('getResearchSeedbedsByInvestigationGroupId/' + this.$route.params.idGrupo);
+        this.items = data;
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     },
-    externalFormatter,
+    periodActivityFormatter,
   },
 })
 </script>
 
 <template>
+  <h1>Semilleros</h1>
   <VCard flat>
-    <h2>Estudiantes</h2>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
@@ -76,25 +62,24 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
-      <VBtn to="subir-estudiantes" class="mx-2" prepend-icon="ri-upload-cloud-2-fill" color="black"> Subir</VBtn>
       <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
-
     </VCardTitle>
     <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
     >
-    <template v-slot:item.userStudent.isExternalUser="{item}">
-      {{ externalFormatter(item.userStudent.isExternalUser)}}
+      <!--<template v-slot:item.isActive="{item}">
+        <VChip :color="item.isActive ? 'green' : ''" >
+          {{ periodActivityFormatter(item.isActive)}}
+        </VChip>
+      </template>-->
 
-    </template>
-
-      <!--<template v-slot:item.link="{item}">
+      <template v-slot:item.link="{item}">
         <RouterLink :to="item.id.toString()">
           <VIcon icon="ri-search-eye-fill"/>
         </RouterLink>
-      </template>-->
+      </template>
     </VDataTable>
   </VCard>
 </template>

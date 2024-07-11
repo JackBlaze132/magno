@@ -139,7 +139,7 @@ public class ServiceStudentProfile {
         s.setUserCode(String.valueOf(map.get(IntegraStudentNomenclature.CODE)));
         s.setWasActive(false);
         s.setUserStudent(repositoryUser.findByUserIdentification(identification).get());
-        s.setAcademicPrograms(List.of(repositoryAcademicProgram.findByProgramCode(String.valueOf(map.get(IntegraStudentNomenclature.PROGRAM_CODE)))));
+        s.setAcademicPrograms(List. of(repositoryAcademicProgram.findByProgramCode(String.valueOf(map.get(IntegraStudentNomenclature.PROGRAM_CODE)))));
 
         return s;
     }

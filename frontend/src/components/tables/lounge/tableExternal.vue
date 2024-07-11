@@ -13,12 +13,8 @@ interface Item {
   name: string
   userCode: string,
   identificationNumber: string,
-  phoneNumber: string,
   email: string,
   sex: string,
-  dependency:{
-    name:string,
-  }
 
 }
 
@@ -35,10 +31,8 @@ export default defineComponent({
         {title: 'Nombre', key: 'name'},
         {title: 'Código', key: 'userCode'},
         {title: 'Identificación', key: 'identificationNumber'},
-        {title: 'Teléfono', key: 'phoneNumber'},
         {title: 'Correo', key: 'email'},
         {title: 'Sexo', key: 'sex'},
-        {title: 'Dependecia', key: 'dependency.name'},
         { key: 'link', sortable: false},
       ],
     }
@@ -50,8 +44,8 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.idSemillero);
-        this.loaded = true;
+        this.items = await get('getExternalFunctionaryProfilesByResearchSeedbedId/' + this.$route.params.idSemillero);
+        this.$emit('loaded')
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -63,7 +57,7 @@ export default defineComponent({
 
 <template>
   <VCard flat>
-    <h2>Tutores</h2>
+    <h2>Aliados externos</h2>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"

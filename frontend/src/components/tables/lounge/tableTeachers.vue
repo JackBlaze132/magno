@@ -3,17 +3,23 @@ import { defineComponent } from "vue"
 
 //utils
 import { get } from "@/utils/api";
-import { periodActivityFormatter } from "@/utils/formatter";
-import { VChip, VIcon } from "vuetify/components";
+import { externalFormatter } from "@/utils/formatter";
+import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
 
 
 interface Item {
   id: number,
-  name: string,
-  startDate: string,
-  endDate: string,
-  isActive: boolean,
+  name: string
+  userCode: string,
+  identificationNumber: string,
+  phoneNumber: string,
+  email: string,
+  sex: string,
+  dependency:{
+    name:string,
+  }
+
 }
 
 export default defineComponent({
@@ -23,36 +29,41 @@ export default defineComponent({
       items: [] as Item[],
       search: '',
       links: '',
+      loaded: false,
       headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
-        {title: 'Fecha de inicio', key: 'startDate'},
-        {title: 'Fecha de finalización', key: 'endDate'},
-        {title: 'Estado', key: 'isActive'},
+        {title: 'Código', key: 'userCode'},
+        {title: 'Identificación', key: 'identificationNumber'},
+        {title: 'Teléfono', key: 'phoneNumber'},
+        {title: 'Correo', key: 'email'},
+        {title: 'Sexo', key: 'sex'},
+        {title: 'Dependecia', key: 'dependency.name'},
         { key: 'link', sortable: false},
       ],
     }
   },
   // ...
   created() {
-    this.getPeriods();
+    this.getSeedBeds();
   },
   methods: {
-    async getPeriods() {
+    async getSeedBeds() {
       try {
-        const data = await get('getAssesmentPeriods');
-        this.items = data;
+        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.idSemillero);
+        this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     },
-    periodActivityFormatter,
+    externalFormatter,
   },
 })
 </script>
 
 <template>
   <VCard flat>
+    <h2>Tutores</h2>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
@@ -63,23 +74,15 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
-      <VBtn to="agregar-periodo" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
     >
-      <template v-slot:item.isActive="{item}">
-        <VChip :color="item.isActive ? 'green' : ''" >
-          {{ periodActivityFormatter(item.isActive)}}
-        </VChip>
-      </template>
-      <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id + '/grupos-investigacion/listar-grupos'">
-          <VIcon icon="ri-search-eye-fill"/>
-        </RouterLink>
-      </template>
+
+
     </VDataTable>
   </VCard>
 </template>

@@ -72,7 +72,7 @@ export default {
           console.error("Error al realizar la solicitud", data.error);
         } else {
           console.log(data);
-          this.$router.push(this.$route.params.idSemillero + '');
+          this.$router.push('detalles');
         }
       })
       .catch(error => console.error("Error al realizar la solicitud", error));
