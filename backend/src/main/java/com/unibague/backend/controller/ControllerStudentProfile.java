@@ -65,4 +65,9 @@ public class ControllerStudentProfile {
     public List<StudentProfile> getStudentProfilesByResearchSeedbedId(@PathVariable Long id) {
         return serviceStudentProfile.getStudentProfilesByResearchSeedbedId(id);
     }
+
+    @GetMapping(path = "/getStudentProfilesByUserIdentification/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<StudentProfile> getStudentProfilesByUserIdentification(@PathVariable Long id) {
+        return serviceStudentProfile.getStudentProfilesByUserIdentification(id);
+    }
 }
