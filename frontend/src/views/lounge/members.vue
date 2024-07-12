@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import TableCoordinator from '@/components/seedbeds/tableCoordinator.vue';
-import { defineComponent } from 'vue';
+
+
 import { VCard } from 'vuetify/components';
 import { get } from "@/utils/api";
-import { it } from 'vuetify/locale';
+import LoadingManager from '@/utils/loadingManager';
+
 
 </script>
 
@@ -16,13 +17,13 @@ export default {
     return {
       items: [] as Item[],
       loading: true,
-      componentsLoaded: 0,
-      totalComponents: 4
     }
   },
   // ...
   created() {
     this.getData();
+    LoadingManager.setTotalComponents(4);
+    LoadingManager.reset();
   },
   methods: {
     async getData(){
@@ -34,32 +35,13 @@ export default {
       }
     },
     onChildLoeaded (){
-      this.componentsLoaded += 1;
-      if (this.componentsLoaded === this.totalComponents) {
-        this.loading = false
+      LoadingManager.onChildLoaded();
+      if (LoadingManager. allComponentsLoaded()){
+        this.loading = false;
       }
-    }
-  },
 
-  /*data() {
-    return {
-      loading: true
     }
   },
-  mounted() {
-    this.checkLoading()
-  },
-  methods: {
-    checkLoading() {
-      const components = [this.$refs.tableCoordinator, this.$refs.tableTeachers]
-      const allLoaded = components.every(component => component.loaded)
-      if (allLoaded) {
-        this.loading = false
-      } else {
-        setTimeout(this.checkLoading, 100)
-      }
-    }
-  }*/
 }
 </script>
 
@@ -68,11 +50,9 @@ export default {
   <h1 v-if="items.length != 0">{{items[0].name}}</h1>
 
   <VCard class="pa-5" rounded="lg">
-    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.8" persistent contained>
+    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
       <v-progress-circular indeterminate color="primary" size="64"/>
     </VOverlay>
-
-
     <tableCoordinator @loaded="onChildLoeaded"/>
     <tableTeachers @loaded="onChildLoeaded"/>
     <tableMembers @loaded="onChildLoeaded"/>

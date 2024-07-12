@@ -33,8 +33,8 @@ export default defineComponent({
   methods: {
     async getUsers() {
       try {
-        const data = await get('getUsers');
-        this.items = data;
+        this.items = await get('getUsers');
+        this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
       }

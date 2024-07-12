@@ -40,8 +40,8 @@ export default defineComponent({
   methods: {
     async getPeriods() {
       try {
-        const data = await get('getAssesmentPeriods');
-        this.items = data;
+        this.items = await get('getAssesmentPeriods');
+        this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
       }
