@@ -21,6 +21,9 @@ public class ResearchSeedbed {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
     @OneToOne
     @JoinColumn(name = "coordinator_id")
     private FunctionaryProfile coordinator;

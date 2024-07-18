@@ -31,13 +31,10 @@ public class ServiceResearchSeedbed {
         return repositoryResearchSeedbed.findAll();
     }
 
-    public List<ResearchSeedbed> getResearchSeedbeds1(){
-        return repositoryResearchSeedbed.findAll1();
-    }
-
     public Boolean addResearchSeedbed(HashMap<String, String> researchSeedbed) {
         try{
             ResearchSeedbed r = new ResearchSeedbed();
+            r.setActive(true);
             ResearchSeedbed aux;
 
             FunctionaryProfile coordinator = repositoryFunctionaryProfile.findById(Long.parseLong(researchSeedbed.get("coordinator_fp_id"))).get();

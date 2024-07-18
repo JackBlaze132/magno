@@ -46,7 +46,6 @@ public class FetchExternalData {
     }
 
     private static Map<String, Object> getFunctionaryData(String identificationNumber, List<Map<String, Object>> list) {
-        long startTime = System.nanoTime();
         Map<String, Map<String, Object>> identificationMap = new HashMap<>();
 
         for (Map<String, Object> map : list) {
@@ -54,18 +53,13 @@ public class FetchExternalData {
             identificationMap.computeIfAbsent(identification, k -> new HashMap<>()).putAll(map);
         }
 
-        Map<String, Object> mapByIdentificacion = identificationMap.get(identificationNumber);
-        long endTime= System.nanoTime();
-        long executionTime = endTime - startTime;
-        System.out.println("Execution time: " + executionTime);
-        return mapByIdentificacion;
+        return identificationMap.get(identificationNumber);
     }
 
     public static Map<String, Object> fromStringJsonToMap(String json) {
         try{
             JSONObject jsonObject = new JSONObject(json);
-            Map<String, Object> map = jsonObject.toMap();
-            return map;
+            return jsonObject.toMap();
         }
         catch (Exception e){
             System.out.println("Error: " + e.getMessage());
