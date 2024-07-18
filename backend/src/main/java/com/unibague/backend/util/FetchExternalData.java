@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,31 @@ public class FetchExternalData {
             e.printStackTrace();
         }
         return new HashMap<String, Object>();
+    }
+
+    public static List<String> fetchDependencyNamesFromExternalData(){
+        String url = "http://integra.unibague.edu.co/functionariesChart/dependencies?api_token=$2y$10$s/5xSDieUMEvYD/gfNqFAeFzvWXt13jhWuugpJzQ9rZQrbGpBYUxi";
+        try{
+            String jsonString = restTemplate.getForObject(url, String.class);
+            JsonParser jsonParser = new JsonParser();
+            JsonElement jsonElement = jsonParser.parse(jsonString);
+
+            Gson gson = new Gson();
+            List<Map<String, Object>> list = gson.fromJson(jsonElement, new TypeToken<List<Map<String, Object>>>() {}.getType());
+
+            List<String> dependencyNames = new ArrayList<>();
+            for (Map<String, Object> dependency : list) {
+                String dependencyName = (String) dependency.get("dep_name");
+                dependencyNames.add(dependencyName);
+            }
+
+            return dependencyNames;
+        }
+        catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private static Map<String, Object> getFunctionaryData(String identificationNumber, List<Map<String, Object>> list) {

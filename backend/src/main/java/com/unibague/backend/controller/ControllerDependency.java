@@ -26,4 +26,9 @@ public class ControllerDependency {
     public Boolean addDependency(@RequestBody HashMap<String, String> dependency) {
         return serviceDependency.addDependency(dependency);
     }
+
+    @PostMapping("/addAllDependencies")
+    public Boolean addAllDependencies() {
+        return serviceDependency.addAllDependencies();
+    }
 }

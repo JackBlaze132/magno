@@ -19,11 +19,6 @@ public class ControllerResearchSeedbed {
         return serviceResearchSeedbed.getResearchSeedbeds();
     }
 
-    @GetMapping("/getResearchSeedbeds1")
-    public List<ResearchSeedbed> getResearchSeedbeds1(){
-        return serviceResearchSeedbed.getResearchSeedbeds1();
-    }
-
     @PostMapping("/addResearchSeedbed")
     public Boolean addResearchSeedbed(@RequestBody HashMap<String, String> researchSeedbed){
         return serviceResearchSeedbed.addResearchSeedbed(researchSeedbed);

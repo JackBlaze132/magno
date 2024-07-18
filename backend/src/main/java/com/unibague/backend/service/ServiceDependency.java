@@ -2,6 +2,7 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.Dependency;
 import com.unibague.backend.repository.RepositoryDependency;
+import com.unibague.backend.util.FetchExternalData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,21 @@ public class ServiceDependency {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public List<String> getAllDependenciesNames(){
+        return FetchExternalData.fetchDependencyNamesFromExternalData();
+    }
+
+    public Boolean addAllDependencies(){
+        List<String> dependencies = getAllDependenciesNames();
+        for (String dependency : dependencies) {
+            if (!repositoryDependency.existsByName(dependency)) {
+                Dependency d = new Dependency();
+                d.setName(dependency);
+                repositoryDependency.save(d);
+            }
+        }
+        return true;
     }
 }
