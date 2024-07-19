@@ -20,6 +20,7 @@ declare module 'vue' {
     TableAcademic: typeof import('./src/components/provitional/tableAcademic.vue')['default']
     TableAssestmentPeriods: typeof import('./src/components/tables/general/tableAssestmentPeriods.vue')['default']
     TableCoordinator: typeof import('./src/components/tables/lounge/tableCoordinator.vue')['default']
+    TableEmployees: typeof import('./src/components/tables/general/tableEmployees.vue')['default']
     TableExternal: typeof import('./src/components/tables/lounge/tableExternal.vue')['default']
     TableGroups: typeof import('./src/components/tables/general/tableGroups.vue')['default']
     'TableGroups copy': typeof import('./src/components/provitional/tableGroups copy.vue')['default']
