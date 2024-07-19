@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.unibague.backend.model.AcademicProgram;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
@@ -63,6 +64,36 @@ public class FetchExternalData {
             }
 
             return dependencyNames;
+        }
+        catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<AcademicProgram> fetchAcademicProgramNamesFromExternalData(){
+        String url = "http://integra.unibague.edu.co/academicPrograms?api_token=$2y$10$s/5xSDieUMEvYD/gfNqFAeFzvWXt13jhWuugpJzQ9rZQrbGpBYUqo";
+        try{
+            String jsonString = restTemplate.getForObject(url, String.class);
+            JsonParser jsonParser = new JsonParser();
+            JsonElement jsonElement = jsonParser.parse(jsonString);
+
+            Gson gson = new Gson();
+            List<Map<String, Object>> list = gson.fromJson(jsonElement, new TypeToken<List<Map<String, Object>>>() {}.getType());
+
+            List<AcademicProgram> academicPrograms = new ArrayList<>();
+            for (Map<String, Object> academicProgram : list) {
+
+                String academicProgramName = (String) academicProgram.get(IntegraAcademicPorgramsNomenclature.PROGRAM_NAME);
+                String academicProgramCode = (String) academicProgram.get(IntegraAcademicPorgramsNomenclature.PROGRAM_CODE);
+
+                if(!Character.isLetter(academicProgramCode.charAt(0))){
+                    academicPrograms.add(new AcademicProgram(academicProgramName, academicProgramCode));
+                }
+            }
+
+            return academicPrograms;
         }
         catch (Exception e){
             System.out.println("Error: " + e.getMessage());

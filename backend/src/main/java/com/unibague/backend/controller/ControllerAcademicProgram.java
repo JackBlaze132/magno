@@ -27,4 +27,9 @@ public class ControllerAcademicProgram {
     public boolean addAcademicProgram(@RequestBody HashMap<String, String> academicProgram){
         return serviceAcademicProgram.addAcademicProgram(academicProgram);
     }
+
+    @PostMapping(path = "/addAllAcademicPrograms")
+    public boolean addAllAcademicPrograms(){
+        return serviceAcademicProgram.addAllAcademicPrograms();
+    }
 }

@@ -27,4 +27,13 @@ public class AcademicProgram {
     @JsonIgnore
     @ManyToMany(mappedBy = "academicPrograms")
     private List<StudentProfile> studentProfiles;
+
+    public AcademicProgram(String name, String programCode) {
+        this.name = name;
+        this.programCode = programCode;
+    }
+
+    public AcademicProgram() {
+
+    }
 }
