@@ -14,7 +14,7 @@
             />
           </v-list-item>
           <v-list-item
-            prepend-icon="ri-home-3-fill"
+            prepend-icon="ri-home-3-line"
             title="Inicio"
             value="inicio"
             to="/inicio">
@@ -26,17 +26,29 @@
             to="/periodos">
           </v-list-item>
           <v-list-item
-            prepend-icon="ri-file-2-line"
+            prepend-icon="ri-file-chart-line"
             title="Informes"
             value="informes"
             to="/informes">
           </v-list-item>
           <v-divider class="px-4 my-4"></v-divider>
           <v-list-item
-            prepend-icon="ri-user-settings-fill"
+            prepend-icon="ri-user-settings-line"
             title="Usuarios"
             value="usuarios"
             to="/usuarios">
+          </v-list-item>
+          <v-list-item
+            prepend-icon="ri-briefcase-4-line"
+            title="Funcionarios"
+            value="funcionarios"
+            to="/funcionarios">
+          </v-list-item>
+          <v-list-item
+            prepend-icon="ri-graduation-cap-line"
+            title="Estudiantes"
+            value="estudiantes"
+            to="/estudiantes">
           </v-list-item>
         </v-list>
         <template v-slot:append>

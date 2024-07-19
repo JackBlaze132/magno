@@ -110,6 +110,14 @@ export const routes = [
           }
         ],
       },
+      {
+        path: '/funcionarios',
+        component: () => import('@/views/functionary/index.vue'),
+      },
+      {
+        path:'/estudiantes',
+        component: () => import('@/views/students/index.vue'),
+      }
 
 
     ],
