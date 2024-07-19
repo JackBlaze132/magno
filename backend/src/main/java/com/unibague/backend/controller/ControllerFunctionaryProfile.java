@@ -15,9 +15,9 @@ public class ControllerFunctionaryProfile {
     @Autowired
     ServiceFunctionaryProfile serviceFunctionaryProfile;
 
-    @GetMapping("/getTeacherProfiles")
+    @GetMapping("/getFunctionaryProfiles")
     public List<FunctionaryProfile> getTeacherProfiles() {
-        return serviceFunctionaryProfile.getTeacherProfiles();
+        return serviceFunctionaryProfile.getFunctionaryProfiles();
     }
 
     @GetMapping("/getTeacherProfiles1")

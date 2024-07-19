@@ -9,7 +9,6 @@ import com.unibague.backend.util.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +84,7 @@ public class ServiceFunctionaryProfile {
         return repositoryFunctionaryProfile.findExternalFunctionaryProfilesByResearchSeedbedId(researchseedbedId);
     }
 
-    public List<FunctionaryProfile> getTeacherProfiles() {
+    public List<FunctionaryProfile> getFunctionaryProfiles() {
         return repositoryFunctionaryProfile.findAll();
     }
 
