@@ -47,6 +47,7 @@ public class ControllerStudentProfile {
         return serviceStudentProfile.addStudentProfile(studentProfile);
     }
 
+    // TODO: First path variable is not used
     @PostMapping(path = "/addStudentProfileByExcel/{apid}/{rsid}")
     //apid = assesment_period_id / rsid = research_seedbed_id
     public Boolean addUserByExcel(@RequestParam("file") MultipartFile file, @PathVariable String apid, @PathVariable String rsid) {

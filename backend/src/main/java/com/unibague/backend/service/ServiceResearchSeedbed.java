@@ -1,6 +1,7 @@
 package com.unibague.backend.service;
 
 import com.unibague.backend.model.FunctionaryProfile;
+import com.unibague.backend.model.InvestigationGroup;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
 import com.unibague.backend.repository.RepositoryFunctionaryProfile;
@@ -39,10 +40,11 @@ public class ServiceResearchSeedbed {
 
             FunctionaryProfile coordinator = repositoryFunctionaryProfile.findById(Long.parseLong(researchSeedbed.get("coordinator_fp_id"))).get();
             FunctionaryProfile tutor = repositoryFunctionaryProfile.findById(Long.parseLong(researchSeedbed.get("tutor_fp_id"))).get();
+            InvestigationGroup ig = repositoryInvestigationGroup.findById(Long.parseLong(researchSeedbed.get("investigation_group_id"))).get();
 
             r.setName(researchSeedbed.get("name"));
-            r.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.parseLong(researchSeedbed.get("assesment_period_id"))).get());
-            r.setInvestigationGroup(repositoryInvestigationGroup.findById(Long.parseLong(researchSeedbed.get("investigation_group_id"))).get());
+            r.setInvestigationGroup(ig);
+            r.setAssesmentPeriod(ig.getAssesmentPeriod());
             r.setCoordinator(coordinator);
             r.setTutor(tutor);
 
