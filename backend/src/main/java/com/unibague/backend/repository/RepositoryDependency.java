@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface RepositoryDependency extends JpaRepository<Dependency, Long>{
 
     Optional<Dependency> findById(Long id);
+    Optional<Dependency> findByName(String name);
     Boolean existsByName(String name);
 }

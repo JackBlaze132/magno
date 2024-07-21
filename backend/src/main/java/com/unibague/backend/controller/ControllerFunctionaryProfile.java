@@ -45,7 +45,7 @@ public class ControllerFunctionaryProfile {
         return serviceFunctionaryProfile.findInvestigationGroupDirector1();
     }
 
-    @PostMapping("/addTeacherProfile")
+    @PostMapping("/addFunctionaryProfile")
     public Boolean addFunctionaryProfile(@RequestBody HashMap<String, String> functionaryProfile) {
         return serviceFunctionaryProfile.addFunctionaryProfile(functionaryProfile);
     }

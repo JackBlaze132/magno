@@ -20,6 +20,8 @@ import java.util.stream.StreamSupport;
 @Service
 public class ServiceUpload {
 
+    //https://www.youtube.com/watch?v=pCQ20erq_cg&t=7s
+
     private final UtilUpload utilUpload;
 
     public ServiceUpload(UtilUpload utilUpload){
@@ -80,8 +82,6 @@ public class ServiceUpload {
                         return BigDecimal.valueOf(numericValue).toPlainString();
                     }
                 }
-            case BLANK:
-                return "";
             default:
                 return "";
         }

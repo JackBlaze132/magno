@@ -31,6 +31,9 @@ public class ServiceFunctionaryProfile {
     @Autowired
     RepositoryResearchSeedbed repositoryResearchSeedbed;
 
+    @Autowired
+    ServiceUser serviceUser;
+
     public Boolean addFunctionaryProfile(HashMap<String, String> functionaryProfile) {
         try{
 
@@ -39,8 +42,22 @@ public class ServiceFunctionaryProfile {
             FunctionaryProfile f = new FunctionaryProfile();
             f.setIdentificationNumber(functionaryProfile.get("identification_number"));
             f.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(functionaryProfile.get("assesment_period_id"))).get());
-            f.setDependency(repositoryDependency.findById(Long.valueOf(functionaryProfile.get("dependency_id"))).get());
-            f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
+            f.setDependency(repositoryDependency.findByName(map.get(IntegraFunctionaryNomenclature.PROGRAM).toString()).get());
+
+            if(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).isEmpty()){
+                //Notice that the following code don't consider the case when the user is an external user, needs to be corrected
+                Map<String, Object> functionaryInfo = FetchExternalData.fetchExternalDataFromFunctionary(functionaryProfile.get("identification_number"));
+
+                HashMap<String, String> user = new HashMap<>();
+                user.put("email", String.valueOf(functionaryInfo.get("email")));
+                user.put("isExternalUser", "false");
+                user.put("userIdentification", String.valueOf(functionaryInfo.get("identification")));
+                serviceUser.addUser(user);
+                f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
+            }
+            else{
+                f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
+            }
 
             f.setEmail(String.valueOf(map.get("email")));
             f.setName(String.valueOf(map.get("full_name")));
@@ -52,6 +69,7 @@ public class ServiceFunctionaryProfile {
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

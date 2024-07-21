@@ -1,5 +1,6 @@
 package com.unibague.backend.service;
 
+import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.model.InvestigationGroup;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
@@ -32,10 +33,11 @@ public class ServiceInvestigationGroup {
         try{
 
             InvestigationGroup i = new InvestigationGroup();
+            FunctionaryProfile coordinator = repositoryFunctionaryProfile.findById(Long.parseLong(investigationGroup.get("coordinator_fp_id"))).get();
 
             i.setName(investigationGroup.get("name"));
-            i.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.parseLong(investigationGroup.get("assesment_period_id"))).get());
-            i.setCoordinator(repositoryFunctionaryProfile.findById(Long.parseLong(investigationGroup.get("coordinator_fp_id"))).get());
+            i.setCoordinator(coordinator);
+            i.setAssesmentPeriod(coordinator.getAssesmentPeriod());
 
             List<ResearchSeedbed> researchSeedbeds = new ArrayList<>();
             i.setResearchSeedbeds(researchSeedbeds);
@@ -49,5 +51,9 @@ public class ServiceInvestigationGroup {
 
     public List<InvestigationGroup> findInvestigationGroupByAssesmentPeriod(Long assesmentPeriodId) {
         return repositoryInvestigationGroup.findByAssesmentPeriodId(assesmentPeriodId);
+    }
+
+    public List<InvestigationGroup> findAllOrderedByAssesmentPeriod(){
+        return repositoryInvestigationGroup.findAllOrderedByAssesmentPeriod();
     }
 }

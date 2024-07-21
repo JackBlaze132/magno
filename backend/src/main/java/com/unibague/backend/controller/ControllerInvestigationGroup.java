@@ -29,4 +29,9 @@ public class ControllerInvestigationGroup {
     public List<InvestigationGroup> getInvestigationGroupsByAssesmentPeriodId(@PathVariable Long id) {
         return serviceInvestigationGroup.findInvestigationGroupByAssesmentPeriod(id);
     }
+
+    @GetMapping("/getAllInvestigationGroupsOrderedByAssesmentPeriod")
+    public List<InvestigationGroup> getAllInvestigationGroupsOrderedByAssesmentPeriod() {
+        return serviceInvestigationGroup.findAllOrderedByAssesmentPeriod();
+    }
 }

@@ -25,10 +25,10 @@ public class FunctionaryProfile {
     @Column(name = "user_code", nullable = false)
     private String userCode;
 
-    @Column(name = "identification_number", nullable = false, unique = true)
+    @Column(name = "identification_number", nullable = false)
     private String identificationNumber;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
     private String phoneNumber;
