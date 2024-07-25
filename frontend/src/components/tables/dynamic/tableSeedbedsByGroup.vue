@@ -11,10 +11,7 @@ import { RouterLink } from "vue-router";
 interface Item {
   id: number,
   name: string,
-  coordinator: {
-    name: string
-  },
-  assesmentPeriod:{
+  coordninator: {
     name: string
   }
 }
@@ -26,12 +23,11 @@ export default defineComponent({
       items: [] as Item[],
       search: '',
       links: '',
-      sortBy:[{key:'assesmentPeriod.name', order:'des'}, {key: 'name', order:'asc'}],
       headers: [
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
-        {title: 'Periodo', key: 'assesmentPeriod.name'},
         {title: 'Coordinador', key: 'coordinator.name'},
+        { key: 'link', sortable: false},
       ],
     }
   },
@@ -42,7 +38,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getResearchSeedbeds');
+        this.items = await get('getResearchSeedbedsByInvestigationGroupId/' + this.$route.params.idGrupo);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -54,6 +50,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <h1>Semilleros</h1>
   <VCard flat>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
@@ -71,9 +68,18 @@ export default defineComponent({
       :items="items"
       :search="search"
       :headers="headers"
-      :sort-by="sortBy"
-
     >
+      <!--<template v-slot:item.isActive="{item}">
+        <VChip :color="item.isActive ? 'green' : ''" >
+          {{ periodActivityFormatter(item.isActive)}}
+        </VChip>
+      </template>-->
+
+      <template v-slot:item.link="{item}">
+        <RouterLink :to="item.id.toString()">
+          <VIcon icon="ri-search-eye-fill"/>
+        </RouterLink>
+      </template>
     </VDataTable>
   </VCard>
 </template>

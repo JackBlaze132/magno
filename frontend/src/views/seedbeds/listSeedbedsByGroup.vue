@@ -1,3 +1,12 @@
+<template>
+  <VCard flat>
+    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
+      <v-progress-circular indeterminate color="primary" size="64"/>
+    </VOverlay>
+    <tableSeedbedsByGroup @loaded="onChildLoeaded"/>
+</VCard>
+</template>
+
 <script lang="ts">
 import LoadingManager from '@/utils/loadingManager';
 export default{
@@ -22,11 +31,3 @@ export default{
 }
 
 </script>
-<template>
-  <VCard variant="flat">
-    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
-      <v-progress-circular indeterminate color="primary" size="64"/>
-    </VOverlay>
-    <tableGroups @loaded="onChildLoeaded"/>
-  </VCard>
-</template>

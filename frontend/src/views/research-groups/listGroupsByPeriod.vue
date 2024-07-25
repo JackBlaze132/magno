@@ -1,14 +1,4 @@
-<template	>
-  <VCard>
-    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
-      <v-progress-circular indeterminate color="primary" size="64"/>
-    </VOverlay>
-    <TableFunctionaries @loaded="onChildLoeaded"/>
-  </VCard>
-</template>
-
 <script lang="ts">
-import TableFunctionaries from '@/components/tables/general/tableEmployees.vue';
 import LoadingManager from '@/utils/loadingManager';
 export default{
   data(){
@@ -32,3 +22,11 @@ export default{
 }
 
 </script>
+<template>
+  <VCard variant="flat">
+    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
+      <v-progress-circular indeterminate color="primary" size="64"/>
+    </VOverlay>
+    <tableGroupsByPeriod @loaded="onChildLoeaded"/>
+  </VCard>
+</template>
