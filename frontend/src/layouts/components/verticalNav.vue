@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import magnoDark from '@images/logos/magno-dark.svg?raw'
+import { VDivider } from 'vuetify/components';
 </script>
 
 <template>
@@ -20,16 +21,23 @@
             to="/inicio">
           </v-list-item>
           <v-list-item
+            prepend-icon="ri-file-chart-line"
+            title="Informes"
+            value="informes"
+            to="/informes">
+          </v-list-item>
+          <VDivider class="px-4 my-4"/>
+          <v-list-item
             prepend-icon="ri-calendar-check-fill"
             title="Periodos académicos"
             value="periodos"
             to="/periodos">
           </v-list-item>
           <v-list-item
-            prepend-icon="ri-file-chart-line"
-            title="Informes"
-            value="informes"
-            to="/informes">
+            prepend-icon="ri-seedling-line"
+            title="Semilleros"
+            value="semilleros"
+            to="/semilleros">
           </v-list-item>
           <v-divider class="px-4 my-4"></v-divider>
           <v-list-item

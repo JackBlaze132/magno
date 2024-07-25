@@ -7,9 +7,15 @@ import { externalFormatter } from "@/utils/formatter";
 
 interface Item {
   id: number,
-  userIdentification: string,
+  name: string
+  userCode: string,
+  identificationNumber: string,
+  phoneNumber: string,
   email: string,
-  isExternalUser: boolean,
+  sex: string,
+  dependency:{
+    name:string,
+  }
 }
 
 export default defineComponent({
@@ -20,10 +26,15 @@ export default defineComponent({
       search: '',
       headers: [
         {title: 'ID', key: 'id'},
-        {title: 'Número de identificación', key: 'userIdentification'},
-        {title: 'Correo electrónico', key: 'email'},
-        {title: 'Afiliación', key: 'isExternalUser'}
-      ]
+        {title: 'Nombre', key: 'name'},
+        {title: 'Código', key: 'userCode'},
+        {title: 'Identificación', key: 'identificationNumber'},
+        {title: 'Teléfono', key: 'phoneNumber'},
+        {title: 'Correo', key: 'email'},
+        {title: 'Sexo', key: 'sex'},
+        {title: 'Dependecia', key: 'dependency.name'},
+        { key: 'link', sortable: false},
+      ],
     }
   },
   // ...

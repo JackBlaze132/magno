@@ -41,7 +41,12 @@ export const routes = [
               {
                 path:'listar-grupos',
                 name:'listar-grupos',
-                component: () => import ('@/views/research-groups/listGroups.vue'),
+                component: () => import ('@/views/research-groups/listGroupsByPeriod.vue'),
+              },
+              {
+                path:'agregar-grupo',
+                name:'agregar-grupo',
+                component: () => import ('@/views/research-groups/addGroupByPeriod.vue'),
               },
               {
                 path:':idGrupo/semilleros',
@@ -54,7 +59,7 @@ export const routes = [
                   {
                     path:'listar-semilleros',
                     name:'listar-semilleros',
-                    component: () => import ('@/views/seedbeds/listSeedbeds.vue'),
+                    component: () => import ('@/views/seedbeds/listSeedbedsByGroup.vue'),
                   },
                   {
                     path:':idSemillero',
@@ -86,14 +91,8 @@ export const routes = [
         ]
       },
       {
-        path:'reports',
-        component: () => import('@/views/reports/index.vue'),
-        children: [
-          {
-            path: 'upload',
-            component: () => import('@/views/reports/upload.vue')
-          }
-        ]
+        path: '/semilleros',
+        component: () => import('@/views/seedbeds/listSeedbeds.vue'),
       },
       {path: '/usuarios', redirect: '/usuarios/listar-usuarios'},
       {
