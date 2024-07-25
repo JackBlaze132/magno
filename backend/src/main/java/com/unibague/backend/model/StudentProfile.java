@@ -25,7 +25,7 @@ public class StudentProfile {
     @Column(name = "user_code")
     private String userCode;
 
-    @Column(name = "identification_number", nullable = false, unique = true)
+    @Column(name = "identification_number", nullable = false)
     private String identificationNumber;
 
     @Column(name = "phone_number")

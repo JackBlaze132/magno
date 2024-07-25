@@ -125,4 +125,8 @@ public class ServiceFunctionaryProfile {
     public FunctionaryProfile findInvestigationGroupDirector1(){
         return repositoryFunctionaryProfile.findInvestigationGroupDirector1();
     }
+
+    public List<FunctionaryProfile> getFunctionaryProfilesByAssesmentPeriod(Long idAssesmentPeriod) {
+        return repositoryFunctionaryProfile.findFunctionaryProfilesByAssesmentPeriodId(idAssesmentPeriod);
+    }
 }

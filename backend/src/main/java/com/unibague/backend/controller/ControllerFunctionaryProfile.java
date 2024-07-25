@@ -69,4 +69,9 @@ public class ControllerFunctionaryProfile {
     public List<FunctionaryProfile> getExternalFunctionaryProfilesByResearchSeedbedId(@PathVariable Long id) {
         return serviceFunctionaryProfile.getExternalFunctionaryProfilesByResearchSeedbedId(id);
     }
+
+    @GetMapping(path = "/getFunctionaryProfileByAssesmentPeriodId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FunctionaryProfile> getFunctionaryProfilesByAssesmentPeriodId(@PathVariable Long id) {
+        return serviceFunctionaryProfile.getFunctionaryProfilesByAssesmentPeriod(id);
+    }
 }

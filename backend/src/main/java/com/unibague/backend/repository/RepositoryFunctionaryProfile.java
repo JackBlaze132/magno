@@ -35,4 +35,7 @@ public interface RepositoryFunctionaryProfile extends JpaRepository<FunctionaryP
 
     @Query("SELECT fp from FunctionaryProfile fp INNER JOIN fp.researchSeedbeds_teacher rs WHERE rs.id = ?1 AND fp.userTeacher.isExternalUser = true")
     List<FunctionaryProfile> findExternalFunctionaryProfilesByResearchSeedbedId(Long id);
+
+    @Query("SELECT fp from FunctionaryProfile fp WHERE fp.assesmentPeriod.id = ?1")
+    List<FunctionaryProfile> findFunctionaryProfilesByAssesmentPeriodId(Long id);
 }
