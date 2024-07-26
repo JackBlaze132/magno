@@ -180,7 +180,7 @@ public class ServiceStudentProfile {
 
     public Boolean addStudentProfileToAResearchSeedbed(HashMap<String, String> studentProfile){
         try{
-            Map<String, Object> map = getJsonByStudentIdentification(studentProfile.get(IntegraStudentNomenclature.IDENTIFICATION));
+            Map<String, Object> map = getJsonByStudentIdentification(studentProfile.get("identification_number"));
 
             Long researchSeedbedId = Long.valueOf(studentProfile.get("research_seedbed_id"));
 
@@ -197,7 +197,9 @@ public class ServiceStudentProfile {
                 addStudentProfile(studentProfile);
             }
             sp = repositoryStudentProfile.findByUserIdentificationAndAssesmentPeriodId(identification, ap.getId()).get();
-            sp.getResearchSeedbeds().add(rs);
+            List<ResearchSeedbed> researchSeedbeds = sp.getResearchSeedbeds();
+            researchSeedbeds.add(rs);
+            sp.setResearchSeedbeds(researchSeedbeds);
             repositoryStudentProfile.save(sp);
             return true;
         }

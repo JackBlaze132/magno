@@ -44,7 +44,7 @@ public class ControllerStudentProfile {
 
     @PostMapping(path = "/addStudentProfile", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Boolean addStudentProfile(@RequestBody HashMap<String, String> studentProfile) {
-        return serviceStudentProfile.addStudentProfile(studentProfile);
+        return serviceStudentProfile.addStudentProfileToAResearchSeedbed(studentProfile);
     }
 
     // TODO: First path variable is not used
