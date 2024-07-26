@@ -198,8 +198,12 @@ public class ServiceStudentProfile {
             }
             sp = repositoryStudentProfile.findByUserIdentificationAndAssesmentPeriodId(identification, ap.getId()).get();
             List<ResearchSeedbed> researchSeedbeds = new ArrayList<>(sp.getResearchSeedbeds());
-            researchSeedbeds.add(rs);
-            sp.setResearchSeedbeds(researchSeedbeds);
+
+            if(!rs.equals(researchSeedbeds.getFirst())){
+                researchSeedbeds.add(rs);
+                sp.setResearchSeedbeds(researchSeedbeds);
+            }
+            
             repositoryStudentProfile.save(sp);
             return true;
         }
