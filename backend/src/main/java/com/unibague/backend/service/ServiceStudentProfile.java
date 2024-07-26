@@ -178,6 +178,7 @@ public class ServiceStudentProfile {
         return sp;
     }
 
+    //TODO: Implement the functionalities related to postgraduate students
     public Boolean addStudentProfileToAResearchSeedbed(HashMap<String, String> studentProfile){
         try{
             Map<String, Object> map = getJsonByStudentIdentification(studentProfile.get("identification_number"));
@@ -194,16 +195,20 @@ public class ServiceStudentProfile {
 
             StudentProfile sp;
             if (repositoryStudentProfile.findByUserIdentificationAndAssesmentPeriodId(identification, ap.getId()).isEmpty()) {
-                addStudentProfile(studentProfile);
+                return addStudentProfile(studentProfile);
             }
             sp = repositoryStudentProfile.findByUserIdentificationAndAssesmentPeriodId(identification, ap.getId()).get();
             List<ResearchSeedbed> researchSeedbeds = new ArrayList<>(sp.getResearchSeedbeds());
 
-            if(!rs.equals(researchSeedbeds.getFirst())){
+            //If the student is already in the research seedbed (rs), return false
+            if(researchSeedbeds.stream().noneMatch(r -> r.getId().equals(researchSeedbedId))) {
                 researchSeedbeds.add(rs);
                 sp.setResearchSeedbeds(researchSeedbeds);
             }
-            
+            else{
+                return false;
+            }
+
             repositoryStudentProfile.save(sp);
             return true;
         }
