@@ -24,7 +24,7 @@ public class ServiceUser {
             User u = new User();
             u.setEmail(user.get("email"));
             u.setIsExternalUser(Boolean.parseBoolean(user.get("isExternalUser")));
-            u.setUserIdentification(user.get("userIdentification"));
+            u.setUserIdentification(user.get("identification"));
             repositoryUser.saveAndFlush(u);
             return true;
         } catch (Exception e) {

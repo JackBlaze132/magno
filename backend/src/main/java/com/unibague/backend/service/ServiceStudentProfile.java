@@ -197,7 +197,7 @@ public class ServiceStudentProfile {
                 addStudentProfile(studentProfile);
             }
             sp = repositoryStudentProfile.findByUserIdentificationAndAssesmentPeriodId(identification, ap.getId()).get();
-            List<ResearchSeedbed> researchSeedbeds = sp.getResearchSeedbeds();
+            List<ResearchSeedbed> researchSeedbeds = new ArrayList<>(sp.getResearchSeedbeds());
             researchSeedbeds.add(rs);
             sp.setResearchSeedbeds(researchSeedbeds);
             repositoryStudentProfile.save(sp);
