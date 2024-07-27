@@ -77,7 +77,7 @@ export default defineComponent({
         single-line
       ></VTextField>
       <VBtn to="subir-estudiantes" class="mx-2" prepend-icon="ri-upload-cloud-2-fill" color="black"> Subir</VBtn>
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+      <VBtn to="agregar-estudiante" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
 
     </VCardTitle>
     <VDataTable

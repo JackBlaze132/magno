@@ -6,13 +6,10 @@ import { VDivider } from 'vuetify/components';
 <template>
   <v-card >
     <v-layout class="auth-wrapper">
-      <v-navigation-drawer class="bg-grey-lighten-2 position-fixed" theme="light" permanent>
+      <v-navigation-drawer class="bg-grey-lighten-2 position-fixed" permanent color="surface">
         <v-list nav>
           <v-list-item>
-            <v-img
-              :width="500"
-              v-html=magnoDark
-            />
+            <VIcon icon="ri-app-logo"></VIcon>
           </v-list-item>
           <v-list-item
             prepend-icon="ri-home-3-line"
@@ -34,10 +31,17 @@ import { VDivider } from 'vuetify/components';
             to="/periodos">
           </v-list-item>
           <v-list-item
+<<<<<<< Updated upstream
             prepend-icon="ri-seedling-line"
             title="Semilleros"
             value="semilleros"
             to="/semilleros">
+=======
+            prepend-icon="ri-file-chart-2-line"
+            title="Informes"
+            value="informes"
+            to="/informes">
+>>>>>>> Stashed changes
           </v-list-item>
           <v-divider class="px-4 my-4"></v-divider>
           <v-list-item
@@ -47,17 +51,24 @@ import { VDivider } from 'vuetify/components';
             to="/usuarios">
           </v-list-item>
           <v-list-item
+<<<<<<< Updated upstream
             prepend-icon="ri-briefcase-4-line"
+=======
+            prepend-icon="ri-briefcase-4-fill"
+>>>>>>> Stashed changes
             title="Funcionarios"
             value="funcionarios"
             to="/funcionarios">
           </v-list-item>
+<<<<<<< Updated upstream
           <v-list-item
             prepend-icon="ri-graduation-cap-line"
             title="Estudiantes"
             value="estudiantes"
             to="/estudiantes">
           </v-list-item>
+=======
+>>>>>>> Stashed changes
         </v-list>
         <template v-slot:append>
           <div class="pa-2">

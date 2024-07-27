@@ -4,22 +4,12 @@ import { defineComponent } from "vue"
 //utils
 import { get } from "@/utils/api";
 import { externalFormatter } from "@/utils/formatter";
-import { VIcon } from "vuetify/components";
-import { RouterLink } from "vue-router";
-
 
 interface Item {
   id: number,
-  name: string
-  userCode: string,
-  identificationNumber: string,
-  phoneNumber: string,
+  userIdentification: string,
   email: string,
-  sex: string,
-  dependency:{
-    name:string,
-  }
-
+  isExternalUser: boolean,
 }
 
 export default defineComponent({
@@ -28,29 +18,22 @@ export default defineComponent({
     return {
       items: [] as Item[],
       search: '',
-      links: '',
-      loaded: false,
       headers: [
         {title: 'ID', key: 'id'},
-        {title: 'Nombre', key: 'name'},
-        {title: 'Código', key: 'userCode'},
-        {title: 'Identificación', key: 'identificationNumber'},
-        {title: 'Teléfono', key: 'phoneNumber'},
-        {title: 'Correo', key: 'email'},
-        {title: 'Sexo', key: 'sex'},
-        {title: 'Dependecia', key: 'dependency.name'},
-        { key: 'link', sortable: false},
-      ],
+        {title: 'Número de identificación', key: 'userIdentification'},
+        {title: 'Correo electrónico', key: 'email'},
+        {title: 'Afiliación', key: 'isExternalUser'}
+      ]
     }
   },
   // ...
   created() {
-    this.getSeedBeds();
+    this.getUsers();
   },
   methods: {
-    async getSeedBeds() {
+    async getUsers() {
       try {
-        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.idSemillero);
+        this.items = await get('getFunctionaryProfiles');
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -59,11 +42,12 @@ export default defineComponent({
     externalFormatter,
   },
 })
+
+
 </script>
 
 <template>
   <VCard flat>
-    <h2>Tutor</h2>
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
@@ -74,15 +58,18 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-pencil-fill">Editar</VBtn>
+      <VBtn to="agregar-usuarios" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
     >
+      <template v-slot:item.isExternalUser="{item}">
+        {{ externalFormatter(item.isExternalUser)}}
 
-
+      </template>
     </VDataTable>
   </VCard>
 </template>
+

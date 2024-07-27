@@ -1,3 +1,3 @@
 <template>
-  <formUploadStudent/>
+  <formAddStudent/>
 </template>

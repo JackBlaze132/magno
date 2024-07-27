@@ -62,6 +62,11 @@ export const routes = [
                     component: () => import ('@/views/seedbeds/listSeedbedsByGroup.vue'),
                   },
                   {
+                    path:'agregar-semillero',
+                    name:'agregar-semillero',
+                    component: () => import ('@/views/seedbeds/addSeedbedByGroup.vue'),
+                  },
+                  {
                     path:':idSemillero',
                     redirect: (to: RouteLocationNormalized) => {
                       return { name: 'detalles', params: { idSemillero: to.params.idSemillero } }
@@ -76,13 +81,13 @@ export const routes = [
                       {
                         path: 'subir-estudiantes',
                         component: () => import ('@/views/lounge/uploadStudent.vue')
+                      },
+                      {
+                        path: 'agregar-estudiante',
+                        component: () => import ('@/views/lounge/addStudent.vue')
                       }
                     ]
                   },
-                  {
-                    path:'subir-estudiantes',
-                    component: () => import ('@/views/reports/upload.vue')
-                  }
                 ]
               }
             ]
@@ -111,11 +116,15 @@ export const routes = [
       },
       {
         path: '/funcionarios',
+<<<<<<< Updated upstream
         component: () => import('@/views/functionary/index.vue'),
       },
       {
         path:'/estudiantes',
         component: () => import('@/views/students/index.vue'),
+=======
+        component: () => import('@/views/employees/index.vue'),
+>>>>>>> Stashed changes
       }
 
 

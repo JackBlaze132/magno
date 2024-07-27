@@ -6,7 +6,9 @@ import { VSelect } from 'vuetify/components';
 
 interface Item {
   name: string,
-  coordinator_fp_id: string
+  coordinator_fp_id: string,
+  investigation_group_id: string,
+  tutor_fp_id: string
 }
 
 interface Functionary{
@@ -25,6 +27,7 @@ export default defineComponent({
   },
   created() {
       this.getFunctionaries();
+      this.item.investigation_group_id = this.$route.params.idGrupo.toString()
   },
 
   methods: {
@@ -37,10 +40,15 @@ export default defineComponent({
         console.error('Error fetching users:', error);
         }
     },
-    addGroup() {
-      post('addInvestigationGroup', this.item)
+    addSeedbed() {
+      post('addResearchSeedbed', this.item)
       .then((data) => {
-        this.$router.push('listar-grupos');
+        if (data.error) {
+          console.error("Error al realizar la solicitud", data.error);
+        } else {
+          console.log(data);
+          this.$router.push('listar-semilleros');
+        }
       })
       .catch((error) => {
         console.error('Error al realizar la solicitud:', error);
@@ -56,9 +64,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <VForm validate-on="submit" @submit.prevent="addGroup">
+  <VForm validate-on="submit" @submit.prevent="addSeedbed">
     <VTextField label="Nombre" name="name" id="name" v-model="item.name"/>
-    <VSelect label="Director" :items="functionaries" item-title="name" item-value="id" v-model="item.coordinator_fp_id"></VSelect>
+    <VSelect label="Coordinador" :items="functionaries" item-title="name" item-value="id" v-model="item.coordinator_fp_id"></VSelect>
+    <VSelect label="Tutor" :items="functionaries" item-title="name" item-value="id" v-model="item.tutor_fp_id"></VSelect>
 
     <VBtn
       text="Guardar"

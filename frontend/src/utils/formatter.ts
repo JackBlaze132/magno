@@ -10,3 +10,4 @@ export function periodActivityFormatter(isActive: boolean){
   return isActive? 'Activo' : 'inactivo'
 }
 
+

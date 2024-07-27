@@ -53,7 +53,7 @@ export default defineComponent({
 
 <template>
   <h1>Periodos académicos</h1>
-  <VCard flat>
+  <VCard flat class="pa-5">
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
