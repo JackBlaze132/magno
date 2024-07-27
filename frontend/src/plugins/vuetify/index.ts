@@ -5,7 +5,7 @@ import { VBtn } from 'vuetify/components/VBtn'
 import defaults from './defaults'
 import { icons } from './icons'
 import { VDateInput } from 'vuetify/labs/VDateInput'
-//import { themes } from './theme'
+import { themes } from './theme'
 
 // Styles
 
@@ -20,7 +20,9 @@ export default function (app: App) {
     defaults,
     icons,
     theme: {
-      defaultTheme: 'light',
+      defaultTheme: 'dark',
+      themes
+
     },
     components:{
       VDateInput
