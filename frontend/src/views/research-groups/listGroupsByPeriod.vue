@@ -24,7 +24,7 @@ export default{
 </script>
 <template>
   <VCard variant="flat">
-    <VOverlay :model-value="loading" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
+    <VOverlay :model-value="loading" class="d-flex align-center justify-center" opacity="0.85" persistent contained>
       <v-progress-circular indeterminate color="primary" size="64"/>
     </VOverlay>
     <tableGroupsByPeriod @loaded="onChildLoeaded"/>

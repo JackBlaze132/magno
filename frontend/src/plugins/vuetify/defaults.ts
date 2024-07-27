@@ -140,4 +140,7 @@ export default {
   VNavigationDrawer: {
     touchless: true,
   },
+  VOverlay: {
+    scrim: 'surface'
+  }
 }

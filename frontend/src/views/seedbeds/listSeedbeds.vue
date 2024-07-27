@@ -1,7 +1,7 @@
 <template>
   <VCard flat ref="overlayContainer" class="overlay-container">
     <h1>Semilleros</h1>
-    <VOverlay :model-value="loading" :attach="$refs.overlayContainer" class="d-flex align-center justify-center" scrim="white" opacity="0.85" persistent contained>
+    <VOverlay :model-value="loading" :attach="$refs.overlayContainer" class="d-flex align-center justify-center" opacity="0.85" persistent contained>
       <v-progress-circular indeterminate color="primary" size="64"/>
     </VOverlay>
     <tableSeedbeds @loaded="onChildLoeaded"/>

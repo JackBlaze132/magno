@@ -116,15 +116,11 @@ export const routes = [
       },
       {
         path: '/funcionarios',
-<<<<<<< Updated upstream
         component: () => import('@/views/functionary/index.vue'),
       },
       {
-        path:'/estudiantes',
+        path: '/estudiantes',
         component: () => import('@/views/students/index.vue'),
-=======
-        component: () => import('@/views/employees/index.vue'),
->>>>>>> Stashed changes
       }
 
 
