@@ -47,19 +47,9 @@ public class ControllerStudentProfile {
         return serviceStudentProfile.addStudentProfileToAResearchSeedbed(studentProfile);
     }
 
-    // TODO: First path variable is not used
-    @PostMapping(path = "/addStudentProfileByExcel/{apid}/{rsid}")
-    //apid = assesment_period_id / rsid = research_seedbed_id
-    public Boolean addUserByExcel(@RequestParam("file") MultipartFile file, @PathVariable String apid, @PathVariable String rsid) {
-        List<Map<String, String>> retorno = null;
-        try{
-            retorno = serviceUpload.uploadExcel(file);
-        }catch (Exception e) {
-            System.out.println("Error: ");
-            e.printStackTrace();
-            return false;
-        }
-        return serviceStudentProfile.addStudentProfilesByExcel(retorno, apid, rsid);
+    @PostMapping(path = "/addStudentProfileByExcel/{researchSeedbedId}")
+    public Boolean addUserByExcel(@RequestParam("file") MultipartFile file, @PathVariable String researchSeedbedId) {
+        return serviceStudentProfile.addStudentsProfilesByExcel(file, researchSeedbedId);
     }
 
     @GetMapping(path = "/getStudentProfilesByResearchSeedbedId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

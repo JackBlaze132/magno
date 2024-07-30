@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -38,6 +39,9 @@ public class ServiceStudentProfile {
 
     @Autowired
     ServiceUser serviceUser;
+
+    @Autowired
+    ServiceUpload serviceUpload;
 
     private Map<String, Object> getJsonByStudentIdentification(String identification) throws Exception{
         String urlReturn = FetchExternalData.fetchExternalDataFromStudent(identification);
@@ -93,50 +97,41 @@ public class ServiceStudentProfile {
         return (List<StudentProfile>) repositoryStudentProfile.findAll2();
     }
 
+    /**
+     * This method adds students profiles to a research seedbed by an Excel file, notice that
+     * this method just make a call to the method addStudentProfileToAResearchSeedbed for each student in the Excel file
+     * @param file The Excel file with "identification" column, "email" column and their respective values
+     * @param researchSeedbedId The id of the research seedbed where the students will be added
+     * @return true if the students were added successfully, false otherwise
+     */
     @Transactional
-    public Boolean addStudentProfilesByExcel(List<Map<String, String>> listOfMaps, String apid, String rsid) {
+    public Boolean addStudentsProfilesByExcel(MultipartFile file, String researchSeedbedId) {
 
-        if(listOfMaps == null || listOfMaps.isEmpty()){
-            return false;
-        }
+        try{
 
-        serviceUser.addNewUsers(listOfMaps);
+            List<Map<String, String>> listOfMaps = serviceUpload.uploadExcel(file);
 
-        List<StudentProfile> studentProfiles = new ArrayList<StudentProfile>();
-        for (Map<String, String> stringStringMap : listOfMaps) {
-            String studentIdentification = stringStringMap.get(IntegraStudentNomenclature.IDENTIFICATION);
-            StudentProfile studentProfile = new StudentProfile();
-            studentProfile.setIdentificationNumber(studentIdentification);
-            studentProfiles.add(studentProfile);
-        }
-
-        ResearchSeedbed rs = repositoryResearchSeedbed.findById(Long.valueOf(rsid)).get();
-
-        for (StudentProfile studentProfile : studentProfiles) {
-            String document = studentProfile.getIdentificationNumber();
-            if(document == null || document.isEmpty() || document.isBlank()){
-                continue;
-            }
-            try{
-                studentProfile = studentProfileByIdentification(document);
-            }
-            catch (Exception e){
-                System.out.printf("Error: %s", e.getMessage());
-                e.printStackTrace();
+            if(listOfMaps == null || listOfMaps.isEmpty()){
                 return false;
             }
-            studentProfile.setAssesmentPeriod(rs.getAssesmentPeriod());
-            studentProfile.setResearchSeedbeds(List.of(rs));
 
-            ResearchSeedbed researchSeedbed = repositoryResearchSeedbed.findById(Long.valueOf(rsid)).get();
-            if (researchSeedbed.getStudentsProfiles().stream().anyMatch(sp -> sp.getIdentificationNumber().equals(document))){
-                continue;
+            for (Map<String, String> map : listOfMaps){
+                
+                if(map.get(IntegraStudentNomenclature.IDENTIFICATION) == null || map.get(IntegraStudentNomenclature.IDENTIFICATION).isEmpty()){
+                    continue;
+                }
+
+                map.put("research_seedbed_id", researchSeedbedId);
+                map.put("identification_number", map.get(IntegraStudentNomenclature.IDENTIFICATION));
+                addStudentProfileToAResearchSeedbed((HashMap<String, String>) map);
             }
-            else{
-                repositoryStudentProfile.save(studentProfile);
-            }
+            return true;
         }
-        return true;
+        catch (Exception e){
+            System.out.printf("Error: %s", e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
