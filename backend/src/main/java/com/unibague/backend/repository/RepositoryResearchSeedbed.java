@@ -1,5 +1,6 @@
 package com.unibague.backend.repository;
 
+import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.model.ResearchSeedbed;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,5 +13,7 @@ import java.util.Optional;
 public interface RepositoryResearchSeedbed extends JpaRepository<ResearchSeedbed, Long> {
 
     @Query("SELECT rs from ResearchSeedbed rs WHERE rs.investigationGroup.id = ?1")
-    List<ResearchSeedbed> findByInvestigationGroupId(Long investigationGroupId);
+    Optional<List<ResearchSeedbed>> findByInvestigationGroupId(Long investigationGroupId);
+
+    Optional<ResearchSeedbed> findByNameAndAssesmentPeriod(String name, AssesmentPeriod assesmentPeriod);
 }

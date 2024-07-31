@@ -51,7 +51,7 @@ public class ServiceFunctionaryProfile {
                 HashMap<String, String> user = new HashMap<>();
                 user.put("email", String.valueOf(functionaryInfo.get("email")));
                 user.put("isExternalUser", "false");
-                user.put("userIdentification", String.valueOf(functionaryInfo.get("identification")));
+                user.put("identification", String.valueOf(functionaryInfo.get("identification")));
                 serviceUser.addUser(user);
                 f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
             }
