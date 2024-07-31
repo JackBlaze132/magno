@@ -14,7 +14,8 @@ export default defineComponent({
   data() {
     return {
       item: {} as Item,
-      selectedFunctionary: null
+      selectedFunctionary: null,
+      loading: false
     }
   },
   created() {
@@ -29,6 +30,7 @@ export default defineComponent({
           console.error("Error al realizar la solicitud", data.error);
         } else {
           console.log(data);
+          this.loading=true
           this.$router.push('detalles');
         }
       })

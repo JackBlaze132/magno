@@ -78,9 +78,11 @@ export default defineComponent({
       </template>
 
       <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id.toString()">
-          <VIcon icon="ri-search-eye-fill"/>
-        </RouterLink>
+        <QuickActions
+          :toView="item.id.toString()"
+          :toEdit="item.id + '/editar-periodo'"
+          :toDelete="item.id + '/?'"
+          ></QuickActions>
       </template>
     </VDataTable>
   </VCard>

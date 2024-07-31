@@ -1,5 +1,7 @@
 
 import { RouteLocationNormalized } from 'vue-router'
+import { get } from "@/utils/api";
+import LoadingManager from '@/utils/loadingManager';
 
 export const routes = [
   { path: '/', redirect: '/login' },
@@ -15,13 +17,14 @@ export const routes = [
         path: '/informes',
         component: () => import('@/views/reports/index.vue'),
       },
-      {path: '/periodos', redirect: '/periodos/listar-periodos'},
       {
         path: '/periodos',
+        redirect: '/periodos/listar-periodos',
         component: () => import('@/views/assestment-periods/index.vue'),
         children:[
           {
             path:'listar-periodos',
+            name:'Periodos Academicos',
             component: () => import('@/views/assestment-periods/listPeriods.vue')
           },
           {
@@ -29,13 +32,10 @@ export const routes = [
             component: () => import ('@/views/assestment-periods/addPeriod.vue')
           },
           {
-            path: ':idPeriodo/grupos-investigacion',
+            path:':idPeriodo/grupos-investigacion',
             redirect: (to: RouteLocationNormalized) => {
               return { name: 'listar-grupos', params: { idPeriodo : to.params.idPeriodo } }
-            }
-          },
-          {
-            path:':idPeriodo/grupos-investigacion',
+            },
             component: () => import ('@/views/research-groups/index.vue'),
             children:[
               {
@@ -76,7 +76,7 @@ export const routes = [
                       {
                         name: 'detalles',
                         path: 'detalles',
-                        component: () => import ('@/views/lounge/members.vue')
+                        component: () => import ('@/views/lounge/members.vue'),
                       },
                       {
                         path: 'subir-estudiantes',
@@ -99,9 +99,9 @@ export const routes = [
         path: '/semilleros',
         component: () => import('@/views/seedbeds/listSeedbeds.vue'),
       },
-      {path: '/usuarios', redirect: '/usuarios/listar-usuarios'},
       {
         path: '/usuarios',
+        redirect:'/usuarios/listar-usuarios',
         component: () => import('@/views/users/index.vue'),
         children:[
           {

@@ -97,3 +97,23 @@
     height: 75px;
     width: 225px!important ;
   }
+
+  .action {
+    color: rgb(var(--v-theme-on-background)); 
+    opacity: var(--v-medium-emphasis-opacity);
+  }
+
+  .view:hover{
+    color: rgb(var(--v-theme-primary));
+    transition: 500ms;
+  }
+
+  .edit:hover{
+    color: rgb(var(--v-theme-warning));
+    transition: 500ms;
+  }
+
+  .delete:hover{
+    color: rgb(var(--v-theme-error));
+    transition: 500ms;
+  }

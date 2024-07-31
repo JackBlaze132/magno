@@ -12,7 +12,8 @@
     name: 'formAddUser',
     data() {
       return {
-        item: {} as Item
+        item: {} as Item,
+        loading: false
       }
   },
   methods: {
@@ -38,9 +39,11 @@
       <VRadio label="Interno" :value="false"/>
     </VRadioGroup>
     <VBtn
+    :loading="loading"
       text="Agregar"
       prepend-icon="ri-add-fill"
       type="submit"
+
     />
   </VForm>
 </template>

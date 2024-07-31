@@ -4,8 +4,9 @@ import { defineComponent } from "vue"
 //utils
 import { get } from "@/utils/api";
 import { periodActivityFormatter } from "@/utils/formatter";
-import { VChip, VIcon } from "vuetify/components";
+import { VChip, VIcon, VTooltip } from "vuetify/components";
 import { RouterLink } from "vue-router";
+import QuickActions from "@/components/quickActions.vue";
 
 
 interface Item {
@@ -22,6 +23,7 @@ export default defineComponent({
     return {
       items: [] as Item[],
       search: '',
+      show: false,
       links: '',
       headers: [
         {title: 'ID', key: 'id'},
@@ -29,7 +31,7 @@ export default defineComponent({
         {title: 'Fecha de inicio', key: 'startDate'},
         {title: 'Fecha de finalización', key: 'endDate'},
         {title: 'Estado', key: 'isActive'},
-        { key: 'link', sortable: false},
+        {key: 'link', sortable: false},
       ],
     }
   },
@@ -77,9 +79,12 @@ export default defineComponent({
         </VChip>
       </template>
       <template v-slot:item.link="{item}">
-        <RouterLink :to="item.id + '/grupos-investigacion/listar-grupos'">
-          <VIcon icon="ri-search-eye-fill"/>
-        </RouterLink>
+        <QuickActions
+          :toView="item.id + '/grupos-investigacion/listar-grupos'"
+          :toEdit="item.id + '/editar-periodo'"
+          :toDelete="item.id + '/?'"
+          ></QuickActions>
+
       </template>
     </VDataTable>
   </VCard>

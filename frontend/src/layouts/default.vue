@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import AppThemeSwitcher from './components/appThemeSwitcher.vue';
 import verticalNav from './components/verticalNav.vue';
 </script>
 
@@ -6,6 +7,7 @@ import verticalNav from './components/verticalNav.vue';
   <div class="d-flex">
   <verticalNav/>
   <RouterView class="ma-8 w-75"/>
+  <AppThemeSwitcher/>
 </div>
 </template>
 
