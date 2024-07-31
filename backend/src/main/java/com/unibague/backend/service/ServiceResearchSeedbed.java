@@ -119,7 +119,7 @@ public class ServiceResearchSeedbed {
         FunctionaryProfile newFunctionary = repositoryFunctionaryProfile.findById(newFunctionaryId).get();
 
         // Check if the assessment period of the new functionary is the same as the research seedbed
-        if(!rs.getAssesmentPeriod().equals(newFunctionary.getAssesmentPeriod())){
+        if(!rs.getAssesmentPeriod().getId().equals(newFunctionary.getAssesmentPeriod().getId())){
             return false;
         }
 

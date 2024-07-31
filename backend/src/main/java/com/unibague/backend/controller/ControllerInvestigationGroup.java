@@ -25,6 +25,11 @@ public class ControllerInvestigationGroup {
         return serviceInvestigationGroup.addInvestigationGroup(investigationGroup);
     }
 
+    @PatchMapping(path = "/updateInvestigationGroupCoordinator", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean updateInvestigationGroupCoordinator(@RequestBody HashMap<String, String> map) {
+        return serviceInvestigationGroup.updateInvestigationGroupCoordinator(map);
+    }
+
     @GetMapping("/getInvestigationGroupsByAssesmentPeriodId/{id}")
     public List<InvestigationGroup> getInvestigationGroupsByAssesmentPeriodId(@PathVariable Long id) {
         return serviceInvestigationGroup.findInvestigationGroupByAssesmentPeriod(id);
