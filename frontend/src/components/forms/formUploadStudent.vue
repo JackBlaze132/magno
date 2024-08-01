@@ -22,16 +22,7 @@
       </template>
       </VFileInput>
       <span class="d-flex justify-center">
-        <VBtn
-          :loading = "loading"
-          rounded="xl"
-          class="my-2 text-capitalize"
-          prepend-icon="ri-upload-cloud-2-fill"
-          color="black"
-          type="submit"
-          text="Cargar"
-        >
-        </VBtn>
+        <LoadingBtn icon="ri-upload-cloud-2-fill" :loading="loading"></LoadingBtn>
       </span>
     </VForm>
   </VCol>
@@ -41,6 +32,7 @@
 
 <script lang="ts">
 import { file } from '@babel/types';
+import LoadingBtn from '../loadingBtn.vue';
 
 export default {
   data: () => ({
@@ -62,7 +54,7 @@ export default {
       if (this.file.length != 0) {
         formData.append('file', this.file[0]);
         this.loading = true
-        fetch('/api/addStudentProfileByExcel/' + this.$route.params.idPeriodo + '/' + this.$route.params.idSemillero, {
+        fetch('/api/addStudentProfileByExcel/' + this.$route.params.idSemillero, {
         method: 'POST',
         body: formData
       })
