@@ -97,32 +97,49 @@ public class ServiceResearchSeedbed {
     }
 
     /**
-     * Method to update the coordinator of a research seedbed, it receives a map with the following keys:
-     * research_seedbed_id, new_coordinator_fp_id
+     * Method to update the coordinator or tutor of a research seedbed, it receives a map with the following keys:
+     * research_seedbed_id, new_functionary_fp_id, role (COORDINATOR o TUTOR)
      * @param map JSON with the keys mentioned above
-     * @return true if the coordinator was updated successfully, false otherwise
+     * @return true if the functionary was updated successfully, false otherwise
      */
-    public Boolean updateResearchSeedbedCoordinator(HashMap<String, String> map){
+    public Boolean updateResearchSeedbedFunctionary(HashMap<String, String> map){
 
         Long researchSeedbedId = Long.parseLong(map.get("research_seedbed_id"));
-        Long newCoordinatorId = Long.parseLong(map.get("new_coordinator_fp_id"));
+        Long newFunctionaryId = Long.parseLong(map.get("new_functionary_fp_id"));
+        String role = map.get("role");
 
         boolean researchSeedbedExists = repositoryResearchSeedbed.findById(researchSeedbedId).isPresent();
-        boolean newCoordinatorExists = repositoryFunctionaryProfile.findById(newCoordinatorId).isPresent();
+        boolean newFunctionaryExists = repositoryFunctionaryProfile.findById(newFunctionaryId).isPresent();
 
-        if (!researchSeedbedExists || !newCoordinatorExists) {
+        if (!researchSeedbedExists || !newFunctionaryExists) {
             return false;
         }
 
         ResearchSeedbed rs = repositoryResearchSeedbed.findById(researchSeedbedId).get();
-        FunctionaryProfile newCoordinator = repositoryFunctionaryProfile.findById(newCoordinatorId).get();
+        FunctionaryProfile newFunctionary = repositoryFunctionaryProfile.findById(newFunctionaryId).get();
 
-        // Check if the assessment period of the new coordinator is the same as the research seedbed
-        if(!rs.getAssesmentPeriod().equals(newCoordinator.getAssesmentPeriod())){
+        // Check if the assessment period of the new functionary is the same as the research seedbed
+        if(!rs.getAssesmentPeriod().getId().equals(newFunctionary.getAssesmentPeriod().getId())){
             return false;
         }
 
-        rs.setCoordinator(newCoordinator);
+        switch (role) {
+            case "COORDINATOR":
+                if(rs.getTutor().equals(newFunctionary)){
+                    return false; // The new coordinator is the current tutor
+                }
+                rs.setCoordinator(newFunctionary);
+                break;
+            case "TUTOR":
+                if(rs.getCoordinator().equals(newFunctionary)){
+                    return false; // The new tutor is the current coordinator
+                }
+                rs.setTutor(newFunctionary);
+                break;
+            default:
+                return false; // Invalid role
+        }
+
         repositoryResearchSeedbed.save(rs);
 
         return true;

@@ -34,8 +34,8 @@ public class ControllerResearchSeedbed {
         return serviceResearchSeedbed.getResearchSeedbedById(id);
     }
 
-    @PatchMapping(path = "/updateResearchSeedbedCoordinator")
+    @PatchMapping(path = "/updateResearchSeedbedFunctionary")
     public Boolean updateResearchSeedbedCoordinator(@RequestBody HashMap<String, String> map){
-        return serviceResearchSeedbed.updateResearchSeedbedCoordinator(map);
+        return serviceResearchSeedbed.updateResearchSeedbedFunctionary(map);
     }
 }

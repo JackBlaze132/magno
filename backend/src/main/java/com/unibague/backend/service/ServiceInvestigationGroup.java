@@ -32,8 +32,14 @@ public class ServiceInvestigationGroup {
     public boolean addInvestigationGroup(HashMap<String, String> investigationGroup) {
         try{
 
+            Long coordinatorId = Long.parseLong(investigationGroup.get("coordinator_fp_id"));
+
+            if(repositoryFunctionaryProfile.findById(coordinatorId).isEmpty()){
+                return false;
+            }
+
             InvestigationGroup i = new InvestigationGroup();
-            FunctionaryProfile coordinator = repositoryFunctionaryProfile.findById(Long.parseLong(investigationGroup.get("coordinator_fp_id"))).get();
+            FunctionaryProfile coordinator = repositoryFunctionaryProfile.findById(coordinatorId).get();
 
             i.setName(investigationGroup.get("name"));
             i.setCoordinator(coordinator);
@@ -45,6 +51,41 @@ public class ServiceInvestigationGroup {
             repositoryInvestigationGroup.save(i);
             return true;
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Method to update the coordinator of an investigation group, it receives a map with the following keys:
+     * coordinator_fp_id, investigation_group_id
+     * @param map JSON with the keys mentioned above
+     * @return true if the coordinator was updated successfully, false otherwise
+     */
+    public Boolean updateInvestigationGroupCoordinator(HashMap<String, String> map){
+        try{
+            Long coordinatorId = Long.parseLong(map.get("coordinator_fp_id"));
+            Long investigationGroupId = Long.parseLong(map.get("investigation_group_id"));
+
+            if(repositoryFunctionaryProfile.findById(coordinatorId).isEmpty() || repositoryInvestigationGroup.findById(investigationGroupId).isEmpty()){
+                return false;
+            }
+
+            InvestigationGroup i = repositoryInvestigationGroup.findById(investigationGroupId).get();
+            FunctionaryProfile coordinator = repositoryFunctionaryProfile.findById(coordinatorId).get();
+
+            boolean sameAssessmentPeriod = !i.getAssesmentPeriod().getId().equals(coordinator.getAssesmentPeriod().getId());
+            boolean isTheSameCoordinator = i.getCoordinator().getId().equals(coordinator.getId());
+
+            if(sameAssessmentPeriod || isTheSameCoordinator){
+                return false;
+            }
+
+            i.setCoordinator(coordinator);
+            repositoryInvestigationGroup.save(i);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
             return false;
         }
     }
