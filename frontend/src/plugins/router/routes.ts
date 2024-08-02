@@ -1,5 +1,5 @@
 
-import { RouteLocationNormalized } from 'vue-router'
+import { RouteLocationNormalized, useRoute } from 'vue-router'
 import { get } from "@/utils/api";
 import LoadingManager from '@/utils/loadingManager';
 
@@ -51,7 +51,7 @@ export const routes = [
               {
                 path:':idGrupo/semilleros',
                 redirect: (to: RouteLocationNormalized) => {
-                  return { name: 'listar-semilleros', params: { idGrupo: to.params.idGrupo } }
+                  return { name: 'listar-semilleros', params: { idPeriodo: to.params.idPeriodo, idGrupo : to.params.idGrupo } }
                 },
                 component: () => import ('@/views/seedbeds/index.vue'),
                 children:[
@@ -69,7 +69,7 @@ export const routes = [
                   {
                     path:':idSemillero',
                     redirect: (to: RouteLocationNormalized) => {
-                      return { name: 'detalles', params: { idSemillero: to.params.idSemillero } }
+                      return { name: 'detalles', params: { idPeriodo: to.params.idPeriodo, idGrupo : to.params.idGrupo, idSemillero: to.params.idSemillero } }
                     },
                     component: () => import ('@/views/lounge/index.vue'),
                     children:[
@@ -77,6 +77,11 @@ export const routes = [
                         name: 'detalles',
                         path: 'detalles',
                         component: () => import ('@/views/lounge/members.vue'),
+                      },
+                      {
+                        name: 'editar-coordinador',
+                        path: 'editar-coordinador',
+                        component: () => import ('@/views/lounge/editCoordinator.vue'),
                       },
                       {
                         path: 'subir-estudiantes',

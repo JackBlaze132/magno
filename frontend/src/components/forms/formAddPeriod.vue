@@ -20,7 +20,8 @@
     addUser() {
       post('addAssesmentPeriod ', this.item)
         .then((data) => {
-          this.$router.push('/periods');
+          console.log(this.item)
+          this.$router.push('/periodos');
         })
         .catch((error) => {
           console.error('Error al realizar la solicitud:', error);

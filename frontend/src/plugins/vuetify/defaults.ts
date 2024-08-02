@@ -141,6 +141,6 @@ export default {
     touchless: true,
   },
   VOverlay: {
-    scrim: 'surface'
+    scrim: 'background'
   }
 }

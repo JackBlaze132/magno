@@ -26,3 +26,21 @@ export async function post(endpoint: string, data: any) {
     throw error;
   }
 }
+
+export async function update(endpoint: string, data: any) {
+  try {
+    const response = await fetch(`${apiBaseURL}/${endpoint}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  } catch (error) {
+    console.error(`Error posting to ${endpoint}:`, error);
+    throw error;
+  }
+}
+
+

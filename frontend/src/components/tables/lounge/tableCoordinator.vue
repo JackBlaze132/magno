@@ -65,7 +65,7 @@ export default defineComponent({
   <VCard flat>
     <h2>Coordinador</h2>
     <VCardTitle class="d-flex align-center justify-end">
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-pencil-fill">Editar</VBtn>
+      <VBtn to="editar-coordinador" class="mx-2" prepend-icon="ri-pencil-fill">Editar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"
