@@ -86,7 +86,7 @@ public class ServiceStudentProfile {
     }
 
     public List<StudentProfile> getStudentProfiles() {
-        return (List<StudentProfile>) repositoryStudentProfile.findAll();
+        return repositoryStudentProfile.findAll();
     }
 
     public List<StudentProfile> getStudentProfiles1() {

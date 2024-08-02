@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,13 +19,16 @@ public class ServiceAssesmentPeriod {
         return repositoryAssesmentPeriod.findAll();
     }
 
-    public boolean addAssesmentPeriod(HashMap<String, String> assesmentPeriod) {
+    public boolean addAssessmentPeriod(HashMap<String, String> assessmentPeriod) {
         try {
-            AssesmentPeriod a = new AssesmentPeriod();  
-            a.setStartDate(Date.valueOf(assesmentPeriod.get("start_date").substring(0,10)));
-            a.setEndDate(Date.valueOf(assesmentPeriod.get("end_date").substring(0,10)));
-            a.setName(assesmentPeriod.get("name"));
-            a.setIsActive(Boolean.parseBoolean(assesmentPeriod.get("is_active")));
+            AssesmentPeriod a = new AssesmentPeriod();
+            // Notice that the substring method is used because the date values that come from the frontend
+            // Have the format  (example) "2024-07-03T05:00:00.000Z"
+            // If this method fails, the date format should be checked
+            a.setStartDate(Date.valueOf(assessmentPeriod.get("start_date").substring(0,10)));
+            a.setEndDate(Date.valueOf(assessmentPeriod.get("end_date").substring(0,10)));
+            a.setName(assessmentPeriod.get("name"));
+            a.setIsActive(Boolean.parseBoolean(assessmentPeriod.get("is_active")));
             repositoryAssesmentPeriod.save(a);
 
             return true;    
