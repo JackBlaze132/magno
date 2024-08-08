@@ -1,4 +1,3 @@
 <template>
-  <h1>hola</h1>
-  <formUpdateCoordinator roler="COORDINATOR"/>
+  <FormUpdateFunctionary label="Coordinador" roler="COORDINATOR"/>
 </template>

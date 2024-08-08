@@ -74,7 +74,7 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-pencil-fill">Editar</VBtn>
+      <VBtn to="editar-tutor" class="mx-2" prepend-icon="ri-pencil-fill">Editar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"

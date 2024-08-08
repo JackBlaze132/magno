@@ -22,6 +22,9 @@ export default defineComponent({
     roler:{
       type: String,
       default: '',
+    },
+    label:{
+      type: String,
     }
   },
   data() {
@@ -73,7 +76,7 @@ export default defineComponent({
 
 <template>
   <VForm validate-on="submit" @submit.prevent="addSeedbed">
-    <VSelect label="Coordinador" :items="functionaries" item-title="name" item-value="id" v-model="item.new_functionary_fp_id"></VSelect>
+    <VSelect :label="label" :items="functionaries" item-title="name" item-value="id" v-model="item.new_functionary_fp_id"></VSelect>
 
     <VBtn
       text="Guardar"

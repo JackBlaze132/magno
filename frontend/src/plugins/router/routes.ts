@@ -84,6 +84,11 @@ export const routes = [
                         component: () => import ('@/views/lounge/editCoordinator.vue'),
                       },
                       {
+                        name: 'editar-tutor',
+                        path: 'editar-tutor',
+                        component: () => import ('@/views/lounge/editTutor.vue'),
+                      },
+                      {
                         path: 'subir-estudiantes',
                         component: () => import ('@/views/lounge/uploadStudent.vue')
                       },
