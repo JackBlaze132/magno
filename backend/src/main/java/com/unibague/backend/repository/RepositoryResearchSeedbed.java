@@ -15,5 +15,7 @@ public interface RepositoryResearchSeedbed extends JpaRepository<ResearchSeedbed
     @Query("SELECT rs from ResearchSeedbed rs WHERE rs.investigationGroup.id = ?1")
     Optional<List<ResearchSeedbed>> findByInvestigationGroupId(Long investigationGroupId);
 
+    Optional<List<ResearchSeedbed>> findResearchSeedbedsByAssesmentPeriodId(Long assessmentPeriodId);
+
     Optional<ResearchSeedbed> findByNameAndAssesmentPeriod(String name, AssesmentPeriod assesmentPeriod);
 }

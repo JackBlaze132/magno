@@ -38,4 +38,9 @@ public class ControllerResearchSeedbed {
     public Boolean updateResearchSeedbedCoordinator(@RequestBody HashMap<String, String> map){
         return serviceResearchSeedbed.updateResearchSeedbedFunctionary(map);
     }
+
+    @PatchMapping(path = "/updateResearchSeedbedName")
+    public Boolean updateResearchSeedbedName(@RequestBody HashMap<String, String> map){
+        return serviceResearchSeedbed.updateResearchSeedbedName(map);
+    }
 }

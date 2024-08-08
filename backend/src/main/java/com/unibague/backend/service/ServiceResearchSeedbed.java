@@ -1,6 +1,5 @@
 package com.unibague.backend.service;
 
-import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.model.InvestigationGroup;
 import com.unibague.backend.model.ResearchSeedbed;
@@ -31,19 +30,20 @@ public class ServiceResearchSeedbed {
     @Autowired
     RepositoryInvestigationGroup repositoryInvestigationGroup;
 
-    public List<ResearchSeedbed> getResearchSeedbeds(){
+    public List<ResearchSeedbed> getResearchSeedbeds() {
         return repositoryResearchSeedbed.findAll();
     }
 
     /**
      * Method to add a research seedbed, it receives a map with the following keys:
      * name, coordinator_fp_id, tutor_fp_id, investigation_group_id
+     *
      * @param map JSON with the keys mentioned above
      * @return true if the research seedbed was created successfully, false otherwise
      */
     @Transactional
     public Boolean addResearchSeedbed(HashMap<String, String> map) {
-        try{
+        try {
 
             String name = map.get("name");
             Long coordinatorId = Long.parseLong(map.get("coordinator_fp_id"));
@@ -54,7 +54,7 @@ public class ServiceResearchSeedbed {
             boolean tutorExists = repositoryFunctionaryProfile.findById(tutorId).isPresent();
             boolean investigationGroupExists = repositoryInvestigationGroup.findById(investigationGroupId).isPresent();
 
-            if(!coordinatorExists || !tutorExists || !investigationGroupExists){
+            if (!coordinatorExists || !tutorExists || !investigationGroupExists) {
                 return false;
             }
 
@@ -62,7 +62,7 @@ public class ServiceResearchSeedbed {
             FunctionaryProfile tutor = repositoryFunctionaryProfile.findById(tutorId).get();
             InvestigationGroup ig = repositoryInvestigationGroup.findById(investigationGroupId).get();
 
-            if(repositoryResearchSeedbed.findByNameAndAssesmentPeriod(name, ig.getAssesmentPeriod()).isPresent()){
+            if (repositoryResearchSeedbed.findByNameAndAssesmentPeriod(name, ig.getAssesmentPeriod()).isPresent()) {
                 return false;
             }
 
@@ -89,8 +89,7 @@ public class ServiceResearchSeedbed {
             repositoryFunctionaryProfile.save(tutor);
 
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Failure trying to create a research seedbed:\n" + e.getMessage());
             return false;
         }
@@ -102,10 +101,11 @@ public class ServiceResearchSeedbed {
      * Notice that if this method fails trying to update a tutor that is already a tutor in another research seedbed
      * it's important to review the constraints in the database, because in some cases it could be necessary to fix a
      * unique constraint violation in the database because it is generated automatically
+     *
      * @param map JSON with the keys mentioned above
      * @return true if the functionary was updated successfully, false otherwise
      */
-    public Boolean updateResearchSeedbedFunctionary(HashMap<String, String> map){
+    public Boolean updateResearchSeedbedFunctionary(HashMap<String, String> map) {
 
         Long researchSeedbedId = Long.parseLong(map.get("research_seedbed_id"));
         Long newFunctionaryId = Long.parseLong(map.get("new_functionary_fp_id"));
@@ -122,19 +122,19 @@ public class ServiceResearchSeedbed {
         FunctionaryProfile newFunctionary = repositoryFunctionaryProfile.findById(newFunctionaryId).get();
 
         // Check if the assessment period of the new functionary is the same as the research seedbed
-        if(!rs.getAssesmentPeriod().getId().equals(newFunctionary.getAssesmentPeriod().getId())){
+        if (!rs.getAssesmentPeriod().getId().equals(newFunctionary.getAssesmentPeriod().getId())) {
             return false;
         }
 
         switch (role) {
             case "COORDINATOR":
-                if(rs.getTutor().equals(newFunctionary)){
+                if (rs.getTutor().equals(newFunctionary)) {
                     return false; // The new coordinator is the current tutor
                 }
                 rs.setCoordinator(newFunctionary);
                 break;
             case "TUTOR":
-                if(rs.getCoordinator().equals(newFunctionary)){
+                if (rs.getCoordinator().equals(newFunctionary)) {
                     return false; // The new tutor is the current coordinator
                 }
                 rs.setTutor(newFunctionary);
@@ -148,21 +148,51 @@ public class ServiceResearchSeedbed {
         return true;
     }
 
-    public List<ResearchSeedbed> getResearchSeedbedsByInvestigationGroupId(Long id){
-        if(repositoryResearchSeedbed.findByInvestigationGroupId(id).isEmpty()){
+    public List<ResearchSeedbed> getResearchSeedbedsByInvestigationGroupId(Long id) {
+        if (repositoryResearchSeedbed.findByInvestigationGroupId(id).isEmpty()) {
             return null;
         }
-        else{
-            return repositoryResearchSeedbed.findByInvestigationGroupId(id).get();
-        }
+        return repositoryResearchSeedbed.findByInvestigationGroupId(id).get();
     }
 
-    public ResearchSeedbed getResearchSeedbedById(Long id){
-        if(repositoryResearchSeedbed.findById(id).isEmpty()){
+    public ResearchSeedbed getResearchSeedbedById(Long id) {
+        if (repositoryResearchSeedbed.findById(id).isEmpty()) {
             return null;
         }
-        else{
-            return repositoryResearchSeedbed.findById(id).get();
+        return repositoryResearchSeedbed.findById(id).get();
+    }
+
+    /**
+     * Method to update the name of a research seedbed, it receives a map with the following keys:
+     * research_seedbed_id, new_name
+     * @param map JSON with the keys mentioned above
+     * @return true if the name was updated successfully, false otherwise
+     */
+    public Boolean updateResearchSeedbedName(HashMap<String, String> map) {
+        Long researchSeedbedId = Long.parseLong(map.get("research_seedbed_id"));
+        String newName = map.get("new_name");
+
+        boolean researchSeedbedExists = repositoryResearchSeedbed.findById(researchSeedbedId).isPresent();
+
+        if (!researchSeedbedExists) {
+            return false;
         }
+
+        ResearchSeedbed rs = repositoryResearchSeedbed.findById(researchSeedbedId).get();
+        Long assessmentPeriodId = rs.getAssesmentPeriod().getId();
+
+        if(repositoryResearchSeedbed.findResearchSeedbedsByAssesmentPeriodId(assessmentPeriodId).isPresent()){
+            List<ResearchSeedbed> researchSeedbeds = repositoryResearchSeedbed.findResearchSeedbedsByAssesmentPeriodId(assessmentPeriodId).get();
+            for (ResearchSeedbed researchSeedbed : researchSeedbeds) {
+                if(researchSeedbed.getName().equalsIgnoreCase(newName)){
+                    return false;
+                }
+            }
+        }
+        rs.setName(newName);
+
+        repositoryResearchSeedbed.save(rs);
+
+        return true;
     }
 }
