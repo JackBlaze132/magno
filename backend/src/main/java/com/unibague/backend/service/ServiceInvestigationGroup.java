@@ -90,6 +90,39 @@ public class ServiceInvestigationGroup {
         }
     }
 
+    /**
+     * Method to update the name of an investigation group, it receives a map with the following keys:
+     * investigation_group_id, new_name
+     * @param map JSON with the keys mentioned above
+     * @return true if the name was updated successfully, false otherwise
+     */
+    public Boolean updateInvestigationGroupName(HashMap<String, String> map){
+        try{
+            Long investigationGroupId = Long.parseLong(map.get("investigation_group_id"));
+            String name = map.get("new_name");
+
+            if(repositoryInvestigationGroup.findById(investigationGroupId).isEmpty()){
+                return false;
+            }
+
+            InvestigationGroup i = repositoryInvestigationGroup.findById(investigationGroupId).get();
+
+            List<InvestigationGroup> investigationGroups = repositoryInvestigationGroup.findByAssesmentPeriodId(i.getAssesmentPeriod().getId());
+            for(InvestigationGroup investigationGroup : investigationGroups){
+                if(investigationGroup.getName().equalsIgnoreCase(name)){
+                    return false;
+                }
+            }
+
+            i.setName(name);
+            repositoryInvestigationGroup.save(i);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<InvestigationGroup> findInvestigationGroupByAssesmentPeriod(Long assesmentPeriodId) {
         return repositoryInvestigationGroup.findByAssesmentPeriodId(assesmentPeriodId);
     }

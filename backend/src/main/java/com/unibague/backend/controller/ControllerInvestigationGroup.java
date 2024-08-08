@@ -39,4 +39,9 @@ public class ControllerInvestigationGroup {
     public List<InvestigationGroup> getAllInvestigationGroupsOrderedByAssesmentPeriod() {
         return serviceInvestigationGroup.findAllOrderedByAssesmentPeriod();
     }
+
+    @PatchMapping(path = "/updateInvestigationGroupName", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean updateInvestigationGroupName(@RequestBody HashMap<String, String> map) {
+        return serviceInvestigationGroup.updateInvestigationGroupName(map);
+    }
 }

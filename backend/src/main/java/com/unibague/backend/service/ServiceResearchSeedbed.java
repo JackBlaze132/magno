@@ -99,6 +99,9 @@ public class ServiceResearchSeedbed {
     /**
      * Method to update the coordinator or tutor of a research seedbed, it receives a map with the following keys:
      * research_seedbed_id, new_functionary_fp_id, role (COORDINATOR o TUTOR)
+     * Notice that if this method fails trying to update a tutor that is already a tutor in another research seedbed
+     * it's important to review the constraints in the database, because in some cases it could be necessary to fix a
+     * unique constraint violation in the database because it is generated automatically
      * @param map JSON with the keys mentioned above
      * @return true if the functionary was updated successfully, false otherwise
      */
