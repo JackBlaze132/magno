@@ -22,7 +22,7 @@
       </template>
       </VFileInput>
       <span class="d-flex justify-center">
-        <LoadingBtn icon="ri-upload-cloud-2-fill" :loading="loading"></LoadingBtn>
+        <LoadingBtn icon="ri-upload-cloud-2-fill" text="Cargar" :loading="loading"></LoadingBtn>
       </span>
     </VForm>
   </VCol>

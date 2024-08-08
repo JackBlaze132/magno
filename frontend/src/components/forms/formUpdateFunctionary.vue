@@ -2,6 +2,7 @@
 import { defineComponent } from 'vue'
 import { get, update } from "@/utils/api";
 import { VSelect } from 'vuetify/components';
+import LoadingBtn from '../loadingBtn.vue';
 
 
 interface Item {
@@ -31,7 +32,8 @@ export default defineComponent({
     return {
       item: {} as Item,
       functionaries: [] as Functionary[],
-      selectedFunctionary: null
+      selectedFunctionary: null,
+      loading: false
     }
   },
   created() {
@@ -55,6 +57,7 @@ export default defineComponent({
       update('updateResearchSeedbedFunctionary', this.item)
       .then((data) => {
         if (data.error) {
+          this.loading = false
           console.error("Error al realizar la solicitud", data.error);
         } else {
           console.log(data);
@@ -62,6 +65,7 @@ export default defineComponent({
         }
       })
       .catch((error) => {
+        this.loading = false
         console.error('Error al realizar la solicitud:', error);
       });
     }
@@ -78,10 +82,10 @@ export default defineComponent({
   <VForm validate-on="submit" @submit.prevent="addSeedbed">
     <VSelect :label="label" :items="functionaries" item-title="name" item-value="id" v-model="item.new_functionary_fp_id"></VSelect>
 
-    <VBtn
+    <LoadingBtn
       text="Guardar"
-      prepend-icon="ri-save-2-line"
-      type="submit"
+      icon="ri-save-2-line"
+      :loading="loading"
     />
   </VForm>
 </template>

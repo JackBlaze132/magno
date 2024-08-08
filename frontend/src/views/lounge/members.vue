@@ -49,7 +49,7 @@ export default {
 <template>
   <h1 v-if="items.length != 0">{{items[0].name}}</h1>
 
-  <VCard class="pa-5" rounded="lg">
+  <VCard class="pa-5 my-3" rounded="lg">
     <VOverlay :model-value="loading" class="d-flex align-center justify-center" opacity="0.85" persistent contained>
       <v-progress-circular indeterminate color="primary" size="64"/>
     </VOverlay>

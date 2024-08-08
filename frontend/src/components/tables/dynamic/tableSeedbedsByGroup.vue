@@ -53,7 +53,7 @@ export default defineComponent({
 
 <template>
   <h1>Semilleros</h1>
-  <VCard flat>
+  <VCard flat class="pa-5 my-3">
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
@@ -80,7 +80,7 @@ export default defineComponent({
       <template v-slot:item.link="{item}">
         <QuickActions
           :toView="item.id.toString()"
-          :toEdit="item.id + '/editar-periodo'"
+          :toEdit="item.id + '/editar-semillero'"
           :toDelete="item.id + '/?'"
           ></QuickActions>
       </template>

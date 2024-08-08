@@ -9,6 +9,9 @@
       },
       icon: {
         type: String,
+      },
+      text:{
+        type:String,
       }
     }
   })
@@ -21,9 +24,9 @@
     :loading="loading"
     rounded="xl"
     class="my-2 text-capitalize"
-    prepend-icon="ri-upload-cloud-2-fill"
+    :prepend-icon="$props.icon"
     color="black"
     type="submit"
-    text="Cargar">
+    :text="$props.text">
   </VBtn>
 </template>

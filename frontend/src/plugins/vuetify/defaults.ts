@@ -142,5 +142,8 @@ export default {
   },
   VOverlay: {
     scrim: 'background'
+  },
+  VCard:{
+    rounded: 'lg'
   }
 }

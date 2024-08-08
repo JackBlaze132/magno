@@ -33,6 +33,7 @@ export const routes = [
           },
           {
             path:':idPeriodo/grupos-investigacion',
+            name: 'grupos-investigacion',
             redirect: (to: RouteLocationNormalized) => {
               return { name: 'listar-grupos', params: { idPeriodo : to.params.idPeriodo } }
             },
@@ -49,7 +50,14 @@ export const routes = [
                 component: () => import ('@/views/research-groups/addGroupByPeriod.vue'),
               },
               {
+                path:':idGrupo/editar-grupo',
+                name:'editar-grupo',
+                component: () => import ('@/views/research-groups/editGroupByPeriod.vue')
+
+              },
+              {
                 path:':idGrupo/semilleros',
+                name:'semilleros',
                 redirect: (to: RouteLocationNormalized) => {
                   return { name: 'listar-semilleros', params: { idPeriodo: to.params.idPeriodo, idGrupo : to.params.idGrupo } }
                 },
@@ -66,6 +74,12 @@ export const routes = [
                     name:'agregar-semillero',
                     component: () => import ('@/views/seedbeds/addSeedbedByGroup.vue'),
                   },
+                  {
+                    path:':idSemillero/editar-semillero',
+                    name:'editar-semillero',
+                    component: () => import ('@/views/seedbeds/editSeedbedByGroup.vue'),
+                  },
+
                   {
                     path:':idSemillero',
                     redirect: (to: RouteLocationNormalized) => {
