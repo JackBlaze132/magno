@@ -6,6 +6,7 @@ import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
 import com.unibague.backend.repository.RepositoryFunctionaryProfile;
 import com.unibague.backend.repository.RepositoryInvestigationGroup;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,6 +118,21 @@ public class ServiceInvestigationGroup {
             i.setName(name);
             repositoryInvestigationGroup.save(i);
             return true;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Transactional
+    public Boolean deleteInvestigationGroup(HashMap<String, String> map){
+        try{
+            Long investigationGroupId = Long.parseLong(map.get("investigation_group_id"));
+            if(repositoryInvestigationGroup.findById(investigationGroupId).isPresent()){
+                repositoryInvestigationGroup.deleteResearchSeedbed(investigationGroupId);
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             return false;

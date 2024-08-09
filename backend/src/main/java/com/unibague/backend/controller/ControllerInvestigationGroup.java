@@ -44,4 +44,9 @@ public class ControllerInvestigationGroup {
     public boolean updateInvestigationGroupName(@RequestBody HashMap<String, String> map) {
         return serviceInvestigationGroup.updateInvestigationGroupName(map);
     }
+
+    @DeleteMapping("/deleteInvestigationGroup")
+    public boolean deleteInvestigationGroup(@RequestBody HashMap<String, String> map) {
+        return serviceInvestigationGroup.deleteInvestigationGroup(map);
+    }
 }

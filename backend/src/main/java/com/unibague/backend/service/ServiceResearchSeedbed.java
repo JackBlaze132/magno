@@ -206,8 +206,12 @@ public class ServiceResearchSeedbed {
     @Transactional
     public Boolean deleteResearchSeedbed(HashMap<String, String> map) {
         try{
-            repositoryResearchSeedbed.deleteResearchSeedbed(Long.parseLong(map.get("research_seedbed_id")));
-            return true;
+            Long researchSeedbedId = Long.parseLong(map.get("research_seedbed_id"));
+            if(repositoryResearchSeedbed.findById(researchSeedbedId).isPresent()){
+                repositoryResearchSeedbed.deleteResearchSeedbed(researchSeedbedId);
+                return true;
+            }
+            return false;
         }
         catch (Exception e){
             System.out.println("Failure trying to delete a research seedbed:\n" + e.getMessage());
