@@ -61,4 +61,9 @@ public class ControllerStudentProfile {
     public List<StudentProfile> getStudentProfilesByUserIdentification(@PathVariable Long id) {
         return serviceStudentProfile.getStudentProfilesByUserIdentification(id);
     }
+
+    @DeleteMapping(path = "/deleteStudentProfileFromAResearchSeedbed", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Boolean deleteStudentProfileFromAResearchSeedbed(@RequestBody HashMap<String, String> map) {
+        return serviceStudentProfile.deleteStudentProfileFromResearchSeedbed(map);
+    }
 }

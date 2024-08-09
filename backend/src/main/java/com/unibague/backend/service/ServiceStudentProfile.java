@@ -43,7 +43,7 @@ public class ServiceStudentProfile {
     @Autowired
     ServiceUpload serviceUpload;
 
-    private Map<String, Object> getJsonByStudentIdentification(String identification) throws Exception{
+    private Map<String, Object> getJsonByStudentIdentification(String identification) throws Exception {
         String urlReturn = FetchExternalData.fetchExternalDataFromStudent(identification);
         return FetchExternalData.fromStringJsonToMap(urlReturn);
     }
@@ -54,18 +54,19 @@ public class ServiceStudentProfile {
 
     /**
      * This method adds a student profile to the database, the method suppose that the student profile is not already in the database
+     *
      * @param studentProfile a json with the student profile information
      * @return true if the student profile was added successfully, false otherwise
      */
     public Boolean addStudentProfile(HashMap<String, String> studentProfile) {
-        try{
+        try {
             Map<String, Object> map = getJsonByStudentIdentification(studentProfile.get("identification_number"));
             String identification = String.valueOf(map.get(IntegraStudentNomenclature.IDENTIFICATION));
 
             Long researchSeedbedId = Long.valueOf(studentProfile.get("research_seedbed_id"));
             String academicProgramId = (String) map.get("program_code");
 
-            if(repositoryResearchSeedbed.findById(researchSeedbedId).isEmpty() || !repositoryAcademicProgram.existsByProgramCode(academicProgramId)){
+            if (repositoryResearchSeedbed.findById(researchSeedbedId).isEmpty() || !repositoryAcademicProgram.existsByProgramCode(academicProgramId)) {
                 return false;
             }
 
@@ -100,24 +101,25 @@ public class ServiceStudentProfile {
     /**
      * This method adds students profiles to a research seedbed by an Excel file, notice that
      * this method just make a call to the method addStudentProfileToAResearchSeedbed for each student in the Excel file
-     * @param file The Excel file with "identification" column, "email" column and their respective values
+     *
+     * @param file              The Excel file with "identification" column, "email" column and their respective values
      * @param researchSeedbedId The id of the research seedbed where the students will be added
      * @return true if the students were added successfully, false otherwise
      */
     @Transactional
     public Boolean addStudentsProfilesByExcel(MultipartFile file, String researchSeedbedId) {
 
-        try{
+        try {
 
             List<Map<String, String>> listOfMaps = serviceUpload.uploadExcel(file);
 
-            if(listOfMaps == null || listOfMaps.isEmpty()){
+            if (listOfMaps == null || listOfMaps.isEmpty()) {
                 return false;
             }
 
-            for (Map<String, String> map : listOfMaps){
-                
-                if(map.get(IntegraStudentNomenclature.IDENTIFICATION) == null || map.get(IntegraStudentNomenclature.IDENTIFICATION).isEmpty()){
+            for (Map<String, String> map : listOfMaps) {
+
+                if (map.get(IntegraStudentNomenclature.IDENTIFICATION) == null || map.get(IntegraStudentNomenclature.IDENTIFICATION).isEmpty()) {
                     continue;
                 }
 
@@ -126,8 +128,7 @@ public class ServiceStudentProfile {
                 addStudentProfileToAResearchSeedbed((HashMap<String, String>) map);
             }
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;
@@ -136,6 +137,7 @@ public class ServiceStudentProfile {
 
     /**
      * This method return a pre-created student profile with the information of the student with the identification number
+     *
      * @param identification the identification number of the student
      * @return A pre-created student profile with the information of the student with the identification number
      */
@@ -143,7 +145,7 @@ public class ServiceStudentProfile {
 
         Map<String, Object> map = getJsonByStudentIdentification(identification);
 
-        if(repositoryUser.findByUserIdentification(identification).isEmpty()){
+        if (repositoryUser.findByUserIdentification(identification).isEmpty()) {
 
             HashMap<String, String> userMap = new HashMap<>();
 
@@ -174,13 +176,13 @@ public class ServiceStudentProfile {
     }
 
     //TODO: Implement the functionalities related to postgraduate students
-    public Boolean addStudentProfileToAResearchSeedbed(HashMap<String, String> studentProfile){
-        try{
+    public Boolean addStudentProfileToAResearchSeedbed(HashMap<String, String> studentProfile) {
+        try {
             Map<String, Object> map = getJsonByStudentIdentification(studentProfile.get("identification_number"));
 
             Long researchSeedbedId = Long.valueOf(studentProfile.get("research_seedbed_id"));
 
-            if(map.get("identification") == null || repositoryResearchSeedbed.findById(researchSeedbedId).isEmpty()){
+            if (map.get("identification") == null || repositoryResearchSeedbed.findById(researchSeedbedId).isEmpty()) {
                 return false;
             }
 
@@ -196,18 +198,50 @@ public class ServiceStudentProfile {
             List<ResearchSeedbed> researchSeedbeds = new ArrayList<>(sp.getResearchSeedbeds());
 
             //If the student is already in the research seedbed (rs), return false
-            if(researchSeedbeds.stream().noneMatch(r -> r.getId().equals(researchSeedbedId))) {
+            if (researchSeedbeds.stream().noneMatch(r -> r.getId().equals(researchSeedbedId))) {
                 researchSeedbeds.add(rs);
                 sp.setResearchSeedbeds(researchSeedbeds);
-            }
-            else{
+            } else {
                 return false;
             }
 
             repositoryStudentProfile.save(sp);
             return true;
+        } catch (Exception e) {
+            System.out.printf("Error: %s", e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        catch (Exception e){
+    }
+
+    /**
+     * This method deletes a student profile from a research seedbed
+     *
+     * @param map a JSON WITH THE KEYS "research_seedbed_id" and "student_profile_id"
+     * @return true if the student profile was deleted successfully, false otherwise
+     */
+    public Boolean deleteStudentProfileFromResearchSeedbed(HashMap<String, String> map) {
+        try {
+            Long researchSeedbedId = Long.valueOf(map.get("research_seedbed_id"));
+            Long studentProfileId = Long.valueOf(map.get("student_profile_id"));
+
+            if (repositoryResearchSeedbed.findById(researchSeedbedId).isEmpty() || repositoryStudentProfile.findById(studentProfileId).isEmpty()) {
+                return false;
+            }
+
+            ResearchSeedbed rs = repositoryResearchSeedbed.findById(researchSeedbedId).get();
+            StudentProfile sp = repositoryStudentProfile.findById(studentProfileId).get();
+
+            if (sp.getResearchSeedbeds().stream().anyMatch(r -> r.getId().equals(researchSeedbedId))) {
+                List<ResearchSeedbed> researchSeedbeds = new ArrayList<>(sp.getResearchSeedbeds());
+                researchSeedbeds.removeIf(r -> r.getId().equals(researchSeedbedId));
+                sp.setResearchSeedbeds(researchSeedbeds);
+                repositoryStudentProfile.save(sp);
+                return true;
+            }
+            return false;
+
+        } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;
