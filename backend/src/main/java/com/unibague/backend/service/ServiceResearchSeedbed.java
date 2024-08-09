@@ -3,6 +3,7 @@ package com.unibague.backend.service;
 import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.model.InvestigationGroup;
 import com.unibague.backend.model.ResearchSeedbed;
+import com.unibague.backend.model.StudentProfile;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
 import com.unibague.backend.repository.RepositoryFunctionaryProfile;
 import com.unibague.backend.repository.RepositoryInvestigationGroup;
@@ -29,6 +30,12 @@ public class ServiceResearchSeedbed {
 
     @Autowired
     RepositoryInvestigationGroup repositoryInvestigationGroup;
+
+    @Autowired
+    ServiceStudentProfile serviceStudentProfile;
+
+    @Autowired
+    ServiceFunctionaryProfile serviceFunctionaryProfile;
 
     public List<ResearchSeedbed> getResearchSeedbeds() {
         return repositoryResearchSeedbed.findAll();
@@ -195,4 +202,18 @@ public class ServiceResearchSeedbed {
 
         return true;
     }
+
+    @Transactional
+    public Boolean deleteResearchSeedbed(HashMap<String, String> map) {
+        try{
+            repositoryResearchSeedbed.deleteResearchSeedbed(Long.parseLong(map.get("research_seedbed_id")));
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Failure trying to delete a research seedbed:\n" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

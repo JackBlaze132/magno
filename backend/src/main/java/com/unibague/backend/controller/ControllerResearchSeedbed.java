@@ -43,4 +43,9 @@ public class ControllerResearchSeedbed {
     public Boolean updateResearchSeedbedName(@RequestBody HashMap<String, String> map){
         return serviceResearchSeedbed.updateResearchSeedbedName(map);
     }
+
+    @DeleteMapping(path = "/deleteResearchSeedbed")
+    public Boolean deleteResearchSeedbed(@RequestBody HashMap<String, String> map){
+        return serviceResearchSeedbed.deleteResearchSeedbed(map);
+    }
 }
