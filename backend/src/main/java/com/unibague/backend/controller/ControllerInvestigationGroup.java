@@ -45,8 +45,8 @@ public class ControllerInvestigationGroup {
         return serviceInvestigationGroup.updateInvestigationGroupName(map);
     }
 
-    @DeleteMapping("/deleteInvestigationGroup")
-    public boolean deleteInvestigationGroup(@RequestBody HashMap<String, String> map) {
-        return serviceInvestigationGroup.deleteInvestigationGroup(map);
+    @DeleteMapping("/deleteInvestigationGroup/{investigationGroupId}")
+    public boolean deleteInvestigationGroup(@PathVariable Long investigationGroupId) {
+        return serviceInvestigationGroup.deleteInvestigationGroup(investigationGroupId);
     }
 }

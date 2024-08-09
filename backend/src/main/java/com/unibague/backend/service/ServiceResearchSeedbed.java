@@ -204,9 +204,8 @@ public class ServiceResearchSeedbed {
     }
 
     @Transactional
-    public Boolean deleteResearchSeedbed(HashMap<String, String> map) {
+    public Boolean deleteResearchSeedbed(Long researchSeedbedId) {
         try{
-            Long researchSeedbedId = Long.parseLong(map.get("research_seedbed_id"));
             if(repositoryResearchSeedbed.findById(researchSeedbedId).isPresent()){
                 repositoryResearchSeedbed.deleteResearchSeedbed(researchSeedbedId);
                 return true;

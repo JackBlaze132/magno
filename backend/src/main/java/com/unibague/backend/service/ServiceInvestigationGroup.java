@@ -125,9 +125,8 @@ public class ServiceInvestigationGroup {
     }
 
     @Transactional
-    public Boolean deleteInvestigationGroup(HashMap<String, String> map){
+    public Boolean deleteInvestigationGroup(Long investigationGroupId) {
         try{
-            Long investigationGroupId = Long.parseLong(map.get("investigation_group_id"));
             if(repositoryInvestigationGroup.findById(investigationGroupId).isPresent()){
                 repositoryInvestigationGroup.deleteResearchSeedbed(investigationGroupId);
                 return true;
