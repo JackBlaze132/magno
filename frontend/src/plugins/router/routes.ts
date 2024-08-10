@@ -1,7 +1,6 @@
 
 import { RouteLocationNormalized, useRoute } from 'vue-router'
-import { get } from "@/utils/api";
-import LoadingManager from '@/utils/loadingManager';
+
 
 export const routes = [
   { path: '/', redirect: '/login' },

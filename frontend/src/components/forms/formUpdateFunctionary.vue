@@ -1,6 +1,20 @@
+
+
+<template>
+  <VForm validate-on="submit" @submit.prevent="addSeedbed">
+    <VSelect :label="label" :items="functionaries" item-title="name" item-value="id" v-model="item.new_functionary_fp_id"></VSelect>
+
+    <LoadingBtn
+      text="Guardar"
+      icon="ri-save-2-line"
+      :loading="loading"
+    />
+  </VForm>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { get, update } from "@/utils/api";
+import API from "@/utils/api";
 import { VSelect } from 'vuetify/components';
 import LoadingBtn from '../loadingBtn.vue';
 
@@ -46,7 +60,7 @@ export default defineComponent({
   methods: {
     async getFunctionaries() {
       try {
-        this.functionaries = await get('getFunctionaryProfileByAssesmentPeriodId/' + this.$route.params.idPeriodo);
+        this.functionaries = await API.get(API.GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID + this.$route.params.idPeriodo);
         this.$emit('loaded');
         console.log("Hola obtuve los funcionarios")
       } catch (error) {
@@ -54,7 +68,8 @@ export default defineComponent({
         }
     },
     addSeedbed() {
-      update('updateResearchSeedbedFunctionary', this.item)
+      this.loading=true
+      API.patch(API.PATCH_RESEARCH_SEEDBED_FUNCTIONARY, this.item)
       .then((data) => {
         if (data.error) {
           this.loading = false
@@ -77,15 +92,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<template>
-  <VForm validate-on="submit" @submit.prevent="addSeedbed">
-    <VSelect :label="label" :items="functionaries" item-title="name" item-value="id" v-model="item.new_functionary_fp_id"></VSelect>
-
-    <LoadingBtn
-      text="Guardar"
-      icon="ri-save-2-line"
-      :loading="loading"
-    />
-  </VForm>
-</template>

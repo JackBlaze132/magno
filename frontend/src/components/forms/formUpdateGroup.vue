@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { update } from "@/utils/api";
+import API from "@/utils/api";
 import LoadingBtn from '../loadingBtn.vue';
 
 
@@ -31,7 +31,7 @@ export default defineComponent({
   methods: {
     updateGroup() {
       this.loading = true;
-      update('updateInvestigationGroupName', this.item)
+      API.patch(API.PATCH_INVESTIGATION_GROUP_NAME, this.item)
       .then((data) => {
         if (data.error) {
           console.error("Error al realizar la solicitud", data.error);

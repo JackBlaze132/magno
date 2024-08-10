@@ -1,46 +1,94 @@
-const apiBaseURL = '/api'; // ya se encuentra registrada en el archivo vite.config.mts
 
-export async function get(endpoint: string) {
-  try {
-    const response = await fetch(`${apiBaseURL}/${endpoint}`);
-    const data = await response.json();
-    return Array.isArray(data) ? data : [data];
-  } catch (error) {
-    console.error(`Error fetching ${endpoint}:`, error);
-    throw error;
+class API{
+
+
+  private readonly API_BASE_URL: string = '/api/';
+  // ya se encuentra registrada en el archivo vite.config.mts
+  //----[ENDPOINTS]----
+  //----[GET]----
+  public readonly GET_ASSESMENT_PERIODS: string = 'getAssesmentPeriods';
+  public readonly GET_FUNCTIONARY_PROFILES: string = 'getFunctionaryProfiles';
+  public readonly GET_STUDENT_PROFILES: string = 'getStudentProfiles';
+  public readonly GET_RESEARCH_SEEDBEDS: string = 'getResearchSeedbeds';
+  public readonly GET_USERS: string = 'getUsers';
+  public readonly GET_INVESTIGATION_GROUP_BY_ASSESMENT_PERIOD: string = 'getInvestigationGroupsByAssesmentPeriodId/';
+  public readonly GET_RESEARCH_SEEDBED_BY_GROUP_ID:string='getResearchSeedbedsByInvestigationGroupId/';
+  public readonly GET_COORDINATOR_BY_SEEDBED_ID: string = 'getCoordinatorByResearchseedbedId/';
+  public readonly GET_EXTERNAL_FUNCTIONARY_PROFILE_BY_SEEDBED_ID: string='getExternalFunctionaryProfilesByResearchSeedbedId/';
+  public readonly GET_STUDENT_PROFLIE_BY_SEEDBED_ID: string='getStudentProfilesByResearchSeedbedId/'
+  public readonly GET_TUTOR_BY_SEEDBED_ID: string='getTutorByResearchseedbedId/'
+  public readonly GET_SEEDBED_BY_ID: string='getResearchSeedbedById/'
+  public readonly GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID:string='getFunctionaryProfileByAssesmentPeriodId/'
+
+  //----[POST]----
+  public readonly POST_INVESTIGATION_GROUP:string='addInvestigationGroup'
+  public readonly POST_ASSESMENT_PERIOD:string='addAssesmentPeriod'
+  public readonly POST_RESEARCH_SEEDBED:string='addResearchSeedbed'
+  public readonly POST_STUDENT_PROFILE:string='addStudentProfile'
+  public readonly POST_USER:string='addUser'
+  public readonly POST_STUDENT_PROFILE_BY_EXCEL:string='addStudentProfileByExcel/'
+
+  //----[PATCH]----
+  public readonly PATCH_RESEARCH_SEEDBED_FUNCTIONARY:string='updateResearchSeedbedFunctionary'
+  public readonly PATCH_INVESTIGATION_GROUP_NAME:string='updateInvestigationGroupName'
+  public readonly PATCH_SEEDBED_NAME:string='updateResearchSeedbedName'
+
+
+  private static instance: API;
+
+  public static getInstance(){
+    if (!API.instance) {
+      API.instance = new API();
+    }
+    return API.instance;
   }
+
+  public async get(endpoint: string) {
+    try {
+      const response = await fetch(this.API_BASE_URL + `${endpoint}`);
+      const data = await response.json();
+      return Array.isArray(data) ? data : [data];
+    } catch (error) {
+      console.error(`Error fetching ${endpoint}:`, error);
+      throw error;
+    }
+  }
+
+  public async post(endpoint: string, data: any) {
+    try {
+      const response = await fetch(this.API_BASE_URL + `${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return response.json();
+    } catch (error) {
+      console.error(`Error posting to ${endpoint}:`, error);
+      throw error;
+    }
+  }
+
+  public async patch(endpoint: string, data: any) {
+    try {
+      const response = await fetch(this.API_BASE_URL + `${endpoint}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return response.json();
+    } catch (error) {
+      console.error(`Error patching to ${endpoint}:`, error);
+      throw error;
+    }
+  }
+
 }
 
-export async function post(endpoint: string, data: any) {
-  try {
-    const response = await fetch(`${apiBaseURL}/${endpoint}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    return response.json();
-  } catch (error) {
-    console.error(`Error posting to ${endpoint}:`, error);
-    throw error;
-  }
-}
+export default API.getInstance()
 
-export async function update(endpoint: string, data: any) {
-  try {
-    const response = await fetch(`${apiBaseURL}/${endpoint}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    return response.json();
-  } catch (error) {
-    console.error(`Error posting to ${endpoint}:`, error);
-    throw error;
-  }
-}
 
 

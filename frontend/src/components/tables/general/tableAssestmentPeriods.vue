@@ -2,7 +2,7 @@
 import { defineComponent } from "vue"
 
 //utils
-import { get } from "@/utils/api";
+import API from "@/utils/api";
 import { periodActivityFormatter } from "@/utils/formatter";
 import { VChip, VIcon, VTooltip } from "vuetify/components";
 import { RouterLink } from "vue-router";
@@ -42,7 +42,7 @@ export default defineComponent({
   methods: {
     async getPeriods() {
       try {
-        this.items = await get('getAssesmentPeriods');
+        this.items = await API.get(API.GET_ASSESMENT_PERIODS)
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

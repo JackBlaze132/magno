@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { get, post } from "@/utils/api";
+import API from "@/utils/api";
 import { VSelect } from 'vuetify/components';
 
 
@@ -30,7 +30,7 @@ export default defineComponent({
   methods: {
     async getFunctionaries() {
       try {
-        this.functionaries = await get('getFunctionaryProfileByAssesmentPeriodId/' + this.$route.params.idPeriodo);
+        this.functionaries = await API.get(API.GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID + this.$route.params.idPeriodo);
         this.$emit('loaded');
         console.log("Hola obtuve los funcionarios")
       } catch (error) {
@@ -38,7 +38,7 @@ export default defineComponent({
         }
     },
     addGroup() {
-      post('addInvestigationGroup', this.item)
+      API.post(API.POST_INVESTIGATION_GROUP, this.item)
       .then((data) => {
         this.$router.push('listar-grupos');
       })

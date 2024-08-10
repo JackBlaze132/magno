@@ -2,7 +2,7 @@
 
 
 import { VCard } from 'vuetify/components';
-import { get } from "@/utils/api";
+import API from "@/utils/api";
 import LoadingManager from '@/utils/loadingManager';
 
 
@@ -28,7 +28,7 @@ export default {
   methods: {
     async getData(){
       try {
-        const data = await get('getResearchSeedbedById/' + this.$route.params.idSemillero);
+        const data = await API.get(API.GET_SEEDBED_BY_ID + this.$route.params.idSemillero);
         this.items = data;
       } catch (error) {
         console.error('Error fetching users:', error);

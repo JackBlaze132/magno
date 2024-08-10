@@ -2,7 +2,7 @@
 import { defineComponent } from "vue"
 
 //utils
-import { get } from "@/utils/api";
+import API from "@/utils/api";
 import { externalFormatter } from "@/utils/formatter";
 
 interface Item {
@@ -33,7 +33,7 @@ export default defineComponent({
   methods: {
     async getUsers() {
       try {
-        this.items = await get('getUsers');
+        this.items = await API.get(API.GET_USERS);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

@@ -2,7 +2,7 @@
 import { defineComponent } from "vue"
 
 //utils
-import { get } from "@/utils/api";
+import API from "@/utils/api";
 import { externalFormatter } from "@/utils/formatter";
 import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
@@ -50,7 +50,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getTutorByResearchseedbedId/' + this.$route.params.idSemillero);
+        this.items = await API.get(API.GET_TUTOR_BY_SEEDBED_ID + this.$route.params.idSemillero);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

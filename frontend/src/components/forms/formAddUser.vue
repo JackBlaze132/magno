@@ -1,6 +1,6 @@
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import { post } from "@/utils/api";
+  import API from "@/utils/api";
 
   interface Item {
     userIdentification: string,
@@ -18,7 +18,7 @@
   },
   methods: {
     addUser() {
-      post('addUser', this.item)
+      API.post(API.POST_USER, this.item)
         .then((data) => {
           this.$router.push('/users');
         })

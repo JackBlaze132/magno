@@ -1,6 +1,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import { post } from "@/utils/api";
+  import API from "@/utils/api";
+import LoadingBtn from '../loadingBtn.vue';
 
   interface Item {
     name: string,
@@ -13,17 +14,20 @@
     name: 'formAddPeriod',
     data() {
       return {
-        item: {} as Item
+        item: {} as Item,
+        loading:false
       }
   },
   methods: {
     addUser() {
-      post('addAssesmentPeriod ', this.item)
+      API.post(API.POST_ASSESMENT_PERIOD, this.item)
         .then((data) => {
+          this.loading=true
           console.log(this.item)
           this.$router.push('/periodos');
         })
         .catch((error) => {
+          this.loading=false
           console.error('Error al realizar la solicitud:', error);
         });
     }
@@ -40,10 +44,10 @@
       <VRadio label="Activo" :value="true"/>
       <VRadio label="Inactivo" :value="false"/>
     </VRadioGroup>
-    <VBtn
+    <LoadingBtn
       text="Guardar"
-      prepend-icon="ri-save-2-line"
-      type="submit"
+      icon="ri-save-2-line"
+      :loading="loading"
     />
   </VForm>
 </template>

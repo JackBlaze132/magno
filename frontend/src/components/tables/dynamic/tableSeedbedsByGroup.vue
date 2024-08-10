@@ -2,7 +2,7 @@
 import { defineComponent } from "vue"
 
 //utils
-import { get } from "@/utils/api";
+import API from "@/utils/api";
 import { periodActivityFormatter } from "@/utils/formatter";
 import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
@@ -40,7 +40,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await get('getResearchSeedbedsByInvestigationGroupId/' + this.$route.params.idGrupo);
+        this.items = await API.get(API.GET_RESEARCH_SEEDBED_BY_GROUP_ID + this.$route.params.idGrupo);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

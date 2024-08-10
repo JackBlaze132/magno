@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { get, post } from "@/utils/api";
-import { VSelect } from 'vuetify/components';
+import API from "@/utils/api";
+import LoadingBtn from '../loadingBtn.vue';
 
 
 interface Item {
@@ -24,17 +24,19 @@ export default defineComponent({
 
   methods: {
     addSeedbed() {
-      post('addStudentProfile', this.item)
+      API.post(API.POST_STUDENT_PROFILE, this.item)
       .then((data) => {
         if (data.error) {
+          this.loading=false
           console.error("Error al realizar la solicitud", data.error);
         } else {
-          console.log(data);
           this.loading=true
+          console.log(data);
           this.$router.push('detalles');
         }
       })
       .catch((error) => {
+        this.loading=false
         console.error('Error al realizar la solicitud:', error);
       });
     }
@@ -44,11 +46,11 @@ export default defineComponent({
 
 <template>
   <VForm validate-on="submit" @submit.prevent="addSeedbed">
-    <VTextField label="Nombre" name="name" id="name" v-model="item.identification_number"/>
-    <VBtn
+    <VTextField label="Número de identificación" name="name" id="name" v-model="item.identification_number"/>
+    <LoadingBtn
       text="Guardar"
-      prepend-icon="ri-save-2-line"
-      type="submit"
+      icon="ri-save-2-line"
+      :loading="loading"
     />
   </VForm>
 </template>
