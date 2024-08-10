@@ -1,9 +1,11 @@
 package com.unibague.backend.repository;
 
+import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.model.StudentProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,4 +32,12 @@ public interface RepositoryStudentProfile extends JpaRepository<StudentProfile, 
 
     @Query("SELECT rs from ResearchSeedbed rs INNER JOIN rs.studentsProfiles sp WHERE sp.userStudent.userIdentification = ?1")
     Optional<List<ResearchSeedbed>> getStudentProfileResearchSeedbeds(String identification);
+
+    @Query("SELECT COUNT(DISTINCT sp) " +
+            "FROM StudentProfile sp " +
+            "JOIN sp.researchSeedbeds rs " +
+            "WHERE sp.assesmentPeriod = :assesmentPeriod " +
+            "GROUP BY sp.assesmentPeriod " +
+            "HAVING COUNT(rs) > 0")
+    Long countStudentsInAnAssessmentPeriod(@Param("assesmentPeriod") AssesmentPeriod assesmentPeriod);
 }
