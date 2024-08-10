@@ -32,16 +32,6 @@ public class ControllerStudentProfile {
         return  serviceStudentProfile.getStudentProfiles();
     }
 
-    @GetMapping(path = "/getStudentProfiles1", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<StudentProfile> getStudentProfiles1() {
-        return  serviceStudentProfile.getStudentProfiles1();
-    }
-
-    @GetMapping(path = "/getStudentProfiles2", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<StudentProfile> getStudentProfiles2() {
-        return  serviceStudentProfile.getStudentProfiles2();
-    }
-
     @PostMapping(path = "/addStudentProfile", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Boolean addStudentProfile(@RequestBody HashMap<String, String> studentProfile) {
         return serviceStudentProfile.addStudentProfileToAResearchSeedbed(studentProfile);

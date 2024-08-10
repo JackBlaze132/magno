@@ -90,14 +90,6 @@ public class ServiceStudentProfile {
         return repositoryStudentProfile.findAll();
     }
 
-    public List<StudentProfile> getStudentProfiles1() {
-        return (List<StudentProfile>) repositoryStudentProfile.findAll1();
-    }
-
-    public List<StudentProfile> getStudentProfiles2() {
-        return (List<StudentProfile>) repositoryStudentProfile.findAll2();
-    }
-
     /**
      * This method adds students profiles to a research seedbed by an Excel file, notice that
      * this method just make a call to the method addStudentProfileToAResearchSeedbed for each student in the Excel file

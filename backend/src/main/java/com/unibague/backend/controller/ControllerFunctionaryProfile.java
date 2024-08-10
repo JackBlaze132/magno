@@ -20,31 +20,6 @@ public class ControllerFunctionaryProfile {
         return serviceFunctionaryProfile.getFunctionaryProfiles();
     }
 
-    @GetMapping("/getTeacherProfiles1")
-    public List<FunctionaryProfile> getTeacherProfiles1() {
-        return serviceFunctionaryProfile.getTeacherProfiles1();
-    }
-
-    @GetMapping("/getTeacherProfiles2")
-    public List<FunctionaryProfile> getTeacherProfiles2() {
-        return serviceFunctionaryProfile.getTeacherProfiles2();
-    }
-
-    @GetMapping("/getResearchSeedbedCoordinator1")
-    public FunctionaryProfile getResearchSeedbedCoordinator1() {
-        return serviceFunctionaryProfile.findResearchSeedbedCoordinator1();
-    }
-
-    @GetMapping("/getResearchSeedbedCoordinator2")
-    public FunctionaryProfile getResearchSeedbedCoordinator2() {
-        return serviceFunctionaryProfile.findResearchSeedbedCoordinator2();
-    }
-
-    @GetMapping("/getInvestigationGroupDirector1")
-    public FunctionaryProfile getInvestigationGroupDirector1() {
-        return serviceFunctionaryProfile.findInvestigationGroupDirector1();
-    }
-
     @PostMapping("/addFunctionaryProfile")
     public Boolean addFunctionaryProfile(@RequestBody HashMap<String, String> functionaryProfile) {
         return serviceFunctionaryProfile.addFunctionaryProfile(functionaryProfile);

@@ -14,13 +14,6 @@ import java.util.Optional;
 @Repository
 public interface RepositoryStudentProfile extends JpaRepository<StudentProfile, Long>{
 
-
-    @Query("SELECT sp from StudentProfile sp INNER JOIN sp.researchSeedbeds rs WHERE rs.id = 1")
-    List<StudentProfile> findAll1();
-
-    @Query("SELECT sp from StudentProfile sp INNER JOIN sp.researchSeedbeds rs WHERE rs.id = 2")
-    List<StudentProfile> findAll2();
-
     @Query("SELECT sp from StudentProfile sp INNER JOIN sp.researchSeedbeds rs WHERE rs.id = ?1")
     List<StudentProfile> findAllByResearchSeedbedId(Long id);
 
