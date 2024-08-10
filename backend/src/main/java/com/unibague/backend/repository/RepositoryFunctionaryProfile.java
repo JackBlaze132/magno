@@ -13,6 +13,8 @@ public interface RepositoryFunctionaryProfile extends JpaRepository<FunctionaryP
 
     Optional<FunctionaryProfile> findById(Long teacherProfileId);
 
+    Optional<FunctionaryProfile> findByIdentificationNumber(String identificationNumber);
+
     @Query("SELECT rs.coordinator from ResearchSeedbed rs WHERE rs.id = ?1")
     FunctionaryProfile findCoordinatorByResearchSeedbedId(Long id);
 

@@ -9,6 +9,7 @@ import com.unibague.backend.util.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,29 +35,38 @@ public class ServiceFunctionaryProfile {
     @Autowired
     ServiceUser serviceUser;
 
+    /**
+     * Method to add a functionary profile
+     * @param functionaryProfile JSON with the keys identification_number and assesment_period_id
+     * @return true if the functionary profile was added successfully, false otherwise
+     */
     public Boolean addFunctionaryProfile(HashMap<String, String> functionaryProfile) {
         try{
 
-            Map<String, Object> map = FetchExternalData.fetchExternalDataFromFunctionary(functionaryProfile.get("identification_number"));
+            String identificationNumber = functionaryProfile.get("identification_number");
+            if(repositoryFunctionaryProfile.findByIdentificationNumber(identificationNumber).isPresent()){
+                return false;
+            }
+            Map<String, Object> map = FetchExternalData.fetchExternalDataFromFunctionary(identificationNumber);
 
             FunctionaryProfile f = new FunctionaryProfile();
-            f.setIdentificationNumber(functionaryProfile.get("identification_number"));
+            f.setIdentificationNumber(identificationNumber);
             f.setAssesmentPeriod(repositoryAssesmentPeriod.findById(Long.valueOf(functionaryProfile.get("assesment_period_id"))).get());
             f.setDependency(repositoryDependency.findByName(map.get(IntegraFunctionaryNomenclature.PROGRAM).toString()).get());
 
-            if(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).isEmpty()){
+            if(repositoryUser.findByUserIdentification(identificationNumber).isEmpty()){
                 //Notice that the following code don't consider the case when the user is an external user, needs to be corrected
-                Map<String, Object> functionaryInfo = FetchExternalData.fetchExternalDataFromFunctionary(functionaryProfile.get("identification_number"));
+                Map<String, Object> functionaryInfo = FetchExternalData.fetchExternalDataFromFunctionary(identificationNumber);
 
                 HashMap<String, String> user = new HashMap<>();
                 user.put("email", String.valueOf(functionaryInfo.get("email")));
                 user.put("isExternalUser", "false");
                 user.put("identification", String.valueOf(functionaryInfo.get("identification")));
                 serviceUser.addUser(user);
-                f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
+                f.setUserTeacher(repositoryUser.findByUserIdentification(identificationNumber).get());
             }
             else{
-                f.setUserTeacher(repositoryUser.findByUserIdentification(functionaryProfile.get("identification_number")).get());
+                f.setUserTeacher(repositoryUser.findByUserIdentification(identificationNumber).get());
             }
 
             f.setEmail(String.valueOf(map.get("email")));
@@ -104,26 +114,6 @@ public class ServiceFunctionaryProfile {
 
     public List<FunctionaryProfile> getFunctionaryProfiles() {
         return repositoryFunctionaryProfile.findAll();
-    }
-
-    public List<FunctionaryProfile> getTeacherProfiles1() {
-        return repositoryFunctionaryProfile.findAll1();
-    }
-
-    public List<FunctionaryProfile> getTeacherProfiles2() {
-        return repositoryFunctionaryProfile.findAll2();
-    }
-
-    public FunctionaryProfile findResearchSeedbedCoordinator1() {
-        return repositoryFunctionaryProfile.findResearchSeedbedCoordinator1();
-    }
-
-    public FunctionaryProfile findResearchSeedbedCoordinator2() {
-        return repositoryFunctionaryProfile.findResearchSeedbedCoordinator2();
-    }
-
-    public FunctionaryProfile findInvestigationGroupDirector1(){
-        return repositoryFunctionaryProfile.findInvestigationGroupDirector1();
     }
 
     public List<FunctionaryProfile> getFunctionaryProfilesByAssesmentPeriod(Long idAssesmentPeriod) {

@@ -5,6 +5,7 @@ import com.unibague.backend.service.ServiceInvestigationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,11 @@ public class ControllerInvestigationGroup {
     @PostMapping(path = "/addInvestigationGroup", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean addInvestigationGroup(@RequestBody HashMap<String, String> investigationGroup) {
         return serviceInvestigationGroup.addInvestigationGroup(investigationGroup);
+    }
+
+    @PostMapping(path = "/addInvestigationGroupsByExcel/{assessmentPeriodId}")
+    public boolean addInvestigationGroupsByExcel(@PathVariable Long assessmentPeriodId, @RequestParam("file") MultipartFile file) {
+        return serviceInvestigationGroup.addInvestigationGroupsByExcel(file, assessmentPeriodId);
     }
 
     @PatchMapping(path = "/updateInvestigationGroupCoordinator", consumes = MediaType.APPLICATION_JSON_VALUE)

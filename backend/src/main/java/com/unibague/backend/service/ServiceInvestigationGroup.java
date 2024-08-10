@@ -9,10 +9,12 @@ import com.unibague.backend.repository.RepositoryInvestigationGroup;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ServiceInvestigationGroup {
@@ -25,6 +27,12 @@ public class ServiceInvestigationGroup {
 
     @Autowired
     RepositoryFunctionaryProfile repositoryFunctionaryProfile;
+
+    @Autowired
+    ServiceUpload serviceUpload;
+
+    @Autowired
+    ServiceFunctionaryProfile serviceFunctionaryProfile;
 
     public List<InvestigationGroup> getInvestigationGroups() {
         return repositoryInvestigationGroup.findAll();
@@ -52,6 +60,39 @@ public class ServiceInvestigationGroup {
             repositoryInvestigationGroup.save(i);
             return true;
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Transactional
+    public Boolean addInvestigationGroupsByExcel(MultipartFile file, Long assessmentPeriodId){
+        try{
+            List<Map<String, String>> listOfMaps = serviceUpload.uploadExcel(file);
+
+            if (listOfMaps == null || listOfMaps.isEmpty()) {
+                return false;
+            }
+
+            //First, we create the functionary profiles
+            for(Map<String, String> map : listOfMaps){
+                HashMap<String, String> functionaryProfile = new HashMap<>();
+                functionaryProfile.put("identification_number", map.get("coordinator_id"));
+                functionaryProfile.put("assesment_period_id", assessmentPeriodId.toString());
+                serviceFunctionaryProfile.addFunctionaryProfile(functionaryProfile);
+            }
+
+            //Then, we create the investigation groups
+            for(Map<String, String> map : listOfMaps){
+                HashMap<String, String> investigationGroup = new HashMap<>();
+                investigationGroup.put("name", map.get("name"));
+                investigationGroup.put("coordinator_fp_id", repositoryFunctionaryProfile.findByIdentificationNumber(map.get("coordinator_id")).get().getId().toString());
+                addInvestigationGroup(investigationGroup);
+            }
+            return true;
+
+        }
+        catch (Exception e){
             System.out.println("Error: " + e.getMessage());
             return false;
         }
