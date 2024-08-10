@@ -2,6 +2,7 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,21 @@ public class ServiceAssesmentPeriod {
 
             return true;    
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Transactional
+    public Boolean deleteAssessmentPeriod(Long assessmentPeriodId){
+        try {
+            if(repositoryAssesmentPeriod.findById(assessmentPeriodId).isPresent()){
+                repositoryAssesmentPeriod.deleteAssessmentPeriod(assessmentPeriodId);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error deleting assessment period " + e.getMessage());
             e.printStackTrace();
             return false;
         }
