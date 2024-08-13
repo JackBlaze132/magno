@@ -1,5 +1,32 @@
+<template>
+  <VBtn icon class="action view"   flat color="transparent" desity="compact" :to="toView">
+    <VIcon icon="ri-eye-line" />
+    <VTooltip activator="parent" location="top">
+      Ver
+    </VTooltip>
+  </VBtn>
+  <VBtn icon class="action edit" flat color="transparent" desity="compact" :to="toEdit">
+    <VIcon icon="ri-edit-box-line" />
+    <VTooltip activator="parent" location="top">
+      Editar
+    </VTooltip>
+  </VBtn>
+  <VBtn icon class="action delete" flat color="transparent" desity="compact" @click="overlay = !overlay">
+    <VIcon icon="ri-delete-bin-5-line" />
+    <VOverlay v-model="overlay" scrim="black" class="d-flex align-center justify-center" opacity="0.7">
+      <FormDeleteGeneral :index="toDelete" :content="deleteContent"/>
+    </VOverlay>
+    <VTooltip activator="parent" location="top">
+      Eliminar
+    </VTooltip>
+
+  </VBtn>
+</template>
+
+
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import FormDeleteGeneral from './forms/Delete/formDeleteGeneral.vue';
 
   export default defineComponent({
     name: 'quickActions',
@@ -12,34 +39,19 @@
       },
       toDelete:{
         type: String,
+      },
+      deleteContent:{
+        type: String,
       }
-    }
+    },
+    data(){
+      return{
+        overlay: false
+      }
+    },
+
   })
 </script>
-
-<template>
-  <RouterLink :to="toView">
-    <VIcon icon="ri-eye-line" class="action view"/>
-    <VTooltip activator="parent" location="top">
-      Ver
-    </VTooltip>
-  </RouterLink>
-  &nbsp
-  <RouterLink :to="toEdit">
-    <VIcon icon="ri-edit-box-line" class="action edit"/>
-    <VTooltip activator="parent" location="top">
-      Editar
-    </VTooltip>
-  </RouterLink>
-  &nbsp
-  <RouterLink :to="toDelete">
-    <VIcon icon="ri-delete-bin-5-line" class="action delete"/>
-    <VTooltip activator="parent" location="top">
-      Eliminar
-    </VTooltip>
-  </RouterLink>
-</template>
-
 
 
 

@@ -1,5 +1,6 @@
 <template	>
-  <VCard>
+  <VCard flat color="transparent">
+    <h1>Estudiantes</h1>
     <VOverlay :model-value="loading" class="d-flex align-center justify-center" opacity="0.85" persistent contained>
       <v-progress-circular indeterminate color="primary" size="64"/>
     </VOverlay>

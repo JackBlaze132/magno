@@ -80,9 +80,10 @@ export default defineComponent({
       </template>
       <template v-slot:item.link="{item}">
         <QuickActions
-          :toView="item.id + '/grupos-investigacion/listar-grupos'"
+          :toView="item.id + '/grupos-investigacion'"
           :toEdit="item.id + '/editar-periodo'"
-          :toDelete="item.id + '/?'"
+          :toDelete="item.id"
+          :deleteContent="item.name"
           ></QuickActions>
 
       </template>

@@ -81,7 +81,8 @@ export default defineComponent({
         <QuickActions
           :toView="item.id.toString()"
           :toEdit="item.id + '/editar-semillero'"
-          :toDelete="item.id + '/?'"
+          :toDelete="item.id"
+          :deleteContent="item.name"
           ></QuickActions>
       </template>
     </VDataTable>

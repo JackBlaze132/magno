@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { cloneNode } from '@babel/types';
+import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'loadingBtn',
@@ -12,6 +13,10 @@
       },
       text:{
         type:String,
+      },
+      color:{
+        type:String,
+        default: 'black'
       }
     }
   })
@@ -25,7 +30,7 @@
     rounded="xl"
     class="my-2 text-capitalize"
     :prepend-icon="$props.icon"
-    color="black"
+    :color="color"
     type="submit"
     :text="$props.text">
   </VBtn>

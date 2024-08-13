@@ -52,7 +52,7 @@ export default defineComponent({
   methods: {
     async getSeedBeds() {
       try {
-        this.items = await API.get(API.GET_STUDENT_PROFLIE_BY_SEEDBED_ID + this.$route.params.idSemillero);
+        this.items = await API.get(API.GET_STUDENT_PROFLIE_BY_RESEARCH_SEEDBED_ID + this.$route.params.idSemillero);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

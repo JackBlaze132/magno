@@ -13,25 +13,32 @@ class API{
   public readonly GET_USERS: string = 'getUsers';
   public readonly GET_INVESTIGATION_GROUP_BY_ASSESMENT_PERIOD: string = 'getInvestigationGroupsByAssesmentPeriodId/';
   public readonly GET_RESEARCH_SEEDBED_BY_GROUP_ID:string='getResearchSeedbedsByInvestigationGroupId/';
-  public readonly GET_COORDINATOR_BY_SEEDBED_ID: string = 'getCoordinatorByResearchseedbedId/';
+  public readonly GET_COORDINATOR_BY_RESEARCH_SEEDBED_ID: string = 'getCoordinatorByResearchseedbedId/';
   public readonly GET_EXTERNAL_FUNCTIONARY_PROFILE_BY_SEEDBED_ID: string='getExternalFunctionaryProfilesByResearchSeedbedId/';
-  public readonly GET_STUDENT_PROFLIE_BY_SEEDBED_ID: string='getStudentProfilesByResearchSeedbedId/'
-  public readonly GET_TUTOR_BY_SEEDBED_ID: string='getTutorByResearchseedbedId/'
-  public readonly GET_SEEDBED_BY_ID: string='getResearchSeedbedById/'
-  public readonly GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID:string='getFunctionaryProfileByAssesmentPeriodId/'
+  public readonly GET_STUDENT_PROFLIE_BY_RESEARCH_SEEDBED_ID: string='getStudentProfilesByResearchSeedbedId/'
+  public readonly GET_TUTOR_BY_RESEARCH_SEEDBED_ID: string='getTutorByResearchseedbedId/';
+  public readonly GET_RESEARCH_SEEDBED_BY_ID: string='getResearchSeedbedById/';
+  public readonly GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID:string='getFunctionaryProfileByAssesmentPeriodId/';
 
   //----[POST]----
-  public readonly POST_INVESTIGATION_GROUP:string='addInvestigationGroup'
-  public readonly POST_ASSESMENT_PERIOD:string='addAssesmentPeriod'
-  public readonly POST_RESEARCH_SEEDBED:string='addResearchSeedbed'
-  public readonly POST_STUDENT_PROFILE:string='addStudentProfile'
-  public readonly POST_USER:string='addUser'
-  public readonly POST_STUDENT_PROFILE_BY_EXCEL:string='addStudentProfileByExcel/'
+  public readonly POST_INVESTIGATION_GROUP:string='addInvestigationGroup';
+  public readonly POST_ASSESMENT_PERIOD:string='addAssesmentPeriod';
+  public readonly POST_RESEARCH_SEEDBED:string='addResearchSeedbed';
+  public readonly POST_STUDENT_PROFILE:string='addStudentProfile';
+  public readonly POST_USER:string='addUser';
+  public readonly POST_STUDENT_PROFILE_BY_EXCEL:string='addStudentProfileByExcel/';
 
   //----[PATCH]----
-  public readonly PATCH_RESEARCH_SEEDBED_FUNCTIONARY:string='updateResearchSeedbedFunctionary'
-  public readonly PATCH_INVESTIGATION_GROUP_NAME:string='updateInvestigationGroupName'
-  public readonly PATCH_SEEDBED_NAME:string='updateResearchSeedbedName'
+  public readonly PATCH_RESEARCH_SEEDBED_FUNCTIONARY:string='updateResearchSeedbedFunctionary';
+  public readonly PATCH_INVESTIGATION_GROUP_NAME:string='updateInvestigationGroupName';
+  public readonly PATCH_RESEARCH_SEEDBED_NAME:string='updateResearchSeedbedName';
+
+  //----[DELETE]----
+  public readonly DELETE_STUDENT_PROFILE_FROM_RESEARCH_SEEDBED:string='deleteStudentProfileFromAResearchSeedbed';
+  public readonly DELETE_RESEARCH_SEEDBED:string='deleteResearchSeedbed/';
+  public readonly DELETE_INVESTIGATION_GROUP: string='deleteInvestigationGroup/';
+  public readonly DELETE_ASSESMENT_PERIOD: string='deleteAssessmentPeriod/';
+
 
 
   private static instance: API;
@@ -83,6 +90,18 @@ class API{
     } catch (error) {
       console.error(`Error patching to ${endpoint}:`, error);
       throw error;
+    }
+  }
+
+  public async delete(endpoint: string){
+    try{
+      const response = await fetch(this.API_BASE_URL + `${endpoint}`, {
+        method: 'DELETE',
+      });
+      return response.json();
+    }catch(error){
+      console.error(`Error deleting to ${endpoint}:`, error);
+      throw error
     }
   }
 

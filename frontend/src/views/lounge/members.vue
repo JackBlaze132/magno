@@ -28,7 +28,7 @@ export default {
   methods: {
     async getData(){
       try {
-        const data = await API.get(API.GET_SEEDBED_BY_ID + this.$route.params.idSemillero);
+        const data = await API.get(API.GET_RESEARCH_SEEDBED_BY_ID + this.$route.params.idSemillero);
         this.items = data;
       } catch (error) {
         console.error('Error fetching users:', error);

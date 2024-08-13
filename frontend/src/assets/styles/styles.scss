@@ -98,22 +98,22 @@
     width: 225px!important ;
   }
 
-  .action {
+  .action{
     color: rgb(var(--v-theme-on-background)); 
     opacity: var(--v-medium-emphasis-opacity);
   }
 
-  .view:hover{
+  .view:hover i{
     color: rgb(var(--v-theme-primary));
     transition: 500ms;
   }
 
-  .edit:hover{
+  .edit:hover i{
     color: rgb(var(--v-theme-warning));
     transition: 500ms;
   }
 
-  .delete:hover{
+  .delete:hover i{
     color: rgb(var(--v-theme-error));
     transition: 500ms;
   }

@@ -47,7 +47,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <VCard flat>
+  <VCard flat class="pa-5 my-3">
     <VCardTitle class="d-flex align-center justify-end">
       <VTextField
         v-model="search"
