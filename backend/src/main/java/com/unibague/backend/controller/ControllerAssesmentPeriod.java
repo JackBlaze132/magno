@@ -29,4 +29,9 @@ public class ControllerAssesmentPeriod {
     public boolean deleteAssessmentPeriod(@PathVariable Long id) {
         return serviceAssesmentPeriod.deleteAssessmentPeriod(id);
     }
+
+    @PatchMapping(path = "/updateAssessmentPeriod", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean updateAssessmentPeriod(@RequestBody HashMap<String, String> map) {
+        return serviceAssesmentPeriod.updateAssessmentPeriod(map);
+    }
 }
