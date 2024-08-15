@@ -82,7 +82,8 @@ export default defineComponent({
           :toView="item.id.toString()"
           :toEdit="item.id + '/editar-semillero'"
           :toDelete="item.id"
-          :deleteContent="item.name"
+          :deleteItem="item.name"
+          deleteType="semillero"
           ></QuickActions>
       </template>
     </VDataTable>

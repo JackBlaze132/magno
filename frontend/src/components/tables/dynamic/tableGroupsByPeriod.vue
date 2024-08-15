@@ -80,7 +80,8 @@ export default defineComponent({
           :toView="item.id + '/semilleros'"
           :toEdit="item.id + '/editar-grupo'"
           :toDelete="item.id"
-          :deleteContent="item.name"
+          :deleteItem="item.name"
+          deleteType="grupo"
           ></QuickActions>
       </template>
     </VDataTable>

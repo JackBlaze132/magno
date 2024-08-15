@@ -1,3 +1,7 @@
+<template>
+  <themeSwitcher :themes="themes" />
+</template>
+
 <script setup lang="ts">
 import type { ThemeSwitcherTheme } from '@layouts/scripts/types'
 import themeSwitcher from './themeSwitcher.vue';
@@ -14,6 +18,4 @@ const themes: ThemeSwitcherTheme[] = [
 ]
 </script>
 
-<template>
-  <themeSwitcher :themes="themes" />
-</template>
+

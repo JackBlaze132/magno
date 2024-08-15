@@ -14,7 +14,7 @@
   <VBtn icon class="action delete" flat color="transparent" desity="compact" @click="overlay = !overlay">
     <VIcon icon="ri-delete-bin-5-line" />
     <VOverlay v-model="overlay" scrim="black" class="d-flex align-center justify-center" opacity="0.7">
-      <FormDeleteGeneral :index="toDelete" :content="deleteContent"/>
+      <FormDeleteGeneral :index="toDelete" :itemType="deleteType" :itemName="deleteItem"/>
     </VOverlay>
     <VTooltip activator="parent" location="top">
       Eliminar
@@ -40,7 +40,10 @@
       toDelete:{
         type: String,
       },
-      deleteContent:{
+      deleteType:{
+        type: String,
+      },
+      deleteItem:{
         type: String,
       }
     },

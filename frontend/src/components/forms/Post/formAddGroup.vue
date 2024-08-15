@@ -1,7 +1,21 @@
+<template>
+  <VForm validate-on="submit" @submit.prevent="addGroup">
+    <VTextField label="Nombre" name="name" id="name" v-model="item.name"/>
+    <VSelect label="Director" :items="functionaries" item-title="name" item-value="id" v-model="item.coordinator_fp_id"></VSelect>
+
+    <LoadingBtn
+      text="Guardar"
+      icon="ri-save-2-line"
+      :loading="loading"
+    />
+  </VForm>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import API from "@/utils/api";
 import { VSelect } from 'vuetify/components';
+import LoadingBtn from '@/components/loadingBtn.vue';
 
 
 interface Item {
@@ -20,7 +34,8 @@ export default defineComponent({
     return {
       item: {} as Item,
       functionaries: [] as Functionary[],
-      selectedFunctionary: null
+      selectedFunctionary: null,
+      loading:false
     }
   },
   created() {
@@ -38,11 +53,13 @@ export default defineComponent({
         }
     },
     addGroup() {
+      this.loading=true
       API.post(API.POST_INVESTIGATION_GROUP, this.item)
       .then((data) => {
         this.$router.push('listar-grupos');
       })
       .catch((error) => {
+        this.loading=false
         console.error('Error al realizar la solicitud:', error);
       });
     }
@@ -55,15 +72,4 @@ export default defineComponent({
 });
 </script>
 
-<template>
-  <VForm validate-on="submit" @submit.prevent="addGroup">
-    <VTextField label="Nombre" name="name" id="name" v-model="item.name"/>
-    <VSelect label="Director" :items="functionaries" item-title="name" item-value="id" v-model="item.coordinator_fp_id"></VSelect>
 
-    <VBtn
-      text="Guardar"
-      prepend-icon="ri-save-2-line"
-      type="submit"
-    />
-  </VForm>
-</template>

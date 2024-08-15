@@ -1,8 +1,3 @@
-<script lang="ts" setup>
-import AppThemeSwitcher from './components/appThemeSwitcher.vue';
-import verticalNav from './components/verticalNav.vue';
-</script>
-
 <template>
   <div class="d-flex">
   <verticalNav/>
@@ -10,6 +5,11 @@ import verticalNav from './components/verticalNav.vue';
   <AppThemeSwitcher/>
 </div>
 </template>
+
+<script lang="ts" setup>
+import AppThemeSwitcher from './components/appThemeSwitcher.vue';
+import verticalNav from './components/verticalNav.vue';
+</script>
 
 <style lang="scss">
 // As we are using `layouts` plugin we need its styles to be imported

@@ -83,7 +83,8 @@ export default defineComponent({
           :toView="item.id + '/grupos-investigacion'"
           :toEdit="item.id + '/editar-periodo'"
           :toDelete="item.id"
-          :deleteContent="item.name"
+          :deleteItem="item.name"
+          deleteType="periodo"
           ></QuickActions>
 
       </template>

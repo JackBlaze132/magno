@@ -1,14 +1,14 @@
 <template>
   <VCard class="pa-5 my-3" color="surface" max-width="600">
     <VCardTitle>
-      Eliminar {{content}}
+      Eliminar {{itemType}}
     </VCardTitle>
     <VDivider/>
     <VCardText>
-      Esta a punto eliminar {{content}}, si esta seguro de que desea eliminar este elemento por favor ingrese <span class="px-1" style="background-color:rgb(var(--v-theme-grey-300))"> eliminar {{ content }}</span>en el campo de abajo.
+      Esta a punto eliminar el {{ itemType }} denominado {{itemName}}, si esta seguro de que desea eliminar este elemento por favor ingrese <span class="px-1" style="background-color:rgb(var(--v-theme-grey-300))"> eliminar {{ itemName }}</span>en el campo de abajo.
     </VCardText>
     <VForm validate-on="submit" @submit.prevent="deleteItem">
-      <VTextField  name="field" id="field" v-model="inputValue" :placeholder="`eliminar ${content}`"/>
+      <VTextField  name="field" id="field" v-model="inputValue" :placeholder="`eliminar ${itemName}`"/>
       <VcardItem class="d-flex justify-end">
         <LoadingBtn icon="ri-delete-bin-5-line" text="Eliminar" :loading="loading" color="error" ></LoadingBtn>
       </VcardItem>
@@ -28,7 +28,10 @@ export default defineComponent({
     label: {
       type: String,
     },
-    content: {
+    itemType: {
+      type: String,
+    },
+    itemName:{
       type: String,
     },
     index: {
@@ -43,7 +46,7 @@ export default defineComponent({
   },
   methods: {
     deleteItem() {
-      const expectedValue = `eliminar ${this.content}`;
+      const expectedValue = `eliminar ${this.itemName}`;
       if (this.inputValue !== expectedValue) {
         alert(`Por favor ingrese "${expectedValue}" para confirmar la eliminación.`);
         return;
@@ -51,7 +54,7 @@ export default defineComponent({
 
       this.loading = true;
 
-      if (this.content == 'semillero') {
+      if (this.itemType == 'semillero') {
         API.delete(API.DELETE_RESEARCH_SEEDBED + this.index)
           .then((data) => {
             if (data.error) {
@@ -68,7 +71,7 @@ export default defineComponent({
             console.error('Error al realizar la solicitud:', error);
             this.loading = false;
           });
-      } else if (this.content == 'periodo') {
+      } else if (this.itemType == 'periodo') {
         API.delete(API.DELETE_ASSESMENT_PERIOD + this.index)
           .then((data) => {
             if (data.error) {
@@ -85,7 +88,7 @@ export default defineComponent({
             console.error('Error al realizar la solicitud:', error);
             this.loading = false;
           });
-      }  else if (this.content == 'grupo') {
+      }  else if (this.itemType == 'grupo') {
         API.delete(API.DELETE_INVESTIGATION_GROUP + this.index)
           .then((data) => {
             if (data.error) {

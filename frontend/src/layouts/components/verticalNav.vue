@@ -1,8 +1,3 @@
-<script setup lang="ts">
-  import magnoDark from '@images/logos/magno-dark.svg?raw'
-import { VDivider } from 'vuetify/components';
-</script>
-
 <template>
   <v-card >
     <v-layout class="auth-wrapper">
@@ -72,3 +67,8 @@ import { VDivider } from 'vuetify/components';
     </v-layout>
   </v-card>
 </template>
+
+<script setup lang="ts">
+  import magnoDark from '@images/logos/magno-dark.svg?raw'
+import { VDivider } from 'vuetify/components';
+</script>
