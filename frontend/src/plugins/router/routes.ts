@@ -1,5 +1,5 @@
 
-import { RouteLocationNormalized, useRoute } from 'vue-router'
+import { RouteLocationNormalized} from 'vue-router'
 
 
 export const routes = [
@@ -29,6 +29,11 @@ export const routes = [
           {
             path:'agregar-periodo',
             component: () => import ('@/views/assestment-periods/addPeriod.vue')
+          },
+          {
+            path:':idPeriodo/editar-periodo',
+            name: 'editar-preiodo',
+            component: () => import ('@/views/assestment-periods/editPeriod.vue')
           },
           {
             path:':idPeriodo/grupos-investigacion',
@@ -140,6 +145,22 @@ export const routes = [
       {
         path: '/funcionarios',
         component: () => import('@/views/functionary/index.vue'),
+        redirect: (to: RouteLocationNormalized) => {
+          return { name: 'listar-funcionarios' }
+        },
+        children:[
+          {
+            path:'listar-funcionarios',
+            name:'listar-funcionarios',
+            component: () => import ('@/views/functionary/listFunctionaries.vue')
+          },
+          {
+            path: 'agregar-funcionarios',
+            name: 'agregar-funcionarios',
+            component: () => import ('@/views/functionary/addFunctionary.vue')
+          }
+
+        ]
       },
       {
         path: '/estudiantes',

@@ -1,5 +1,6 @@
 package com.unibague.backend.service;
 
+import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.*;
@@ -44,7 +45,13 @@ public class ServiceFunctionaryProfile {
         try{
 
             String identificationNumber = functionaryProfile.get("identification_number");
-            if(repositoryFunctionaryProfile.findByIdentificationNumber(identificationNumber).isPresent()){
+            Long assesmentPeriodId = Long.valueOf(functionaryProfile.get("assesment_period_id"));
+
+            if(repositoryAssesmentPeriod.findById(assesmentPeriodId).isEmpty()){
+                return false;
+            }
+            AssesmentPeriod assesmentPeriod = repositoryAssesmentPeriod.findById(assesmentPeriodId).get();
+            if(repositoryFunctionaryProfile.findByIdentificationNumberAndAssesmentPeriod(identificationNumber, assesmentPeriod).isPresent()){
                 return false;
             }
             Map<String, Object> map = FetchExternalData.fetchExternalDataFromFunctionary(identificationNumber);

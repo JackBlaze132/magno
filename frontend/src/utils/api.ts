@@ -15,7 +15,7 @@ class API{
   public readonly GET_RESEARCH_SEEDBED_BY_GROUP_ID:string='getResearchSeedbedsByInvestigationGroupId/';
   public readonly GET_COORDINATOR_BY_RESEARCH_SEEDBED_ID: string = 'getCoordinatorByResearchseedbedId/';
   public readonly GET_EXTERNAL_FUNCTIONARY_PROFILE_BY_SEEDBED_ID: string='getExternalFunctionaryProfilesByResearchSeedbedId/';
-  public readonly GET_STUDENT_PROFLIE_BY_RESEARCH_SEEDBED_ID: string='getStudentProfilesByResearchSeedbedId/'
+  public readonly GET_STUDENT_PROFLIE_BY_RESEARCH_SEEDBED_ID: string='getStudentProfilesByResearchSeedbedId/';
   public readonly GET_TUTOR_BY_RESEARCH_SEEDBED_ID: string='getTutorByResearchseedbedId/';
   public readonly GET_RESEARCH_SEEDBED_BY_ID: string='getResearchSeedbedById/';
   public readonly GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID:string='getFunctionaryProfileByAssesmentPeriodId/';
@@ -27,11 +27,14 @@ class API{
   public readonly POST_STUDENT_PROFILE:string='addStudentProfile';
   public readonly POST_USER:string='addUser';
   public readonly POST_STUDENT_PROFILE_BY_EXCEL:string='addStudentProfileByExcel/';
+  public readonly POST_FUNCTIONARY_PROFILE: string='addFunctionaryProfile';
 
   //----[PATCH]----
   public readonly PATCH_RESEARCH_SEEDBED_FUNCTIONARY:string='updateResearchSeedbedFunctionary';
   public readonly PATCH_INVESTIGATION_GROUP_NAME:string='updateInvestigationGroupName';
   public readonly PATCH_RESEARCH_SEEDBED_NAME:string='updateResearchSeedbedName';
+  public readonly PATCH_ASSESMENT_PERIOD:string='updateAssessmentPeriod';
+
 
   //----[DELETE]----
   public readonly DELETE_STUDENT_PROFILE_FROM_RESEARCH_SEEDBED:string='deleteStudentProfileFromAResearchSeedbed';

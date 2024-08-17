@@ -69,7 +69,7 @@ export default defineComponent({
         hide-details
         single-line
       ></VTextField>
-      <VBtn to="agregar-usuarios" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+      <VBtn to="agregar-funcionarios" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
     </VCardTitle>
     <VDataTable
       :items="items"
