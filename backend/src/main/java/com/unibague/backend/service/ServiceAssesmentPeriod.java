@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ServiceAssesmentPeriod {
@@ -56,54 +57,42 @@ public class ServiceAssesmentPeriod {
 
     /**
      *This method updates the name, the dates or both of an assessment period, notice that there are three possible types of update
-     * and use the following keys: id, type_of_update, name, start_date, end_date
+     * and use the following keys: id, name, start_date, end_date
      * @param map JSON with the keys and values to update
      * @return true if the update was successful, false otherwise
      */
-    public Boolean updateAssessmentPeriod(HashMap<String, String> map){
-        String typeOfUpdate = map.get("type_of_update");
+    public Boolean updateAssessmentPeriod(Map<String, String> map){
 
-        return switch (typeOfUpdate) {
-            case "Name" -> updateAssessmentPeriodName(map);
-            case "Dates" -> updateAssessmentPeriodDates(map);
-            case "Both" -> updateAssessmentPeriodName(map) && updateAssessmentPeriodDates(map);
-            default -> false;
-        };
-    }
+        String id = map.get("id");
+        Long idLong = Long.parseLong(id);
 
-    private Boolean updateAssessmentPeriodName(HashMap<String, String> map){
+        if(repositoryAssesmentPeriod.findById(idLong).isEmpty()){
+            return false;
+        }
+
+        AssesmentPeriod assessmentPeriod = repositoryAssesmentPeriod.findById(idLong).get();
+
+
+        if (!map.get("name").isEmpty()) {
+            assessmentPeriod.setName(map.get("name"));
+        }
+
+        if (!map.get("start_date").isEmpty()) {
+            assessmentPeriod.setStartDate(Date.valueOf(map.get("start_date").substring(0,10)));
+        }
+
+        if (!map.get("end_date").isEmpty()) {
+            assessmentPeriod.setEndDate(Date.valueOf(map.get("start_date").substring(0,10)));
+        }
+
         try {
-            Long id = Long.parseLong(map.get("id"));
-            String name = map.get("name");
-            if(repositoryAssesmentPeriod.findById(id).isPresent()){
-                AssesmentPeriod a = repositoryAssesmentPeriod.findById(id).get();
-                a.setName(name);
-                repositoryAssesmentPeriod.save(a);
-            }
+            repositoryAssesmentPeriod.save(assessmentPeriod);
             return true;
         } catch (Exception e) {
-            System.out.println("Error updating assessment period name " + e.getMessage());
+            System.out.println("Error updating assessment period " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
-
-    private Boolean updateAssessmentPeriodDates(HashMap<String, String> map){
-        try {
-            Long id = Long.parseLong(map.get("id"));
-            Date startDate = Date.valueOf(map.get("start_date").substring(0,10));
-            Date endDate = Date.valueOf(map.get("end_date").substring(0,10));
-            if(repositoryAssesmentPeriod.findById(id).isPresent()){
-                AssesmentPeriod a = repositoryAssesmentPeriod.findById(id).get();
-                a.setStartDate(startDate);
-                a.setEndDate(endDate);
-                repositoryAssesmentPeriod.save(a);
-            }
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error updating assessment period dates " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
+    
 }
