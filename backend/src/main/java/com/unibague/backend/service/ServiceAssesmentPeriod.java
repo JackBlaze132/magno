@@ -61,28 +61,26 @@ public class ServiceAssesmentPeriod {
      * @param map JSON with the keys and values to update
      * @return true if the update was successful, false otherwise
      */
-    public Boolean updateAssessmentPeriod(Map<String, String> map){
-
+    public Boolean updateAssessmentPeriod(Map<String, String> map) {
         String id = map.get("id");
         Long idLong = Long.parseLong(id);
 
-        if(repositoryAssesmentPeriod.findById(idLong).isEmpty()){
+        if (repositoryAssesmentPeriod.findById(idLong).isEmpty()) {
             return false;
         }
 
         AssesmentPeriod assessmentPeriod = repositoryAssesmentPeriod.findById(idLong).get();
 
-
-        if (!map.get("name").isEmpty()) {
+        if (map.containsKey("name") && !map.get("name").isEmpty()) {
             assessmentPeriod.setName(map.get("name"));
         }
 
-        if (!map.get("start_date").isEmpty()) {
-            assessmentPeriod.setStartDate(Date.valueOf(map.get("start_date").substring(0,10)));
+        if (map.containsKey("start_date") && !map.get("start_date").isEmpty()) {
+            assessmentPeriod.setStartDate(Date.valueOf(map.get("start_date").substring(0, 10)));
         }
 
-        if (!map.get("end_date").isEmpty()) {
-            assessmentPeriod.setEndDate(Date.valueOf(map.get("start_date").substring(0,10)));
+        if (map.containsKey("end_date") && !map.get("end_date").isEmpty()) {
+            assessmentPeriod.setEndDate(Date.valueOf(map.get("end_date").substring(0, 10)));
         }
 
         try {
