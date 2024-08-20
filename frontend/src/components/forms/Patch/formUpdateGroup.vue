@@ -1,3 +1,11 @@
+<template>
+  <VForm validate-on="submit" @submit.prevent="updateGroup">
+    <VTextField label="Nombre" name="name" id="name" v-model="item.new_name"/>
+
+    <LoadingBtn icon="ri-save-2-line" text="Guardar" :loading="loading"></LoadingBtn>
+  </VForm>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import API from "@/utils/api";
@@ -49,11 +57,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<template>
-  <VForm validate-on="submit" @submit.prevent="updateGroup">
-    <VTextField label="Nombre" name="name" id="name" v-model="item.new_name"/>
-
-    <LoadingBtn icon="ri-save-2-line" text="Guardar" :loading="loading"></LoadingBtn>
-  </VForm>
-</template>

@@ -3,9 +3,7 @@ import { defineComponent } from "vue"
 
 //utils
 import API from "@/utils/api";
-import { externalFormatter } from "@/utils/formatter";
-import { VIcon } from "vuetify/components";
-import { RouterLink } from "vue-router";
+
 
 
 interface Item {
@@ -50,7 +48,6 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    externalFormatter,
   },
 })
 </script>

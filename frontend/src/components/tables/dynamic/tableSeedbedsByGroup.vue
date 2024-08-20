@@ -3,7 +3,7 @@ import { defineComponent } from "vue"
 
 //utils
 import API from "@/utils/api";
-import { periodActivityFormatter } from "@/utils/formatter";
+import Formatter from "@/utils/formatter";
 import { VIcon } from "vuetify/components";
 import { RouterLink } from "vue-router";
 
@@ -46,7 +46,9 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    periodActivityFormatter,
+    periodActivityFormatter(state:boolean){
+      return Formatter.periodActivityFormatter(state);
+    }
   },
 })
 </script>

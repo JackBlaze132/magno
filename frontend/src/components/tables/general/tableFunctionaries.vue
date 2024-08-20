@@ -3,26 +3,14 @@ import { defineComponent } from "vue"
 
 //utils
 import API from "@/utils/api";
-import { externalFormatter } from "@/utils/formatter";
 
-interface Item {
-  id: number,
-  name: string
-  userCode: string,
-  identificationNumber: string,
-  phoneNumber: string,
-  email: string,
-  sex: string,
-  dependency:{
-    name:string,
-  }
-}
+
 
 export default defineComponent({
 
   data() {
     return {
-      items: [] as Item[],
+      items: [{}],
       search: '',
       headers: [
         {title: 'ID', key: 'id'},
@@ -50,7 +38,6 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    externalFormatter,
   },
 })
 
@@ -76,10 +63,6 @@ export default defineComponent({
       :search="search"
       :headers="headers"
     >
-      <template v-slot:item.isExternalUser="{item}">
-        {{ externalFormatter(item.isExternalUser)}}
-
-      </template>
     </VDataTable>
   </VCard>
 </template>

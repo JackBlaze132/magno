@@ -23,7 +23,7 @@ export const routes = [
         children:[
           {
             path:'listar-periodos',
-            name:'Periodos Academicos',
+            name:'listar-periodos',
             component: () => import('@/views/assestment-periods/listPeriods.vue')
           },
           {

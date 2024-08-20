@@ -3,10 +3,7 @@ import { defineComponent } from "vue"
 
 //utils
 import API from "@/utils/api";
-import { externalFormatter } from "@/utils/formatter";
-import { VIcon } from "vuetify/components";
-import { RouterLink } from "vue-router";
-
+import Formater from "@/utils/formatter";
 
 interface Item {
   id: number,
@@ -58,7 +55,9 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    externalFormatter,
+    externalFormatter(state:boolean){
+      return Formater.externalFormatter(state)
+    },
   },
 })
 </script>

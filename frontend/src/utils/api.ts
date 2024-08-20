@@ -46,7 +46,9 @@ class API{
 
   private static instance: API;
 
-  public static getInstance(){
+  private constructor() {}
+
+  public static getInstance(): API {
     if (!API.instance) {
       API.instance = new API();
     }

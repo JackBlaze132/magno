@@ -3,14 +3,13 @@ import { defineComponent } from "vue"
 
 //utils
 import API from "@/utils/api";
-import { periodActivityFormatter } from "@/utils/formatter";
-import { VIcon } from "vuetify/components";
-import { RouterLink } from "vue-router";
+import Formatter from "@/utils/formatter";
 
 
 interface Item {
   id: number,
   name: string,
+  active: boolean,
   coordinator: {
     name: string
   },
@@ -32,6 +31,7 @@ export default defineComponent({
         {title: 'Nombre', key: 'name'},
         {title: 'Periodo', key: 'assesmentPeriod.name'},
         {title: 'Coordinador', key: 'coordinator.name'},
+        {title: 'Estado', key: 'active'}
       ],
     }
   },
@@ -48,7 +48,9 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    periodActivityFormatter,
+    periodActivityFormatter(state:boolean){
+      return Formatter.periodActivityFormatter(state);
+    }
   },
 })
 </script>
@@ -72,8 +74,12 @@ export default defineComponent({
       :search="search"
       :headers="headers"
       :sort-by="sortBy"
-
     >
+    <template v-slot:item.active="{item}">
+      <VChip :color="item.active ? 'green' : ''" >
+        {{ periodActivityFormatter(item.active)}}
+      </VChip>
+    </template>
     </VDataTable>
   </VCard>
 </template>

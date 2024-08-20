@@ -1,11 +1,48 @@
+<template>
+  <h1>Periodos académicos</h1>
+  <VCard flat class="pa-5 my-3">
+    <VCardTitle class="d-flex align-center justify-end">
+      <VTextField
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="ri-search-line"
+        variant="outlined"
+        hide-details
+        single-line
+      ></VTextField>
+      <VBtn to="agregar-periodo" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+    </VCardTitle>
+    <VDataTable
+      :items="items"
+      :search="search"
+      :headers="headers"
+    >
+      <template v-slot:item.isActive="{item}">
+        <VChip :color="item.isActive ? 'green' : ''" >
+          {{ periodActivityFormatter(item.isActive)}}
+        </VChip>
+      </template>
+      <template v-slot:item.link="{item}">
+        <QuickActions
+          :toView="item.id + '/grupos-investigacion'"
+          :toEdit="item.id + '/editar-periodo'"
+          :toDelete="item.id"
+          :deleteItem="item.name"
+          deleteType="periodo"
+          ></QuickActions>
+
+      </template>
+    </VDataTable>
+  </VCard>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue"
 
 //utils
 import API from "@/utils/api";
-import { periodActivityFormatter } from "@/utils/formatter";
-import { VChip, VIcon, VTooltip } from "vuetify/components";
-import { RouterLink } from "vue-router";
+import Formatter from "@/utils/formatter";
+import { VChip } from "vuetify/components";
 import QuickActions from "@/components/quickActions.vue";
 
 
@@ -48,46 +85,10 @@ export default defineComponent({
         console.error('Error fetching users:', error);
       }
     },
-    periodActivityFormatter,
+    periodActivityFormatter(state:boolean){
+      return Formatter.periodActivityFormatter(state);
+    },
   },
 })
 </script>
 
-<template>
-  <h1>Periodos académicos</h1>
-  <VCard flat class="pa-5 my-3">
-    <VCardTitle class="d-flex align-center justify-end">
-      <VTextField
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="ri-search-line"
-        variant="outlined"
-        hide-details
-        single-line
-      ></VTextField>
-      <VBtn to="agregar-periodo" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
-    </VCardTitle>
-    <VDataTable
-      :items="items"
-      :search="search"
-      :headers="headers"
-    >
-      <template v-slot:item.isActive="{item}">
-        <VChip :color="item.isActive ? 'green' : ''" >
-          {{ periodActivityFormatter(item.isActive)}}
-        </VChip>
-      </template>
-      <template v-slot:item.link="{item}">
-        <QuickActions
-          :toView="item.id + '/grupos-investigacion'"
-          :toEdit="item.id + '/editar-periodo'"
-          :toDelete="item.id"
-          :deleteItem="item.name"
-          deleteType="periodo"
-          ></QuickActions>
-
-      </template>
-    </VDataTable>
-  </VCard>
-</template>
