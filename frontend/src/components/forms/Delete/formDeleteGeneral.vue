@@ -10,7 +10,7 @@
     <VForm validate-on="submit" @submit.prevent="deleteItem">
       <VTextField  name="field" id="field" v-model="inputValue" :placeholder="`eliminar ${itemName}`"/>
       <VcardItem class="d-flex justify-end">
-        <LoadingBtn icon="ri-delete-bin-5-line" text="Eliminar" :loading="loading" color="error" ></LoadingBtn>
+        <LoadingBtn @click="deleteItem" icon="ri-delete-bin-5-line" text="Eliminar" :loading="loading" color="error" ></LoadingBtn>
       </VcardItem>
     </VForm>
   </VCard>
@@ -45,7 +45,7 @@ export default defineComponent({
     };
   },
   methods: {
-    deleteItem() {
+    async deleteItem() {
       const expectedValue = `eliminar ${this.itemName}`;
       if (this.inputValue !== expectedValue) {
         alert(`Por favor ingrese "${expectedValue}" para confirmar la eliminación.`);
@@ -54,59 +54,28 @@ export default defineComponent({
 
       this.loading = true;
 
-      if (this.itemType == 'semillero') {
-        API.delete(API.DELETE_RESEARCH_SEEDBED + this.index)
-          .then((data) => {
-            if (data.error) {
-              console.error("Error al realizar la solicitud", data.error);
-              this.loading = false;
-            } else {
-              console.log(data);
-              this.$router.push({ path: this.$route.path }).then(() => {
-                this.$router.go(0);
-              });
-            }
-          })
-          .catch((error) => {
-            console.error('Error al realizar la solicitud:', error);
-            this.loading = false;
-          });
-      } else if (this.itemType == 'periodo') {
-        API.delete(API.DELETE_ASSESMENT_PERIOD + this.index)
-          .then((data) => {
-            if (data.error) {
-              console.error("Error al realizar la solicitud", data.error);
-              this.loading = false;
-            } else {
-              console.log(data);
-              this.$router.push({ path: this.$route.path }).then(() => {
-                this.$router.go(0);
-              });
-            }
-          })
-          .catch((error) => {
-            console.error('Error al realizar la solicitud:', error);
-            this.loading = false;
-          });
-      }  else if (this.itemType == 'grupo') {
-        API.delete(API.DELETE_INVESTIGATION_GROUP + this.index)
-          .then((data) => {
-            if (data.error) {
-              console.error("Error al realizar la solicitud", data.error);
-              this.loading = false;
-            } else {
-              console.log(data);
-              this.$router.push({ path: this.$route.path }).then(() => {
-                this.$router.go(0);
-              });
-            }
-          })
-          .catch((error) => {
-            console.error('Error al realizar la solicitud:', error);
-            this.loading = false;
-          });
+      try {
+        let response;
+        if (this.itemType === 'semillero') {
+          response = await API.delete(API.DELETE_RESEARCH_SEEDBED + this.index);
+        } else if (this.itemType === 'grupo') {
+          response = await API.delete(API.DELETE_INVESTIGATION_GROUP + this.index);
+        } else if (this.itemType === 'periodo') {
+          response = await API.delete(API.DELETE_ASSESMENT_PERIOD + this.index);
+        }
+
+        if (response.error) {
+          console.error("Error al realizar la solicitud", response.error);
+        } else {
+          console.log(response);
+          this.$emit('itemDeleted', this.index); // Emitir evento al eliminar el objeto
+        }
+      } catch (error) {
+        console.error("Error al realizar la solicitud", error);
+      } finally {
+        this.loading = false;
       }
-    }
+    },
   }
 });
 </script>

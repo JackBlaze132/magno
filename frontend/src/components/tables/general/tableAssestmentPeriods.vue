@@ -23,12 +23,13 @@
           {{ periodActivityFormatter(item.isActive)}}
         </VChip>
       </template>
-      <template v-slot:item.link="{item}">
+      <template v-slot:item.link="{item, index}">
         <QuickActions
           :toView="item.id + '/grupos-investigacion'"
           :toEdit="item.id + '/editar-periodo'"
           :toDelete="item.id"
           :deleteItem="item.name"
+          @itemDeleted="handleItemDeleted"
           deleteType="periodo"
           ></QuickActions>
 
@@ -55,6 +56,9 @@ interface Item {
 }
 
 export default defineComponent({
+  components:{
+    QuickActions
+  },
 
   data() {
     return {
@@ -87,6 +91,10 @@ export default defineComponent({
     },
     periodActivityFormatter(state:boolean){
       return Formatter.periodActivityFormatter(state);
+    },
+    handleItemDeleted(index: number) {
+      this.items.splice(index, 1);
+      this.getPeriods() // Eliminar el elemento del array
     },
   },
 })

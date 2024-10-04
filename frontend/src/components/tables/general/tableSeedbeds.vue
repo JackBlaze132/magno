@@ -1,3 +1,32 @@
+<template>
+  <VCard flat class="pa-5 my-3">
+    <VCardTitle class="d-flex align-center justify-end">
+      <VTextField
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="ri-search-line"
+        variant="outlined"
+        hide-details
+        single-line
+      ></VTextField>
+      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
+    </VCardTitle>
+    <VDataTable
+      :items="items"
+      :search="search"
+      :headers="headers"
+      :sort-by="sortBy"
+    >
+    <template v-slot:item.active="{item}">
+      <VChip :color="item.active ? 'green' : ''" >
+        {{ periodActivityFormatter(item.active)}}
+      </VChip>
+    </template>
+    </VDataTable>
+  </VCard>
+</template>
+
 <script lang="ts">
 import { defineComponent } from "vue"
 
@@ -54,32 +83,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<template>
-  <VCard flat class="pa-5 my-3">
-    <VCardTitle class="d-flex align-center justify-end">
-      <VTextField
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="ri-search-line"
-        variant="outlined"
-        hide-details
-        single-line
-      ></VTextField>
-      <VBtn to="addPeriod" class="mx-2" prepend-icon="ri-add-fill"> Agregar</VBtn>
-    </VCardTitle>
-    <VDataTable
-      :items="items"
-      :search="search"
-      :headers="headers"
-      :sort-by="sortBy"
-    >
-    <template v-slot:item.active="{item}">
-      <VChip :color="item.active ? 'green' : ''" >
-        {{ periodActivityFormatter(item.active)}}
-      </VChip>
-    </template>
-    </VDataTable>
-  </VCard>
-</template>

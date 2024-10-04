@@ -14,7 +14,7 @@
   <VBtn icon class="action delete" flat color="transparent" desity="compact" @click="overlay = !overlay">
     <VIcon icon="ri-delete-bin-5-line" />
     <VOverlay v-model="overlay" scrim="black" class="d-flex align-center justify-center" opacity="0.7">
-      <FormDeleteGeneral :index="toDelete" :itemType="deleteType" :itemName="deleteItem"/>
+      <FormDeleteGeneral :index="toDelete" :itemType="deleteType" :itemName="deleteItem" @itemDeleted="handleItemDeleted"/>
     </VOverlay>
     <VTooltip activator="parent" location="top">
       Eliminar
@@ -38,13 +38,14 @@
         type: String,
       },
       toDelete:{
-        type: String,
+        type: Number,
       },
       deleteType:{
         type: String,
       },
       deleteItem:{
         type: String,
+        required: true,
       }
     },
     data(){
@@ -52,6 +53,12 @@
         overlay: false
       }
     },
+    methods:{
+      handleItemDeleted(index: any){
+        this.$emit('itemDeleted', index);
+        this.overlay = false;
+      }
+    }
 
   })
 </script>
