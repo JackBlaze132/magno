@@ -3,6 +3,8 @@ class API{
 
 
   private readonly API_BASE_URL: string = '/api/';
+
+  public readonly HEADER_TEST: string='hello/header';
   // ya se encuentra registrada en el archivo vite.config.mts
   //----[ENDPOINTS]----
   //----[GET]----
@@ -55,7 +57,31 @@ class API{
     return API.instance;
   }
 
-  public async get(endpoint: string) {
+  public async get(endpoint: string, headers: Record<string, string> = {}): Promise<any> {
+    try {
+      const response = await fetch(this.API_BASE_URL + `${endpoint}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers, // Agregar headers personalizados si existen
+        },
+      });
+
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        return Array.isArray(data) ? data : [data];
+      } else {
+        const text = await response.text();
+        return text;
+      }
+    } catch (error) {
+      console.error(`Error fetching ${endpoint}:`, error);
+      throw error;
+    }
+  }
+
+  /**public async get(endpoint: string) {
     try {
       const response = await fetch(this.API_BASE_URL + `${endpoint}`);
       const data = await response.json();
@@ -64,7 +90,7 @@ class API{
       console.error(`Error fetching ${endpoint}:`, error);
       throw error;
     }
-  }
+  }**/
 
   public async post(endpoint: string, data: any) {
     try {
