@@ -44,7 +44,7 @@ jobs:
 
     - name: Test internal connectivity with SSH
       run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secretsINTERNAL_RESOURCE_IP. }} 'echo "SSH connection successful"'
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP. }} 'echo "SSH connection successful"'
         
     - name: Clone repository on remote server
       run: |
