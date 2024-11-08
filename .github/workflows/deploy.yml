@@ -59,7 +59,7 @@ jobs:
     - name: Build project on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/magno;
+          cd ~/magno/magno/frontend;
           npm install;
           npm run build'
 
