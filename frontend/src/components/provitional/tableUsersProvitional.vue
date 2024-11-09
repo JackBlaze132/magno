@@ -2,8 +2,8 @@
 import { defineComponent } from "vue"
 
 //utils
-import { get } from "@/utils/api";
-import { externalFormatter } from "@/utils/formatter";
+import API from "@/utils/api";
+import Formatter from "@/utils/formatter";
 
 interface Item {
   id: number,
@@ -26,13 +26,15 @@ export default defineComponent({
   methods: {
     async getUsers() {
       try {
-        const data = await get('getUsers');
+        const data = await API.get('getUsers');
         this.items = data;
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     },
-    externalFormatter
+    externalFormatter(state: boolean){
+      return Formatter.externalFormatter(state)
+    }
   },
 })
 </script>

@@ -26,6 +26,7 @@
     "resolveJsonModule": true,
     "types": [
       "vite/client",
+      "node"
       //"unplugin-vue-router/client"
         
     ],

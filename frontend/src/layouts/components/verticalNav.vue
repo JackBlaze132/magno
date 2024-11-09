@@ -69,6 +69,6 @@
 </template>
 
 <script setup lang="ts">
-  import magnoDark from '@images/logos/magno-dark.svg?raw'
+  //import magnoDark from '@images/logos/magno-dark.svg?raw'
 import { VDivider } from 'vuetify/components';
 </script>

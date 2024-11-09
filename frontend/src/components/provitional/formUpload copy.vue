@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useTheme } from 'vuetify';
+  //import { useTheme } from 'vuetify';
   import {defineComponent} from 'vue'
 
 </script>
@@ -12,7 +12,7 @@
         files: [],
         rules: [
             (value: File[]) => {
-          const fileType = value[0].type;
+          //const fileType = value[0].type;
           const fileName = value[0].name;
           const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
           return fileExtension === 'xlsx' || 'Solo se permiten archivos .xlsx';
@@ -40,7 +40,8 @@
         accept=".xlsx"
     >
       <template v-slot:selection="{ fileNames }">
-        <template v-for="(fileName, index) in fileNames" :key="fileName">
+        <!--<template v-for="(fileName, index) in fileNames" :key="fileName">-->
+        <template v-for="(fileName) in fileNames" :key="fileName">
           <v-chip
             class="me-2 pa-4"
             size="small"

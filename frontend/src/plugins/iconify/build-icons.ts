@@ -10,6 +10,7 @@
  * This example uses Iconify Tools to import and clean up icons.
  * For Iconify Tools documentation visit https://docs.iconify.design/tools/tools2/
  */
+//import { promises as fs } from 'node:fs'
 import { promises as fs } from 'node:fs'
 import { dirname, join } from 'node:path'
 
@@ -19,7 +20,7 @@ import type { IconifyJSON } from '@iconify/types'
 import { getIcons, getIconsCSS, stringToIcon } from '@iconify/utils'
 
 /**
- * Script configuration
+ * Script configuration|
  */
 interface BundleScriptCustomSVGConfig {
 

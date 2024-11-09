@@ -23,7 +23,8 @@
           {{ periodActivityFormatter(item.isActive)}}
         </VChip>
       </template>
-      <template v-slot:item.link="{item, index}">
+      <!--<template v-slot:item.link="{item, index}">-->
+        <template v-slot:item.link="{item}">
         <QuickActions
           :toView="item.id + '/grupos-investigacion'"
           :toEdit="item.id + '/editar-periodo'"
