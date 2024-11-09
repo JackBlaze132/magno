@@ -64,15 +64,10 @@ jobs:
           npm install;
           npm run build'
 
-    - name: Run Semantic Release
-      working-directory: ./    
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npx semantic-release
 
     - name: Restart PM2
       run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} 'cd ~/MIRO/Front_Miro && pm2 restart Front_Miro'
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} 'cd ~/magno/magno/frontend && pm2 restart Front_Magno'
 
     - name: Post Checkout repository
       run: echo "Deployment complete"
