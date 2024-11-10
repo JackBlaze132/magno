@@ -82,8 +82,20 @@ jobs:
     - name: Run Spring Boot app on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/magno/magno/backend;
+          # Detener la aplicación si está en ejecución
+          pid=$(ps aux | grep "java -jar target/*.jar" | grep -v grep | awk "{print $2}")
+          if [ -n "$pid" ]; then
+            echo "Stopping existing Spring Boot application..."
+            kill -9 $pid
+          fi
+          
+          # Iniciar la nueva aplicación
+          echo "Starting Spring Boot application..."
           nohup java -jar target/*.jar > ~/springboot/logs/app.log 2>&1 &'
+      env:
+        JDBC_DATABASE_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
+        JDBC_DATABASE_URL: ${{ secrets.JDBC_DATABASE_URL }}
+        JDBC_DATABASE_USERNAME: ${{ secrets.JDBC_DATABASE_USERNAME }}
 
     # 12. Mensaje de finalización
     - name: Post Deployment
