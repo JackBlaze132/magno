@@ -63,11 +63,11 @@ jobs:
     - name: Clone repository on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/springboot || exit;
+          cd ~/magno/magno/ || exit;
           if [ ! -d ".git" ]; then
-            git clone https://github.com/your-username/your-springboot-repo.git;
+            git clone https://github.com/JackBlaze132/magno.git
           else
-            cd your-springboot-repo;
+            cd magno;
             git pull;
           fi'
 
@@ -75,14 +75,14 @@ jobs:
     - name: Build Spring Boot project on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/springboot/your-springboot-repo;
+          cd ~/magno/magno/backend;
           mvn clean install -DskipTests'
 
     # 11. Ejecutar la aplicación Spring Boot en el servidor remoto
     - name: Run Spring Boot app on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/springboot/your-springboot-repo;
+          cd ~/magno/magno/backend;
           nohup java -jar target/*.jar > ~/springboot/logs/app.log 2>&1 &'
 
     # 12. Mensaje de finalización
