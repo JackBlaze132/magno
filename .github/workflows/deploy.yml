@@ -72,7 +72,7 @@ jobs:
         if pm2 list | grep -q 'Front_Magno'; then
           pm2 restart Front_Magno;
         else
-          pm2 start http-server -- -a ${{secrets.INTERNAL_RESOURCE_IP}} -p 3000 --name Front_Magno --proxy http://${{secrets.INTERNAL_RESOURCE_IP}}:3000 -s dist;
+          pm2 start http-server -- -a ${{secrets.INTERNAL_RESOURCE_IP}} -p 3000 -s dist --name Front_Magno;
         fi"
 
 
