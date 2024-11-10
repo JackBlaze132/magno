@@ -23,6 +23,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '18'
+        distribution: 'microsoft'
 
     # 3. Instalar Maven en el entorno
     - name: Install Maven
