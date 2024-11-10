@@ -66,14 +66,16 @@ jobs:
           
     - name: Restart PM2
       run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          which pm2;
-          cd ~/magno/magno/frontend;
-          if pm2 list | grep -q "Front_Magno"; then
-            pm2 restart Front_Magno;
-          else
-            pm2 start http-server dist -p 3000 --name Front_Magno;
-          fi'
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} << 'EOF'
+        which pm2
+        cd ~/magno/magno/frontend
+        if pm2 list | grep -q "Front_Magno"; then
+          pm2 restart Front_Magno
+        else
+          pm2 start http-server dist -p 3000 --name Front_Magno
+        fi
+        EOF
+
 
     - name: Post Checkout repository
       run: echo "Deployment complete"
