@@ -72,7 +72,7 @@ jobs:
         if pm2 list | grep -q 'Front_Magno'; then
           pm2 restart Front_Magno;
         else
-          pm2 start serve -- -s dist -p 5173 --name Front_Magno;
+          pm2 start --name Front_Magno --interpreter node -- serve -s dist -l 5173;
         fi"
 
 
