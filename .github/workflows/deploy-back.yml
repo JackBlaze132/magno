@@ -18,11 +18,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # 2. Instalar JDK 21 (necesario para Maven y Spring Boot)
-    - name: Set up JDK 21
+    # 2. Instalar JDK 18 (necesario para Maven y Spring Boot)
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: '21'
+        java-version: '17.0.10'
         distribution: 'microsoft'
 
     # 3. Instalar Maven en el entorno
