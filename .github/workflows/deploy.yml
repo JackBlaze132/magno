@@ -72,7 +72,7 @@ jobs:
         if pm2 list | grep -q 'Front_Magno'; then
           pm2 restart Front_Magno;
         else
-          INTERNAL_RESOURCE_IP=${{ secrets.INTERNAL_RESOURCE_IP }} pm2 start scripts/serve-server.mjs --name Front_Magno;
+          pm2 start "serve -s dist -p 3000" --name Front_Magno
         fi"
 
 
