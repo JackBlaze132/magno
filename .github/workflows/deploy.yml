@@ -72,8 +72,8 @@ jobs:
         if pm2 list | grep -q 'Front_Magno'; then
           pm2 restart Front_Magno;
         else
-          cd ~/magno/magno/frontend
-          pm2 start "serve -s dist -p 3000" --name Front_Magno
+          cd ~/magno/magno/frontend;
+          pm2 start "serve -s dist -p 3000" --name Front_Magno;
         fi"
 
 
