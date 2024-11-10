@@ -27,7 +27,7 @@ jobs:
 
     # 3. Instalar Maven en el entorno
     - name: Install Maven
-      run: sudo apt-get install -y maven=3.9.9
+      run: sudo apt-get install -y maven
 
     # Instalar OpenConnect
     - name: Install OpenConnect
