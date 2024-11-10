@@ -26,11 +26,8 @@ jobs:
         distribution: 'microsoft'
 
     # 3. Instalar Maven en el entorno
-    - name: Set up Maven
-      uses: actions/setup-java@v3
-      with:
-        maven-version: '3.2.3'
-        distribution: 'microsoft'
+    - name: Install Maven
+      run: sudo apt-get install -y maven@3.2.3
 
     # Instalar OpenConnect
     - name: Install OpenConnect
