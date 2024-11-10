@@ -30,6 +30,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         maven-version: '3.2.3'
+        distribution: 'microsoft'
 
     # Instalar OpenConnect
     - name: Install OpenConnect
