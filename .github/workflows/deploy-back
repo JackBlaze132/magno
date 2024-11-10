@@ -1,0 +1,85 @@
+name: Deploy Spring Boot Backend
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout del repositorio
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # 2. Instalar JDK 18 (necesario para Maven y Spring Boot)
+    - name: Set up JDK 18
+      uses: actions/setup-java@v3
+      with:
+        java-version: '18'
+
+    # 3. Instalar Maven en el entorno
+    - name: Install Maven
+      run: sudo apt-get install -y maven
+
+    # 4. Instalar sshpass para hacer la conexión SSH no interactiva
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
+
+    # 5. Conectar a la VPN (si es necesario)
+    - name: Connect to VPN
+      run: |
+        echo "${{ secrets.VPN_PASSWORD }}" | sudo openconnect --protocol=gp --user=${{ secrets.VPN_USER }} --passwd-on-stdin ${{ secrets.VPN_HOST }} -b
+      env:
+        VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
+        VPN_USER: ${{ secrets.VPN_USER }}
+        VPN_HOST: ${{ secrets.VPN_HOST }}
+
+    # 6. Verificar la conexión VPN
+    - name: Verify VPN connection
+      run: ip a
+
+    # 7. Verificar las rutas de red
+    - name: List network routes
+      run: ip route
+
+    # 8. Test de conectividad SSH con el servidor remoto
+    - name: Test internal connectivity with SSH
+      run: |
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} 'echo "SSH connection successful"'
+
+    # 9. Clonar el repositorio en el servidor remoto
+    - name: Clone repository on remote server
+      run: |
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
+          cd ~/springboot || exit;
+          if [ ! -d ".git" ]; then
+            git clone https://github.com/your-username/your-springboot-repo.git;
+          else
+            cd your-springboot-repo;
+            git pull;
+          fi'
+
+    # 10. Compilar el proyecto con Maven en el servidor remoto
+    - name: Build Spring Boot project on remote server
+      run: |
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
+          cd ~/springboot/your-springboot-repo;
+          mvn clean install -DskipTests'
+
+    # 11. Ejecutar la aplicación Spring Boot en el servidor remoto
+    - name: Run Spring Boot app on remote server
+      run: |
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
+          cd ~/springboot/your-springboot-repo;
+          nohup java -jar target/*.jar > ~/springboot/logs/app.log 2>&1 &'
+
+    # 12. Mensaje de finalización
+    - name: Post Deployment
+      run: echo "Spring Boot application deployed successfully"
