@@ -6,9 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   deploy-back:
     runs-on: ubuntu-latest
@@ -18,22 +15,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # 2. Instalar JDK 17 (necesario para Maven y Spring Boot)
+    # 2. Instalar JDK 17 en GitHub Actions
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: '17.0.10'
+        java-version: '17'
         distribution: 'microsoft'
 
-    # 3. Instalar Maven en el entorno
+    # 3. Instalar Maven en el entorno de GitHub Actions
     - name: Install Maven
       run: sudo apt-get install -y maven
 
-    # 4. Instalar OpenConnect para la VPN (si es necesario)
+    # 4. Instalar OpenConnect para la conexión a la VPN
     - name: Install OpenConnect
       run: sudo apt-get install -y openconnect
 
-    # 5. Instalar sshpass para hacer la conexión SSH no interactiva
+    # 5. Instalar sshpass para conexión SSH no interactiva
     - name: Install sshpass
       run: sudo apt-get install -y sshpass
 
@@ -42,62 +39,44 @@ jobs:
       run: |
         echo "${{ secrets.VPN_PASSWORD }}" | sudo openconnect --protocol=gp --user=${{ secrets.VPN_USER }} --passwd-on-stdin ${{ secrets.VPN_HOST }} -b
 
-    # 7. Verificar la conexión VPN
-    - name: Verify VPN connection
-      run: ip a
+    # 7. Compilar el proyecto usando Maven
+    - name: Build Spring Boot project
+      run: mvn clean package -DskipTests
 
-    # 8. Verificar las rutas de red
-    - name: List network routes
-      run: ip route
-
-    # 9. Test de conectividad SSH con el servidor remoto
-    - name: Test internal connectivity with SSH
+    # 8. Copiar el archivo JAR generado al servidor remoto
+    - name: Copy JAR to remote server
       run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} 'echo "SSH connection successful"'
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no target/*.jar ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }}:~/magno/magno/backend/
 
-    # 10. Actualizar el repositorio en el servidor remoto
-    - name: Pull repository on remote server
+    # 9. Ejecutar la aplicación Spring Boot en el servidor remoto
+    - name: Run Spring Boot app on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/magno/magno/backend &&
-          git pull'
-
-    # 11. Compilar el proyecto con Maven en el servidor remoto
-    - name: Build Spring Boot project on remote server
-      run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/magno/magno/backend &&
-          mvn clean install -DskipTests'
-
-    # 12. Ejecutar la aplicación Spring Boot en el servidor remoto
-    - name: Stop existing Spring Boot app
-      run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          pid=$(pgrep -f "java -jar target/") || true;
+          # Detener cualquier instancia en ejecución de la aplicación
+          pid=$(pgrep -f "java -jar") || true
           if [ -n "$pid" ]; then
-            echo "Stopping existing Spring Boot application...";
-            kill -9 $pid; sleep 2;
+            echo "Stopping existing Spring Boot application..."
+            kill -9 $pid
           fi
-        '
 
-    - name: Start Spring Boot app on remote server
-      run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          mkdir -p ~/magno/magno/backend/logs;
+          # Crear la carpeta de logs si no existe
+          mkdir -p ~/magno/magno/backend/logs
+
+          # Iniciar la aplicación con las variables de entorno JDBC
+          echo "Starting Spring Boot application..."
           nohup env JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }} \
-                 JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
-                 JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
-                 java -jar target/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
+                   JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
+                   JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
+                   java -jar ~/magno/magno/backend/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
         '
 
-
-    # 13. Mostrar las últimas líneas de los logs para ver si la aplicación se inició correctamente
+    # 10. Mostrar las últimas líneas del log para verificar si la aplicación se inició correctamente
     - name: Show last 50 lines of Spring Boot logs
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
           tail -n 50 ~/magno/magno/backend/logs/app.log
         '
 
-    # 14. Mensaje de finalización
+    # 11. Mensaje de finalización
     - name: Post Deployment
       run: echo "Spring Boot application deployed successfully"
