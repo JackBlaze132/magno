@@ -82,18 +82,21 @@ jobs:
       - name: Run Spring Boot app on remote server
         run: |
           sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} "
-            cd ~/magno/magno/backend && \
+            cd ~/magno/magno/backend || exit;
             pid=\$(pgrep -f 'java -jar') || true
             if [ -n \"\$pid\" ]; then
-              echo 'Stopping existing Spring Boot application...'
-              kill -9 \$pid
+              echo 'Stopping existing Spring Boot application with PID: \$pid...'
+              kill -9 \$pid || echo 'Failed to stop the existing application, it may not be running.'
+            else
+              echo 'No existing Spring Boot application found to stop.'
             fi
-            mkdir -p ~/magno/magno/backend/logs
-            echo 'Starting Spring Boot application...'
-            nohup env JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }} \
-                 JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
-                 JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
-                 java -jar target/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
+            
+          mkdir -p ~/magno/magno/backend/logs
+          echo 'Starting Spring Boot application...'
+          nohup env JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }} \
+               JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
+               JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
+               java -jar target/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
           "
 
       # 13. Mensaje de finalización
