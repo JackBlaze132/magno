@@ -18,7 +18,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # 2. Instalar JDK 18 (necesario para Maven y Spring Boot)
+    # 2. Instalar JDK 17 (necesario para Maven y Spring Boot)
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -29,15 +29,15 @@ jobs:
     - name: Install Maven
       run: sudo apt-get install -y maven
 
-    # Instalar OpenConnect
+    # 4. Instalar OpenConnect
     - name: Install OpenConnect
       run: sudo apt-get install -y openconnect
 
-    # 4. Instalar sshpass para hacer la conexión SSH no interactiva
+    # 5. Instalar sshpass para hacer la conexión SSH no interactiva
     - name: Install sshpass
       run: sudo apt-get install -y sshpass
 
-    # 5. Conectar a la VPN (si es necesario)
+    # 6. Conectar a la VPN (si es necesario)
     - name: Connect to VPN
       run: |
         echo "${{ secrets.VPN_PASSWORD }}" | sudo openconnect --protocol=gp --user=${{ secrets.VPN_USER }} --passwd-on-stdin ${{ secrets.VPN_HOST }} -b
@@ -46,20 +46,20 @@ jobs:
         VPN_USER: ${{ secrets.VPN_USER }}
         VPN_HOST: ${{ secrets.VPN_HOST }}
 
-    # 6. Verificar la conexión VPN
+    # 7. Verificar la conexión VPN
     - name: Verify VPN connection
       run: ip a
 
-    # 7. Verificar las rutas de red
+    # 8. Verificar las rutas de red
     - name: List network routes
       run: ip route
 
-    # 8. Test de conectividad SSH con el servidor remoto
+    # 9. Test de conectividad SSH con el servidor remoto
     - name: Test internal connectivity with SSH
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} 'echo "SSH connection successful"'
 
-    # 9. Clonar el repositorio en el servidor remoto
+    # 10. Clonar el repositorio en el servidor remoto
     - name: Clone repository on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
@@ -71,20 +71,37 @@ jobs:
             git pull;
           fi'
 
-    # 10. Compilar el proyecto con Maven en el servidor remoto
+    # 11. Compilar el proyecto con Maven en el servidor remoto
     - name: Build Spring Boot project on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
           cd ~/magno/magno/backend;
           mvn clean install -DskipTests'
 
-    # 11. Ejecutar la aplicación Spring Boot en el servidor remoto
+    # 12. Ejecutar la aplicación Spring Boot en el servidor remoto con variables de entorno JDBC
     - name: Run Spring Boot app on remote server
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
           cd ~/magno/magno/backend;
-          nohup java -jar target/*.jar > ~/springboot/logs/app.log 2>&1 &'
+          
+          # Detener cualquier instancia en ejecución de la aplicación
+          pid=$(pgrep -f "java -jar") || true
+          if [ -n "$pid" ]; then
+            echo "Stopping existing Spring Boot application..."
+            kill -9 $pid
+          fi
 
-    # 12. Mensaje de finalización
+          # Crear la carpeta de logs si no existe
+          mkdir -p ~/magno/magno/backend/logs
+
+          # Iniciar la aplicación con las variables de entorno JDBC
+          echo "Starting Spring Boot application..."
+          nohup env JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }} \
+                   JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
+                   JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
+                   java -jar target/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
+        '
+
+    # 13. Mensaje de finalización
     - name: Post Deployment
       run: echo "Spring Boot application deployed successfully"
