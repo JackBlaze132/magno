@@ -67,6 +67,7 @@ jobs:
     - name: Restart PM2
       run: |
         sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} "
+        export PATH=\$PATH:/usr/local/nodejs/bin &&
         if pm2 list | grep -q 'Front_Magno'; then
           pm2 restart Front_Magno;
         else
