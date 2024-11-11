@@ -83,7 +83,7 @@ jobs:
         run: |
           sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} "
             cd ~/magno/magno/backend || exit;
-            pid=\$(pgrep -f 'java -jar') || true
+            pid=\$(pgrep -f 'java -jar target/') || true
             if [ -n \"\$pid\" ]; then
               echo 'Stopping existing Spring Boot application with PID: \$pid...'
               kill -9 \$pid || echo 'Failed to stop the existing application, it may not be running.'
