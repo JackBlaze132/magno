@@ -66,15 +66,13 @@ jobs:
           
     - name: Restart PM2
       run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} "
-        export PATH=\$PATH:/usr/local/nodejs/bin &&
-        cd ~/magno/magno/frontend &&
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
         if pm2 list | grep -q 'Front_Magno'; then
           pm2 restart Front_Magno;
         else
-          cd ~/magno/magno/frontend;
-          pm2 start "serve -s dist -p 3000" --name Front_Magno;
-        fi"
+          cd ~/magno/magno/frontend/dist &&
+          pm2 start "serve -s . -p 3000" --name Front_Magno;
+        fi'
 
 
 
