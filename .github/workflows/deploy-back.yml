@@ -81,26 +81,27 @@ jobs:
     # 12. Ejecutar la aplicación Spring Boot en el servidor remoto con variables de entorno JDBC
     - name: Run Spring Boot app on remote server
       run: |
-        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} '
-          cd ~/magno/magno/backend;
-          
+        sshpass -p "${{ secrets.INTERNAL_SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.INTERNAL_USER }}@${{ secrets.INTERNAL_RESOURCE_IP }} "
+          cd ~/magno/magno/backend && \
+      
           # Detener cualquier instancia en ejecución de la aplicación
-          pid=$(pgrep -f "java -jar") || true
-          if [ -n "$pid" ]; then
-            echo "Stopping existing Spring Boot application..."
-            kill -9 $pid
+          pid=\$(pgrep -f 'java -jar') || true
+          if [ -n \"\$pid\" ]; then
+            echo 'Stopping existing Spring Boot application...'
+            kill -9 \$pid
           fi
 
           # Crear la carpeta de logs si no existe
           mkdir -p ~/magno/magno/backend/logs
 
           # Iniciar la aplicación con las variables de entorno JDBC
-          echo "Starting Spring Boot application..."
+          echo 'Starting Spring Boot application...'
           nohup env JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }} \
-                   JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
-                   JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
-                   java -jar target/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
-        '
+               JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }} \
+               JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
+               java -jar target/*.jar > ~/magno/magno/backend/logs/app.log 2>&1 &
+          "
+
 
     # 13. Mensaje de finalización
     - name: Post Deployment
