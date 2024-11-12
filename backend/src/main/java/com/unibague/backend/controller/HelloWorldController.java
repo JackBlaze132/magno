@@ -1,7 +1,9 @@
 package com.unibague.backend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class HelloWorldController {
 
     @GetMapping(path = "/hello/header", headers = "X-API-VERSION=1")
