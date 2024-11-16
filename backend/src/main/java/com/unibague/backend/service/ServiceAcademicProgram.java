@@ -2,6 +2,7 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.AcademicProgram;
 import com.unibague.backend.repository.RepositoryAcademicProgram;
+import com.unibague.backend.util.ExceptionLogger;
 import com.unibague.backend.util.FetchExternalData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class ServiceAcademicProgram {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            ExceptionLogger.logException(e);
             return false;
         }
     }
@@ -48,6 +50,7 @@ public class ServiceAcademicProgram {
             }
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             e.printStackTrace();
             return false;
         }

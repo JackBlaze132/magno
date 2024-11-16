@@ -8,6 +8,7 @@ import com.unibague.backend.repository.RepositoryAssesmentPeriod;
 import com.unibague.backend.repository.RepositoryFunctionaryProfile;
 import com.unibague.backend.repository.RepositoryInvestigationGroup;
 import com.unibague.backend.repository.RepositoryResearchSeedbed;
+import com.unibague.backend.util.ExceptionLogger;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,7 @@ public class ServiceResearchSeedbed {
 
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.println("Failure trying to create a research seedbed:\n" + e.getMessage());
             return false;
         }
@@ -213,6 +215,7 @@ public class ServiceResearchSeedbed {
             return false;
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.println("Failure trying to delete a research seedbed:\n" + e.getMessage());
             e.printStackTrace();
             return false;
