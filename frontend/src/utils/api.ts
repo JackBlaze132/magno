@@ -2,7 +2,7 @@
 class API{
 
 
-  private readonly API_BASE_URL: string = 'http://localhost:8080/';
+  private readonly API_BASE_URL: string = '/api/';
 
   public readonly HEADER_TEST: string='hello/header';
   // ya se encuentra registrada en el archivo vite.config.mts
