@@ -2,6 +2,7 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.User;
 import com.unibague.backend.repository.RepositoryUser;
+import com.unibague.backend.util.ExceptionLogger;
 import com.unibague.backend.util.IntegraStudentNomenclature;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class ServiceUser {
             repositoryUser.saveAndFlush(u);
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;
@@ -104,6 +106,7 @@ public class ServiceUser {
             }
             repositoryUser.deleteUserWithEmptyEmailOrUserIdentification();
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.println(e.getMessage());
             return false;
         }

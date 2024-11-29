@@ -23,6 +23,7 @@ public class FetchExternalData {
             return restTemplate.getForObject(url, String.class).replace("[", "").replace("]", "");
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
@@ -41,6 +42,7 @@ public class FetchExternalData {
             return getFunctionaryData(identificationNumber, list);
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
@@ -66,6 +68,7 @@ public class FetchExternalData {
             return dependencyNames;
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return null;
@@ -96,6 +99,7 @@ public class FetchExternalData {
             return academicPrograms;
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return null;
@@ -119,6 +123,7 @@ public class FetchExternalData {
             return jsonObject.toMap();
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.println("Error: " + e.getMessage());
             System.out.println(json + "fin del json");
             return null;

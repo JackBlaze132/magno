@@ -5,6 +5,7 @@ import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.model.StudentProfile;
 import com.unibague.backend.repository.*;
+import com.unibague.backend.util.ExceptionLogger;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.IntegraStudentNomenclature;
 import com.unibague.backend.util.Sex;
@@ -80,6 +81,7 @@ public class ServiceStudentProfile {
 
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;
@@ -122,6 +124,7 @@ public class ServiceStudentProfile {
             return true;
         } catch (Exception e) {
             System.out.printf("Error: %s", e.getMessage());
+            ExceptionLogger.logException(e);
             e.printStackTrace();
             return false;
         }
@@ -200,6 +203,7 @@ public class ServiceStudentProfile {
             repositoryStudentProfile.save(sp);
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;
@@ -234,6 +238,7 @@ public class ServiceStudentProfile {
             return false;
 
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;

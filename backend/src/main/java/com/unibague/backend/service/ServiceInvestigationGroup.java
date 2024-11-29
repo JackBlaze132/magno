@@ -6,6 +6,7 @@ import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
 import com.unibague.backend.repository.RepositoryFunctionaryProfile;
 import com.unibague.backend.repository.RepositoryInvestigationGroup;
+import com.unibague.backend.util.ExceptionLogger;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,7 @@ public class ServiceInvestigationGroup {
             repositoryInvestigationGroup.save(i);
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.println("Error: " + e.getMessage());
             return false;
         }
