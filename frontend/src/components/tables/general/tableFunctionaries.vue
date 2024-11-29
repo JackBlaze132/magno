@@ -17,6 +17,11 @@
       :search="search"
       :headers="headers"
     >
+    <template v-slot:item.assesmentPeriod="{item}">
+      <VChip v-if="item.assesmentPeriod">
+        {{ item.assesmentPeriod.name }}
+      </VChip>
+    </template>
     </VDataTable>
   </VCard>
 </template>
@@ -39,6 +44,7 @@ export default defineComponent({
         {title: 'ID', key: 'id'},
         {title: 'Nombre', key: 'name'},
         {title: 'Código', key: 'userCode'},
+        {title: 'Periodo', key: 'assesmentPeriod'},
         {title: 'Identificación', key: 'identificationNumber'},
         {title: 'Teléfono', key: 'phoneNumber'},
         {title: 'Correo', key: 'email'},
@@ -56,6 +62,7 @@ export default defineComponent({
     async getUsers() {
       try {
         this.items = await API.get(API.GET_FUNCTIONARY_PROFILES);
+        console.log(this.items);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

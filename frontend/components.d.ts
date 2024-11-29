@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    copy: typeof import('./src/components/provitional/tableTeachers copy.vue')['default']
     FormAddFunctionary: typeof import('./src/components/forms/Post/formAddFunctionary.vue')['default']
     FormAddGroup: typeof import('./src/components/forms/Post/formAddGroup.vue')['default']
     FormAddPeriod: typeof import('./src/components/forms/Post/formAddPeriod.vue')['default']
@@ -14,6 +15,7 @@ declare module 'vue' {
     FormAddStudent: typeof import('./src/components/forms/Post/formAddStudent.vue')['default']
     FormAddUser: typeof import('./src/components/forms/Post/formAddUser.vue')['default']
     FormDeleteGeneral: typeof import('./src/components/forms/Delete/formDeleteGeneral.vue')['default']
+    FormEditGeneral: typeof import('./src/components/forms/Patch/FormEditGeneral.vue')['default']
     FormLogin: typeof import('./src/components/forms/formLogin.vue')['default']
     FormUpdateFunctionary: typeof import('./src/components/forms/Patch/formUpdateFunctionary.vue')['default']
     FormUpdateGroup: typeof import('./src/components/forms/Patch/formUpdateGroup.vue')['default']

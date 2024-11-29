@@ -1,7 +1,13 @@
 <template>
   <VForm validate-on="submit" @submit.prevent="addItem">
     <VTextField label="Número de identificación" name="name" id="name" v-model="item.identification_number"/>
-    <VTextField label="ID periodo academico" name="name" id="name" v-model="item.assesment_period_id"/>
+    <VSelect
+      label="Periodo Académico"
+      :items="periods"
+      item-title="name"
+      item-value="id"
+      v-model="item.assesment_period_id"
+    />
     <LoadingBtn
       text="Guardar"
       icon="ri-save-2-line"
@@ -15,40 +21,54 @@ import { defineComponent } from 'vue'
 import API from "@/utils/api";
 import LoadingBtn from '../loadingBtn.vue';
 
-
 interface Item {
-    identification_number:string,
-    assesment_period_id:string
+  identification_number: string,
+  assesment_period_id: string
+}
+
+interface Period {
+  id: string,
+  name: string
 }
 
 export default defineComponent({
-  name: 'formAddFucntionary',
+  name: 'formAddFunctionary',
   data() {
     return {
       item: {} as Item,
-      selectedFunctionary: null,
+      periods: [] as Period[],
       loading: false
     }
   },
-
+  created() {
+    this.getPeriods();
+  },
   methods: {
+    async getPeriods() {
+      try {
+        this.periods = await API.get(API.GET_ASSESMENT_PERIODS);
+      } catch (error) {
+        console.error('Error fetching periods:', error);
+      }
+    },
     addItem() {
-      this.loading=true
+      this.loading = true;
       API.post(API.POST_FUNCTIONARY_PROFILE, this.item)
-      .then((data) => {
-        if (data.error) {
-          this.loading=false
-          console.error("Error al realizar la solicitud", data.error);
-        } else {
-          console.log(data);
-          this.$router.push('detalles');
-        }
-      })
-      .catch((error) => {
-        this.loading=false
-        console.error('Error al realizar la solicitud:', error);
-      });
+        .then((data) => {
+          this.$router.push('/funcionarios');
+        })
+        .catch((error) => {
+          console.error('Error al realizar la solicitud:', error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   },
+  computed: {
+    PeriodId() {
+      return this.periods.map(functionary => Period.id);
+    },
+  }
 });
 </script>

@@ -3,7 +3,7 @@
   import API from "@/utils/api";
 
   interface Item {
-    userIdentification: string,
+    identification: string,
     email: string,
     isExternalUser: boolean
   }
@@ -20,7 +20,7 @@
     addUser() {
       API.post(API.POST_USER, this.item)
         .then((data) => {
-          this.$router.push('/users');
+          this.$router.push('/usuarios');
         })
         .catch((error) => {
           console.error('Error al realizar la solicitud:', error);
@@ -32,7 +32,7 @@
 
 <template>
   <VForm validate-on="submit" @submit.prevent="addUser">
-    <VTextField label="Cedula" type="text" name="identification" id="identification" v-model="item.userIdentification"/>
+    <VTextField label="Cedula" type="text" name="identification" id="identification" v-model="item.identification"/>
     <VTextField label="Correo" type="text" name="mail" id="mail"  v-model="item.email"/>
     <VRadioGroup v-model="item.isExternalUser" inline>
       <VRadio label="Externo" :value="true"/>
