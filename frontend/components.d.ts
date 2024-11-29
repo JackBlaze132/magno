@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    copy: typeof import('./src/components/provitional/tableTeachers copy.vue')['default']
     FormAddFunctionary: typeof import('./src/components/forms/Post/formAddFunctionary.vue')['default']
     FormAddGroup: typeof import('./src/components/forms/Post/formAddGroup.vue')['default']
     FormAddPeriod: typeof import('./src/components/forms/Post/formAddPeriod.vue')['default']
