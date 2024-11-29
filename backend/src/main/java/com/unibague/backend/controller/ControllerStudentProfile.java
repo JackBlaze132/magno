@@ -1,5 +1,6 @@
 package com.unibague.backend.controller;
 
+import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.model.StudentProfile;
 import com.unibague.backend.model.User;
 import com.unibague.backend.service.ServiceStudentProfile;
@@ -35,6 +36,11 @@ public class ControllerStudentProfile {
     @PostMapping(path = "/addStudentProfile", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Boolean addStudentProfile(@RequestBody HashMap<String, String> studentProfile) {
         return serviceStudentProfile.addStudentProfileToAResearchSeedbed(studentProfile);
+    }
+
+    @GetMapping(path = "/getStudentProfilesResearchSeedbed", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ResearchSeedbed> getStudentProfilesResearchSeedbed(@RequestBody String identification) {
+        return serviceStudentProfile.getStudentProfileResearchSeedbeds(identification);
     }
 
     @PostMapping(path = "/addStudentProfileByExcel/{researchSeedbedId}")

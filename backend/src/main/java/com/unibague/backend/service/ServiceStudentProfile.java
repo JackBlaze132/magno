@@ -49,8 +49,14 @@ public class ServiceStudentProfile {
         return FetchExternalData.fromStringJsonToMap(urlReturn);
     }
 
-    public Optional<List<ResearchSeedbed>> getStudentProfileResearchSeedbeds(String identification) {
-        return repositoryStudentProfile.getStudentProfileResearchSeedbeds(identification);
+    public List<ResearchSeedbed> getStudentProfileResearchSeedbeds(String identification) {
+        Optional<List<ResearchSeedbed>> researchSeedbeds = repositoryStudentProfile.getStudentProfileResearchSeedbeds(identification);
+        if (researchSeedbeds.isPresent()){
+            return researchSeedbeds.get();
+        }else{
+            ExceptionLogger.logException(new Exception("Error getting research seedbeds from student profile with identification number: " + identification));
+            return new ArrayList<>();
+        }
     }
 
     /**
