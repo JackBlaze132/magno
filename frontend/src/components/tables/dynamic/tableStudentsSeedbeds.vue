@@ -67,7 +67,7 @@ export default defineComponent({
   methods: {
     async getUsers() {
       try {
-        this.items = await API.get(`${API.GET_STUDENT_SEEDBEDS}/${this.$route.params.idNumber}`);
+        this.items = await API.get(`${API.GET_STUDENT_SEEDBEDS}${this.$route.params.idNumber}`);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);
