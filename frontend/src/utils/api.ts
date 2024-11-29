@@ -21,6 +21,7 @@ class API{
   public readonly GET_TUTOR_BY_RESEARCH_SEEDBED_ID: string='getTutorByResearchseedbedId/';
   public readonly GET_RESEARCH_SEEDBED_BY_ID: string='getResearchSeedbedById/';
   public readonly GET_FUNNCTIONARY_PROFILES_BY_ASSESMENT_PERIOD_ID:string='getFunctionaryProfileByAssesmentPeriodId/';
+  public readonly GET_STUDENT_SEEDBEDS: string='getStudentProfilesResearchSeedbed/';
 
   //----[POST]----
   public readonly POST_INVESTIGATION_GROUP:string='addInvestigationGroup';

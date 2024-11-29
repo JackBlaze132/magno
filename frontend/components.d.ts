@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    copy: typeof import('./src/components/provitional/tableTeachers copy.vue')['default']
     FormAddFunctionary: typeof import('./src/components/forms/Post/formAddFunctionary.vue')['default']
     FormAddGroup: typeof import('./src/components/forms/Post/formAddGroup.vue')['default']
     FormAddPeriod: typeof import('./src/components/forms/Post/formAddPeriod.vue')['default']
@@ -42,6 +41,7 @@ declare module 'vue' {
     'TableSeedbeds copy': typeof import('./src/components/provitional/tableSeedbeds copy.vue')['default']
     TableSeedbedsByGroup: typeof import('./src/components/tables/dynamic/tableSeedbedsByGroup.vue')['default']
     TableStudents: typeof import('./src/components/tables/general/tableStudents.vue')['default']
+    TableStudentsSeedbeds: typeof import('./src/components/tables/dynamic/tableStudentsSeedbeds.vue')['default']
     TableTeachers: typeof import('./src/components/tables/lounge/tableTeachers.vue')['default']
     'TableTeachers copy': typeof import('./src/components/provitional/tableTeachers copy.vue')['default']
     TableUsers: typeof import('./src/components/tables/general/tableUsers.vue')['default']

@@ -10,24 +10,23 @@
         hide-details
         single-line
       ></VTextField>
-
     </VCardTitle>
     <VDataTable
       :items="items"
       :search="search"
       :headers="headers"
     >
-      <template v-slot:item.userStudent.isExternalUser="{item}">
-        {{ externalFormatter(item.userStudent.isExternalUser)}}
+    <template v-slot:item.assesmentPeriod="{item}">
+      <VChip v-if="item.assesmentPeriod">
+        {{ item.assesmentPeriod.name }}
+      </VChip>
+    </template>
 
-      </template>
-
-      <template v-slot:item.link="{item}">
-        <QuickActions
-          :toView="item.identificationNumber + '/detalles-estudiante'"
-          ></QuickActions>
-
-      </template>
+    <template v-slot:item.link="{item}">
+      <QuickActions
+        :toView="`/periodos/${item.assesmentPeriod.id}/grupos-investigacion/${item.investigationGroup.id}/semilleros/${item.id}`"
+      ></QuickActions>
+    </template>
     </VDataTable>
   </VCard>
 </template>
@@ -54,13 +53,9 @@ export default defineComponent({
       search: '',
       headers: [
         {title: 'ID', key: 'id'},
+        {title: 'Periodo', key: 'assesmentPeriod'},
+        {title: 'Grupo', key: 'investigationGroup.name'},
         {title: 'Nombre', key: 'name'},
-        {title: 'Código', key: 'userCode'},
-        {title: 'Identificación', key: 'identificationNumber'},
-        {title: 'Semestre', key: 'semester'},
-        {title: 'Teléfono', key: 'phoneNumber'},
-        {title: 'Correo', key: 'email'},
-        {title: 'Sexo', key: 'sex'},
         { key: 'link', sortable: false},
       ],
     }
@@ -72,7 +67,7 @@ export default defineComponent({
   methods: {
     async getUsers() {
       try {
-        this.items = await API.get(API.GET_STUDENT_PROFILES);
+        this.items = await API.get(`${API.GET_STUDENT_SEEDBEDS}/${this.$route.params.idNumber}`);
         this.$emit('loaded');
       } catch (error) {
         console.error('Error fetching users:', error);

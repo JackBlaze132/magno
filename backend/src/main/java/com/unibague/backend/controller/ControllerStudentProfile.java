@@ -38,10 +38,11 @@ public class ControllerStudentProfile {
         return serviceStudentProfile.addStudentProfileToAResearchSeedbed(studentProfile);
     }
 
-    @GetMapping(path = "/getStudentProfilesResearchSeedbed", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ResearchSeedbed> getStudentProfilesResearchSeedbed(@RequestBody String identification) {
+    @GetMapping(path = "/getStudentProfilesResearchSeedbed/{identification}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ResearchSeedbed> getStudentProfilesResearchSeedbed(@PathVariable String identification) {
         return serviceStudentProfile.getStudentProfileResearchSeedbeds(identification);
     }
+
 
     @PostMapping(path = "/addStudentProfileByExcel/{researchSeedbedId}")
     public Boolean addUserByExcel(@RequestParam("file") MultipartFile file, @PathVariable String researchSeedbedId) {

@@ -23,8 +23,10 @@ public interface RepositoryStudentProfile extends JpaRepository<StudentProfile, 
     @Query("SELECT sp from StudentProfile sp WHERE sp.userStudent.userIdentification = ?1 AND sp.assesmentPeriod.id = ?2")
     Optional<StudentProfile> findByUserIdentificationAndAssesmentPeriodId(String identification, Long assesmentPeriodId);
 
-    @Query("SELECT rs from ResearchSeedbed rs INNER JOIN rs.studentsProfiles sp WHERE sp.userStudent.userIdentification = ?1")
-    Optional<List<ResearchSeedbed>> getStudentProfileResearchSeedbeds(String identification);
+    @Query("SELECT rs FROM ResearchSeedbed rs " +
+            "JOIN rs.studentsProfiles sp " +
+            "WHERE sp.userStudent.id = (SELECT u.id FROM User u WHERE u.userIdentification = :identification)")
+    List<ResearchSeedbed> findResearchSeedbedsByStudentIdentification(@Param("identification") String identification);
 
     @Query("SELECT COUNT(DISTINCT sp) " +
             "FROM StudentProfile sp " +

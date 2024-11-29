@@ -165,6 +165,22 @@ export const routes = [
       {
         path: '/estudiantes',
         component: () => import('@/views/students/index.vue'),
+        redirect: (to: RouteLocationNormalized) => {
+          return { name: 'listar-estudiantes' }
+        },
+        children:[
+          {
+            path: 'listar-estudiantes',
+            name: 'listar-estudiantes',
+            component: () => import ('@/views/students/listStudents.vue')
+          },
+          {
+            path:':idNumber/detalles-estudiante',
+            name: 'detalles-estudiante',
+            component: () => import ('@/views/students/detailStudent.vue')
+          },
+
+        ]
       }
 
 
