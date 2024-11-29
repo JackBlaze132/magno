@@ -65,10 +65,5 @@ export default defineComponent({
         });
     }
   },
-  computed: {
-    PeriodId() {
-      return this.periods.map(functionary => Period.id);
-    },
-  }
 });
 </script>

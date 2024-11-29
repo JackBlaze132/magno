@@ -17,6 +17,7 @@
       :items="items"
       :search="search"
       :headers="headers"
+      :sort-by="[{key: 'name'}]"
     >
       <template v-slot:item.isActive="{item}">
         <VChip :color="item.isActive ? 'green' : ''" >
