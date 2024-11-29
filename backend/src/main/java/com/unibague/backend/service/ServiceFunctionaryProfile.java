@@ -4,6 +4,7 @@ import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.model.FunctionaryProfile;
 import com.unibague.backend.model.ResearchSeedbed;
 import com.unibague.backend.repository.*;
+import com.unibague.backend.util.ExceptionLogger;
 import com.unibague.backend.util.FetchExternalData;
 import com.unibague.backend.util.IntegraFunctionaryNomenclature;
 import com.unibague.backend.util.Sex;
@@ -85,6 +86,7 @@ public class ServiceFunctionaryProfile {
 
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;
@@ -101,6 +103,7 @@ public class ServiceFunctionaryProfile {
             return true;
         }
         catch (Exception e){
+            ExceptionLogger.logException(e);
             System.out.printf("Error: %s", e.getMessage());
             e.printStackTrace();
             return false;

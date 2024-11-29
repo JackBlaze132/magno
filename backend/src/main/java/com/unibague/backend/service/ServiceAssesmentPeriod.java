@@ -2,6 +2,7 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.AssesmentPeriod;
 import com.unibague.backend.repository.RepositoryAssesmentPeriod;
+import com.unibague.backend.util.ExceptionLogger;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class ServiceAssesmentPeriod {
 
             return true;    
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             e.printStackTrace();
             return false;
         }
@@ -49,6 +51,7 @@ public class ServiceAssesmentPeriod {
             }
             return false;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.println("Error deleting assessment period " + e.getMessage());
             e.printStackTrace();
             return false;
@@ -87,6 +90,7 @@ public class ServiceAssesmentPeriod {
             repositoryAssesmentPeriod.save(assessmentPeriod);
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             System.out.println("Error updating assessment period " + e.getMessage());
             e.printStackTrace();
             return false;

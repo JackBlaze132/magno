@@ -2,6 +2,7 @@ package com.unibague.backend.service;
 
 import com.unibague.backend.model.Dependency;
 import com.unibague.backend.repository.RepositoryDependency;
+import com.unibague.backend.util.ExceptionLogger;
 import com.unibague.backend.util.FetchExternalData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ServiceDependency {
             repositoryDependency.save(d);
             return true;
         } catch (Exception e) {
+            ExceptionLogger.logException(e);
             return false;
         }
     }
